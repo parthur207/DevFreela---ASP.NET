@@ -12,7 +12,9 @@ namespace DevFreela
 
             // Adiciona serviços ao contêiner antes de Build()
             builder.Services.AddControllersWithViews();
-            builder.Services.AddSwaggerGen(); // Registra o Swagger
+
+            // Registra o Swagger
+            builder.Services.AddSwaggerGen(); 
 
             var app = builder.Build();
 
