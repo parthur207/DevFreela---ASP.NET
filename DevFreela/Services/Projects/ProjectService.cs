@@ -78,6 +78,13 @@ namespace DevFreela.Services.Projects
         {
             ResponseModel<CreateProjectInputModel> Resposta = new ResponseModel<CreateProjectInputModel>();
 
+            if (Model.TotalCost < _values.Minimum || Model.TotalCost > _values.Maximum)
+            {
+                Resposta.Message = $"O valor total do projeto deve estar entre {_values.Minimum} e {_values.Maximum}";
+                Resposta.status = false;
+
+                return Resposta;
+            }
             try
             {
                 await _dbContext.Projects.Add(Model); 
