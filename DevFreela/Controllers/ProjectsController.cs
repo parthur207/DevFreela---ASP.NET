@@ -1,5 +1,6 @@
 ﻿using DevFreela.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace DevFreela.Controllers
 {
@@ -8,15 +9,21 @@ namespace DevFreela.Controllers
     [Route("api/projects")]
     public class ProjectsController : ControllerBase
     {
+        private readonly FreeLancerTotalCostConfig _values;
+        public ProjectsController(IOptions<FreeLancerTotalCostConfig> options)
+        {
+            _values = options.Value;
+        }
 
-        [HttpPost]
+        [HttpPost("{ProjectModel}")]
+    
         public IActionResult PostProject(CreateProjectInputModel Model)
         {
             return CreatedAtAction(nameof(GetById), new { Id=1});
         }
 
-        [HttpGet("{search}")]
-        public IActionResult Get(string search)
+        [HttpGet]
+        public IActionResult GetSearch(string search)
         {
             return Ok();
         }
@@ -32,6 +39,7 @@ namespace DevFreela.Controllers
         {
 
             Model.IdProject = Id;
+
             return NoContent();
         }
 
@@ -55,8 +63,8 @@ namespace DevFreela.Controllers
 
 
 
-        [HttpPost("{Id}/comments")]
-        public async Task<IActionResult> PostComment(int Id, CreateProjectCommentInputModel Model)
+        [HttpPost("coments/{Id}")]
+        public async Task<IActionResult> PostComment(int Id, CreateCommentInputModel Model)
         {
             return Ok();
         }   

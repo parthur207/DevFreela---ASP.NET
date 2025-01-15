@@ -1,5 +1,6 @@
 
 
+using DevFreela.Models;
 using Microsoft.AspNetCore.Builder;
 
 namespace DevFreela
@@ -9,6 +10,12 @@ namespace DevFreela
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.Configure<FreeLancerTotalCostConfig> (
+                builder.Configuration.GetSection("FreeLancerTotalCost")
+            );
+
+            
 
             // Adiciona serviços ao contêiner antes de Build()
             builder.Services.AddControllersWithViews();
