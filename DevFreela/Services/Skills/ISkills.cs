@@ -3,6 +3,5 @@
     public interface ISkills
     {
 
-        public async Task<Skil>
     }
 }

@@ -1,4 +1,5 @@
 ﻿using DevFreela.Models;
+using DevFreela.Services.Projects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
@@ -9,29 +10,35 @@ namespace DevFreela.Controllers
     [Route("api/projects")]
     public class ProjectsController : ControllerBase
     {
-        private readonly FreeLancerTotalCostConfig _values;
-        public ProjectsController(IOptions<FreeLancerTotalCostConfig> options)
+        private readonly  IProjects _projectService;
+
+
+        public ProjectsController(IProjects ProjectService)
         {
-            _values = options.Value;
+            _projectService = ProjectService;
         }
 
         [HttpPost("{ProjectModel}")]
-    
         public IActionResult PostProject(CreateProjectInputModel Model)
         {
+
+            //var Response = _projectService.PostProject(Model);
             return CreatedAtAction(nameof(GetById), new { Id=1});
         }
 
         [HttpGet]
         public IActionResult GetSearch(string search)
         {
-            return Ok();
+            _projectService.GetSearch(search);
+            return Ok(search);
         }
 
         [HttpGet("{Id}")]
-        public async Task <IActionResult> GetById()
+        public async Task <IActionResult> GetById(int Id)
         {
-            return Ok();
+
+            var resposta= await _projectService.GetById(Id);
+            return Ok(resposta.Content);
         }
 
         [HttpPut("{Id}")]

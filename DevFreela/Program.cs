@@ -1,6 +1,7 @@
 
 
 using DevFreela.Models;
+using DevFreela.Services.Projects;
 using Microsoft.AspNetCore.Builder;
 
 namespace DevFreela
@@ -15,7 +16,7 @@ namespace DevFreela
                 builder.Configuration.GetSection("FreeLancerTotalCost")
             );
 
-            
+            builder.Services.AddSingleton<IProjects,ProjectService>();
 
             // Adiciona serviços ao contêiner antes de Build()
             builder.Services.AddControllersWithViews();

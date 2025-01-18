@@ -1,24 +1,52 @@
 ﻿using DevFreela.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using System.Runtime.CompilerServices;
 
 namespace DevFreela.Services.Projects
 {
     public class ProjectService : IProjects
     {
 
-        private readonly MyDbContext _dbContext;
-
-        public ProjectsService(MyDbContext DbContext)
-        {
-            _dbContext = DbContext;
-        }
-
+        //private readonly MyDbContext _dbContext;
         private readonly FreeLancerTotalCostConfig _values;
 
-        public ProjectService(IOptions<FreeLancerTotalCostConfig> Config)
+        public ProjectService(IOptions<FreeLancerTotalCostConfig> Config) //MyDbContext DbContext)
         {
             _values = Config.Value;
+
+            //_dbContext = DbContext;
+        }
+
+
+        /*public async Task<ResponseModel<CreateProjectInputModel>> PostProject(CreateProjectInputModel Model)
+        {
+            ResponseModel<CreateProjectInputModel> Resposta = new ResponseModel<CreateProjectInputModel>();
+
+            if (Model.TotalCost < _values.Minimum || Model.TotalCost > _values.Maximum)
+            {
+                Resposta.Message = $"O valor total do projeto deve estar entre {_values.Minimum} e {_values.Maximum}";
+                Resposta.status = false;
+
+                return Resposta;
+            }
+            try
+            {
+                await _dbContext.Projects.Add(Model);
+                _dbContext.SaveChanges();
+
+                Resposta.Message = "Projeto criado com sucesso!";
+
+                return Resposta;
+            }
+            catch (Exception ex)
+            {
+                Resposta.Message = $"Erro ao criar projeto:  + {ex.Message}";
+                Resposta.status = false;
+                return Resposta;
+            }
         }
 
 
@@ -42,14 +70,22 @@ namespace DevFreela.Services.Projects
                 return Resposta;
             }
 
-        }
+        }*/
 
         public async Task<ResponseModel<CreateProjectInputModel>> GetById(int Id)
         {
             
-            ResponseModel<CreateProjectInputModel> Resposta = new ResponseModel<CreateProjectInputModel>(); 
+            ResponseModel<CreateProjectInputModel> Resposta = new ResponseModel<CreateProjectInputModel>();
 
-            try { 
+
+
+            Id++;
+
+            Resposta.Content = Id.ToString();
+
+            return Resposta;
+
+          /*try { 
 
                 var Model= _dbContext.Projects.Find(Id);    
                 Resposta.Content = Model;
@@ -61,46 +97,27 @@ namespace DevFreela.Services.Projects
                 Resposta.Message = $"Erro ao buscar projeto: {ex.Message}";
                 Resposta.status = false;
                 return Resposta;
-            }
+            }*/
+
+      
         }
 
-        public async Task<ResponseModel<List<CreateProjectInputModel>>> GetSearch(string Search)
+        public async Task<ResponseModel<CreateProjectInputModel>> GetSearch(string Search)
         {
-            throw new NotImplementedException();
-        }
+            ResponseModel<CreateProjectInputModel>  Resposta=new ResponseModel<CreateProjectInputModel>();
 
-        public async Task<ResponseModel<CreateCommentInputModel>> PostComment(int Id, string Comment)
-        {
-            
-        }
-
-        public async Task<ResponseModel<CreateProjectInputModel>> PostProject(CreateProjectInputModel Model)
-        {
-            ResponseModel<CreateProjectInputModel> Resposta = new ResponseModel<CreateProjectInputModel>();
-
-            if (Model.TotalCost < _values.Minimum || Model.TotalCost > _values.Maximum)
+            if (!int.TryParse(Search,  out int search))
             {
-                Resposta.Message = $"O valor total do projeto deve estar entre {_values.Minimum} e {_values.Maximum}";
-                Resposta.status = false;
-
-                return Resposta;
-            }
-            try
-            {
-                await _dbContext.Projects.Add(Model); 
-                _dbContext.SaveChanges();
-
-                Resposta.Message = "Projeto criado com sucesso!";
-
-                return Resposta;
-            }
-            catch (Exception ex)
-            {
-                Resposta.Message= $"Erro ao criar projeto:  + {ex.Message}";
+                Resposta.Message= "O valor de busca deve ser um número inteiro";
                 Resposta.status = false;
                 return Resposta;
             }
+            search++;
+
+            Resposta.Content = search.ToString();
+            return Resposta;
         }
+
 
         public async Task<ResponseModel<UpdateProjectInputModel>> Put(int Id, UpdateProjectInputModel Model)
         {
@@ -116,7 +133,7 @@ namespace DevFreela.Services.Projects
                 return Resposta;
             }
 
-            await _dbContext.Projects.Update(Model);    
+            //await _dbContext.Projects.Update(Model);    
             Resposta.Message= "Projeto atualizado com sucesso!";
             return Resposta;
         }
@@ -127,6 +144,11 @@ namespace DevFreela.Services.Projects
         }
 
         public async Task<ResponseModel<CreateProjectInputModel>> Complete(int Id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ResponseModel<CreateCommentInputModel>> PostComment()
         {
             throw new NotImplementedException();
         }
