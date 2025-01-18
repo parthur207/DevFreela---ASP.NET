@@ -11,7 +11,7 @@ namespace DevFreela.Controllers
         [HttpPost]
         public async Task<IActionResult> Post()
         {
-            return Ok();
+            return Created();
         }
 
         [HttpPut("{id}/profile-picture")]

@@ -16,7 +16,7 @@ namespace DevFreela.Controllers
         [HttpPost]
         public async Task<IActionResult> Post()
         {
-            return Ok();
+            return Created();
         }
     }
 }

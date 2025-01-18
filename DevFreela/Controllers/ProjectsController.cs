@@ -73,7 +73,7 @@ namespace DevFreela.Controllers
         [HttpPost("coments/{Id}")]
         public async Task<IActionResult> PostComment(int Id, CreateCommentInputModel Model)
         {
-            return Ok();
+            return Created();
         }   
     }
 }
