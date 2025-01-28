@@ -9,9 +9,15 @@ namespace DevFreela.Controllers
     public class UsersController : ControllerBase
     {
         [HttpPost]
-        public async Task<IActionResult> Post()
+        public async Task<IActionResult> Post(CreateUserInputModel model)
         {
             return Created();
+        }
+
+        [HttpPost("{Id}/skills")]
+        public async Task<IActionResult> PostSkills(UsersSkillsInputModel Model)
+        {
+            return NoContent();
         }
 
         [HttpPut("{id}/profile-picture")]
