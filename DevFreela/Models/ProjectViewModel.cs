@@ -14,7 +14,7 @@ namespace DevFreela.Models
             ClientName = clientName;
             FreeLancerName = freeLancerName;
             TotalCost = totalCost;
-            Comments = comments.Select(x=>x.Content).ToList();
+            Comments = comments.Select(x=>x.Content).ToList();//
         }
 
         public int Id { get; private set; }
