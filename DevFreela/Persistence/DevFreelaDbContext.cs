@@ -8,8 +8,6 @@ namespace DevFreela.Persistence
         protected DevFreelaDbContext(DbContextOptions<DevFreelaDbContext> options)
             : base(options)
         {
-
-
         }
 
         public DbSet<Project> Projects { get; set; }
@@ -22,6 +20,8 @@ namespace DevFreela.Persistence
 
         public DbSet<ProjectComment> ProjectComments { get; set; }
 
+
+        //Configuração do relacionamento entre as entidades. Declaração de chaves primárias
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Skill>(x => x.HasKey(x => x.Id));
@@ -29,5 +29,12 @@ namespace DevFreela.Persistence
 
             base.OnModelCreating(modelBuilder);
         }
+
+
+        //Config comunicação ao db utilizando o conect string do appsettings.json
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(DevFreelaDbContext);
+            
     }
 }

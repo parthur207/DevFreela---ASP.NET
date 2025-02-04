@@ -36,7 +36,7 @@ namespace DevFreela.Models
         public List<string> Comments { get; private set; }
 
 
-        public static ProjectViewModel FromEntity(Project entity)
+        public static ProjectViewModel FromProjectEntity(Project entity)
            => new ProjectViewModel(entity.Id, entity.Title, entity.Description, 
                entity.IdClient, entity.IdFreeLancer, entity.Client.FullName, 
                entity.FreeLancer.FullName, entity.TotalCost, entity.Comments);

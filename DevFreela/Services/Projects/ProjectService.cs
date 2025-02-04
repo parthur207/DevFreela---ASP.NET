@@ -1,4 +1,5 @@
 ﻿using DevFreela.Models;
+using DevFreela.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using Microsoft.EntityFrameworkCore;
@@ -13,12 +14,40 @@ namespace DevFreela.Services.Projects
         //private readonly MyDbContext _dbContext;
         private readonly FreeLancerTotalCostConfig _values;
 
-        public ProjectService(IOptions<FreeLancerTotalCostConfig> Config) //MyDbContext DbContext)
+        public ProjectService(IOptions<FreeLancerTotalCostConfig> Config, DevFreelaDbContext DbContext) //MyDbContext DbContext)
         {
             _values = Config.Value;
 
-            //_dbContext = DbContext;
+            _dbContext = DbContext;
         }
+
+
+        public async Task<ResponseModel<CreateProjectInputModel>> PostProject(CreateProjectInputModel model)
+        {
+
+            ResposeModel<CreateProjectInputModel> Resposta = new ResposeModel<CreateProjectInputModel>();
+            try
+            {
+                _dbContext.Projects.Add(model);
+
+                await _dbContext.SaveChangesAsync();
+
+                Resposta.Message = "Projeto criado com sucesso!";
+                return Resposta;
+            }
+
+            catch (Exception ex{
+                Resposta.Message = "Erro ao criar projeto: " + ex.Message;
+                Resposta.Status = false;
+                return Resposta;
+            }
+        }
+
+        public async Task<ResponseModel<CreateProjectInputModel>> DeleteProject()
+        {
+
+        }
+
 
 
         /*public async Task<ResponseModel<CreateProjectInputModel>> PostProject(CreateProjectInputModel Model)

@@ -16,6 +16,13 @@ namespace DevFreela
                 builder.Configuration.GetSection("FreeLancerTotalCost")
             );
 
+
+            builder.Services.AddDbContext<DevFreelaDbContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DevFreelaConnection"));
+            });
+
+
             builder.Services.AddSingleton<IProjects,ProjectService>();
 
             // Adiciona serviços ao contêiner antes de Build()
