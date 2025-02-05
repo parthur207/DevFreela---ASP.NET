@@ -24,8 +24,8 @@ namespace DevFreela.Persistence
         //Configuração do relacionamento entre as entidades. Declaração de chaves primárias
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Skill>(x => x.HasKey(x => x.Id));
-            builder.Entity<UserSkill>(x=>x.HasKey(x=>x.))
+            builder.Entity<Skill>(x => { x.HasKey(x => x.Id)};
+            builder.Entity<UserSkill>(x => { x.HasKey(x => x.))};
 
             base.OnModelCreating(modelBuilder);
         }
