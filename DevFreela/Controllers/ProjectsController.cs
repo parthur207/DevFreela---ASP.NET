@@ -1,6 +1,8 @@
 ﻿using DevFreela.Models;
+using DevFreela.Persistence;
 using DevFreela.Services.Projects;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
 namespace DevFreela.Controllers
@@ -12,33 +14,51 @@ namespace DevFreela.Controllers
     {
         private readonly  IProjects _projectService;
 
+        private readonly DevFreelaDbContext _contextInMemory;
 
-        public ProjectsController(IProjects ProjectService)
+        public ProjectsController(IProjects ProjectService, DevFreelaDbContext ContextInMemory)
         {
             _projectService = ProjectService;
+            _contextInMemory = ContextInMemory;
         }
 
         [HttpPost("{ProjectModel}")]
         public IActionResult PostProject(CreateProjectInputModel Model)
         {
+            var project = Model.ToProjectEntity();
 
-            //var Response = _projectService.PostProject(Model);
-            return CreatedAtAction(nameof(GetById), new { Id=1});
+            _contextInMemory.Projects.Add(project);
+            _contextInMemory.SaveChanges();
+
+            return CreatedAtAction(nameof(GetById), new { Id=1}, Model);
         }
 
         [HttpGet]
-        public IActionResult GetSearch(string search)
+        public IActionResult GetSearch(string search="")
         {
-            _projectService.GetSearch(search);
-            return Ok(search);
+
+            var projects= _contextInMemory.Projects
+                .Include(x=>x.Client)
+                .Include(x=>x.FreeLancer)
+                .Where(x=>!x.IsDeleted).ToList();
+
+            var model = projects.Select(ProjectItemViewModel.FromEntity).ToList();
+
+            return Ok(model);
         }
 
         [HttpGet("{Id}")]
-        public async Task <IActionResult> GetById(int Id)
+        public  IActionResult GetById(int Id)
         {
+            var project = _contextInMemory.Projects
+                .Include(x => x.Client)
+                .Include(x => x.FreeLancer)
+                .Include(x => x.Comments)
+                .SingleOrDefault(x => x.Id == Id);
 
-            var resposta= await _projectService.GetById(Id);
-            return Ok(resposta.Content);
+            var model = ProjectViewModel.FromProjectEntity(project);
+
+            return Ok(model);
         }
 
         [HttpPut("{Id}")]

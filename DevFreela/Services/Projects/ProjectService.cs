@@ -30,9 +30,9 @@ namespace DevFreela.Services.Projects
             ResponseModel<CreateProjectInputModel> Resposta = new ResponseModel<CreateProjectInputModel>();
             try
             {
+                var newproject = model.ToEntity();
 
-                FromEntity()
-                await _dbContext.Projects.Add();
+                await _dbContext.Projects.Add(newproject);
 
                 await _dbContext.SaveChangesAsync();
 

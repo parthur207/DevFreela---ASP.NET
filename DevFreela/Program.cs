@@ -1,8 +1,10 @@
 
 
 using DevFreela.Models;
+using DevFreela.Persistence;
 using DevFreela.Services.Projects;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 
 namespace DevFreela
 {
@@ -16,11 +18,16 @@ namespace DevFreela
                 builder.Configuration.GetSection("FreeLancerTotalCost")
             );
 
+            //Implemento de um banco de dados em memória (para testes)
+            builder.Services.AddDbContext<DevFreelaDbContext>(x => x.UseInMemoryDatabase("DevFreelaDbContext"));
 
-            builder.Services.AddDbContext<DevFreelaDbContext>(options =>
+
+            //Configuração do banco de dados SQL Server 
+
+           /*builder.Services.AddDbContext<DevFreelaDbContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DevFreelaConnection"));
-            });
+            });*/
 
 
             builder.Services.AddSingleton<IProjects,ProjectService>();

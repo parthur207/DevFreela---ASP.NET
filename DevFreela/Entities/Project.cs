@@ -5,9 +5,9 @@ namespace DevFreela.Entities
     public class Project : BaseEntity
     {
 
-        protected Project() { }
+        public Project(){ }
      
-        public Project(string title, string description, int idClient, User client, int idFreeLancer, User freeLancer, decimal totalCost) 
+        public Project(string title, string description, int idClient, int idFreeLancer, decimal totalCost) 
             : base()
         {
             Title = title;

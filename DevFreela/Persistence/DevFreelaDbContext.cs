@@ -33,7 +33,7 @@ namespace DevFreela.Persistence
                     .OnDelete(DeleteBehavior.Restrict);
 
                 x.HasOne(x => x.Client)
-                    .WithMany(x => x.OwnedProjects)
+                    .WithMany(x => x.OwnedProjects) 
                     .HasForeignKey(x => x.IdClient)
                     .OnDelete(DeleteBehavior.Restrict);
         });
