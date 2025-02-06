@@ -12,6 +12,7 @@
             Skills = [];
             OwnedProjects = [];
             FreeLancerProjects = [];
+            Comments = [];
         }
 
         public  string FullName { get; private set; }
@@ -22,7 +23,7 @@
 
         public bool Active { get; private set; }
 
-        public List<UserSkill> Skills{ get; private set; }
+        public List<UserSkill> Skills { get; private set; }
 
         public List<ProjectComment> Comments { get; private set; }
 

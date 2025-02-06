@@ -14,6 +14,8 @@ namespace DevFreela.Services.Projects
         //private readonly MyDbContext _dbContext;
         private readonly FreeLancerTotalCostConfig _values;
 
+        private readonly DevFreelaDbContext _dbContext;
+
         public ProjectService(IOptions<FreeLancerTotalCostConfig> Config, DevFreelaDbContext DbContext) //MyDbContext DbContext)
         {
             _values = Config.Value;
@@ -25,10 +27,12 @@ namespace DevFreela.Services.Projects
         public async Task<ResponseModel<CreateProjectInputModel>> PostProject(CreateProjectInputModel model)
         {
 
-            ResposeModel<CreateProjectInputModel> Resposta = new ResposeModel<CreateProjectInputModel>();
+            ResponseModel<CreateProjectInputModel> Resposta = new ResponseModel<CreateProjectInputModel>();
             try
             {
-                _dbContext.Projects.Add(model);
+
+                FromEntity()
+                await _dbContext.Projects.Add();
 
                 await _dbContext.SaveChangesAsync();
 
@@ -36,7 +40,7 @@ namespace DevFreela.Services.Projects
                 return Resposta;
             }
 
-            catch (Exception ex{
+            catch (Exception ex){
                 Resposta.Message = "Erro ao criar projeto: " + ex.Message;
                 Resposta.Status = false;
                 return Resposta;
