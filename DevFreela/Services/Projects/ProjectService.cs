@@ -30,9 +30,9 @@ namespace DevFreela.Services.Projects
             ResponseModel<CreateProjectInputModel> Resposta = new ResponseModel<CreateProjectInputModel>();
             try
             {
-                var newproject = model.ToEntity();
+                var newproject = model.ToProjectEntity();
 
-                await _dbContext.Projects.Add(newproject);
+                 _dbContext.Projects.Add(newproject);
 
                 await _dbContext.SaveChangesAsync();
 
@@ -47,9 +47,26 @@ namespace DevFreela.Services.Projects
             }
         }
 
-        public async Task<ResponseModel<CreateProjectInputModel>> DeleteProject()
+        public async Task<ResponseModel<CreateProjectInputModel>> DeleteProject(int Id)
         {
+            ResponseModel<CreateProjectInputModel> Resposta = new ResponseModel<CreateProjectInputModel>();
 
+            try 
+            { 
+                var delete=await _dbContext.Projects.FindAsync(Id);
+                 _dbContext.Projects.Remove(delete);
+                await _dbContext.SaveChangesAsync();
+
+                Resposta.Message = "Projeto deletado com sucesso.";
+                return Resposta;
+            }
+            catch(Exception ex)
+            {
+
+                Resposta.Message = "Erro ao deletar projeto: " + ex.Message;
+                Resposta.Status = false;
+                return Resposta;
+            }}
         }
 
 

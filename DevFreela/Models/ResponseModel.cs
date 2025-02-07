@@ -4,6 +4,6 @@
     {
         public string? Content { get; set; }
         public string? Message { get; set; }
-        public bool status { get; set; } = true;
+        public bool Status { get; set; } = true;
     }
 }
