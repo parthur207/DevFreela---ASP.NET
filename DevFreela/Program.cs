@@ -21,16 +21,16 @@ namespace DevFreela
             //Implemento de um banco de dados em memória (para testes)
             builder.Services.AddDbContext<DevFreelaDbContext>(x => x.UseInMemoryDatabase("DevFreelaDbContext"));
 
+            #region Configuração do banco de dados SQL Server
 
-            //Configuração do banco de dados SQL Server 
+            /*builder.Services.AddDbContext<DevFreelaDbContext>(options =>
+             {
+                 options.UseSqlServer(builder.Configuration.GetConnectionString("DevFreelaConnection"));
+             });*/
 
-           /*builder.Services.AddDbContext<DevFreelaDbContext>(options =>
-            {
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DevFreelaConnection"));
-            });*/
+            #endregion
 
-
-            builder.Services.AddSingleton<IProjects,ProjectService>();
+            builder.Services.AddScoped<IProjects,ProjectService>();
 
             // Adiciona serviços ao contêiner antes de Build()
             builder.Services.AddControllersWithViews();

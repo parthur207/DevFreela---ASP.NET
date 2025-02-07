@@ -26,24 +26,24 @@ namespace DevFreela.Persistence
         {
 
             builder.Entity<Project>(x => {
-                x.HasKey(x => x.Id);
-                x.HasOne(x => x.FreeLancer)
-                    .WithMany(x => x.FreeLancerProjects)
-                    .HasForeignKey(x => x.IdFreeLancer)
-                    .OnDelete(DeleteBehavior.Restrict);
+                x.HasKey(x => x.Id);//chave primária
+                x.HasOne(x => x.FreeLancer)//Um FreeLancer
+                    .WithMany(x => x.FreeLancerProjects)// Possui muitos projetos
+                    .HasForeignKey(x => x.IdFreeLancer)//chave estrangeira
+                    .OnDelete(DeleteBehavior.Restrict);//Restrição de deleção 
 
-                x.HasOne(x => x.Client)
-                    .WithMany(x => x.OwnedProjects) 
-                    .HasForeignKey(x => x.IdClient)
+                x.HasOne(x => x.Client)//Um cliente 
+                    .WithMany(x => x.OwnedProjects)//Pode adquirir muitos projetos
+                    .HasForeignKey(x => x.IdClient)//Chave estrangeira
                     .OnDelete(DeleteBehavior.Restrict);
         });
 
             builder.Entity<User>(x =>
             {
-                x.HasKey(x => x.Id);
-                x.HasMany(x => x.Skills)
-                    .WithOne(x => x.User)
-                    .HasForeignKey(x => x.IdUser)
+                x.HasKey(x => x.Id);//Chave primária
+                x.HasMany(x => x.Skills)// Muitas habilidade
+                    .WithOne(x => x.User)//Pertencem a um usuario
+                    .HasForeignKey(x => x.IdUser)//Chave estrangeira
                     .OnDelete(DeleteBehavior.Restrict);
                     
             });
@@ -72,14 +72,32 @@ namespace DevFreela.Persistence
                 .OnDelete(DeleteBehavior.Restrict);
             });
         }
+        #region Implemento do uso do banco de dados em memoria para testes
 
-
-        //Config comunicação ao db utilizando o conect string do appsettings.json
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer();
-
+            optionsBuilder.UseInMemoryDatabase()
         }
+
+        #endregion
+
+        #region Configuração do OnConfiguring para comunicação com o DB utilizando a string de conexão declarada no arquivo do json
+        /*
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+
+            IConfigurationRoot configuration= new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            string connectionString = configuration.GetConnectionString("DevFreelaConnection");
+
+            optionsBuilder.UseSqlServer(connectionString);
+
+        }*/
+
+        #endregion
 
     }
 }
