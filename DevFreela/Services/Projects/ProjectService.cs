@@ -69,8 +69,6 @@ namespace DevFreela.Services.Projects
             }
         }
 
-
-
     /*public async Task<ResponseModel<CreateProjectInputModel>> PostProject(CreateProjectInputModel Model)
     {
         ResponseModel<CreateProjectInputModel> Resposta = new ResponseModel<CreateProjectInputModel>();
@@ -148,7 +146,7 @@ namespace DevFreela.Services.Projects
             }*/
 
       
-        }
+        
 
         public async Task<ResponseModel<CreateProjectInputModel>> GetSearch(string Search)
         {
@@ -157,7 +155,7 @@ namespace DevFreela.Services.Projects
             if (!int.TryParse(Search,  out int search))
             {
                 Resposta.Message= "O valor de busca deve ser um número inteiro";
-                Resposta.status = false;
+                Resposta.Status = false;
                 return Resposta;
             }
             search++;
@@ -176,7 +174,7 @@ namespace DevFreela.Services.Projects
             if (Model.TotalCost < _values.Minimum || Model.TotalCost > _values.Maximum)
             {
                 Resposta.Message= $"O valor total do projeto deve estar entre {_values.Minimum} e {_values.Maximum}";
-                Resposta.status = false;
+                Resposta.Status = false;
 
                 return Resposta;
             }

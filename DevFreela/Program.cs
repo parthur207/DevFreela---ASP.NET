@@ -19,7 +19,7 @@ namespace DevFreela
             );
 
             //Implemento de um banco de dados em memória (para testes)
-            builder.Services.AddDbContext<DevFreelaDbContext>(x => x.UseInMemoryDatabase("DevFreelaDbContext"));
+            builder.Services.AddDbContext<DevFreelaDbContext>(x => x.UseInMemoryDatabase("MyDbContextInMemory"));
 
             #region Configuração do banco de dados SQL Server
 

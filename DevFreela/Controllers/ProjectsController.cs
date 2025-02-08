@@ -40,7 +40,7 @@ namespace DevFreela.Controllers
             var projects= _contextInMemory.Projects
                 .Include(x=>x.Client)
                 .Include(x=>x.FreeLancer)
-                .Where(x=>!x.IsDeleted)..ToList();
+                .Where(x=>!x.IsDeleted).ToList();
 
             var model = projects.Select(ProjectItemViewModel.FromEntity).ToList();
 
