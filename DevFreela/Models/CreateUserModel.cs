@@ -1,6 +1,6 @@
 ﻿namespace DevFreela.Models
 {
-    public class CreateUserInputModel
+    public class CreateUserModel
     {
         public string FullName { get; set; }
 

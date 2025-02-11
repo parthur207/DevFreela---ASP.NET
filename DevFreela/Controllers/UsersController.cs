@@ -9,7 +9,7 @@ namespace DevFreela.Controllers
     public class UsersController : ControllerBase
     {
         [HttpPost]
-        public async Task<IActionResult> Post(CreateUserInputModel model)
+        public async Task<IActionResult> Post(CreateUserModel model)
         {
             return Created();
         }

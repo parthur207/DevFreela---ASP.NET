@@ -23,11 +23,11 @@ namespace DevFreela.Controllers
         }
 
         [HttpPost("{ProjectModel}")]
-        public IActionResult PostProject(CreateProjectInputModel Model)
+        public IActionResult PostProject(CreateProjectModel Model)
         {
-            var project = Model.ToProjectEntity();
+            var entity = Model.ToProjectEntity();
 
-            _contextInMemory.Projects.Add(project);
+            _contextInMemory.Projects.Add(entity);
             _contextInMemory.SaveChanges();
 
             return CreatedAtAction(nameof(GetById), new { Id=1}, Model);
@@ -42,7 +42,7 @@ namespace DevFreela.Controllers
                 .Include(x=>x.FreeLancer)
                 .Where(x=>!x.IsDeleted).ToList();
 
-            var model = projects.Select(ProjectItemViewModel.FromEntity).ToList();
+            var model = projects.Select(ProjectItemViewModel.ToProjectModel).ToList();
 
             return Ok(model);
         }
@@ -56,13 +56,13 @@ namespace DevFreela.Controllers
                 .Include(x => x.Comments)
                 .SingleOrDefault(x => x.Id == Id);
 
-            var model = ProjectViewModel.FromProjectEntity(project);
+            var model = ProjectViewModel.ToProjectModel(project);
 
             return Ok(model);
         }
 
         [HttpPut("{Id}")]
-        public IActionResult Put(int Id, UpdateProjectInputModel Model)
+        public IActionResult Put(int Id, UpdateProjectModel Model)
         {
 
             Model.IdProject = Id;
@@ -91,7 +91,7 @@ namespace DevFreela.Controllers
 
 
         [HttpPost("coments/{Id}")]
-        public async Task<IActionResult> PostComment(int Id, CreateCommentInputModel Model)
+        public async Task<IActionResult> PostComment(int Id, CreateCommentModel Model)
         {
             return Created();
         }   

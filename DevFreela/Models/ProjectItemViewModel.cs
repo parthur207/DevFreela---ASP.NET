@@ -24,7 +24,7 @@ namespace DevFreela.Models
         public decimal TotalCost { get; private set; }
 
 
-        public static ProjectItemViewModel FromEntity(Project project)
+        public static ProjectItemViewModel ToProjectModel(ProjectEntity project)
            => new (project.Id, project.Title,
                project.Client.FullName, project.FreeLancer.FullName, project.TotalCost);
 

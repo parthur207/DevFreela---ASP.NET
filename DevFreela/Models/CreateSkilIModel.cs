@@ -1,6 +1,6 @@
 ﻿namespace DevFreela.Models
 {
-    public class CreateSkillInputModel
+    public class CreateSkillModel
     {
 
         public string Description { get; set; }

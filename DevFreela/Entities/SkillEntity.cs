@@ -1,14 +1,14 @@
 ﻿namespace DevFreela.Entities
 {
-    public class Skill : BaseEntity
+    public class SkillEntity : BaseEntity
     {
-        public Skill(string description)
+        public SkillEntity(string description)
         :base()
         {
             Description = description;
         }
         public string Description { get; private set; }
 
-        public List<UserSkill> UserSkills { get; set; }
+        public List<UserSkillEntity> UserSkills { get; set; }
     }
 }

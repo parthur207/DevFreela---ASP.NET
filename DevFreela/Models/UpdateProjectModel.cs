@@ -1,6 +1,6 @@
 ﻿namespace DevFreela.Models
 {
-    public class UpdateProjectInputModel
+    public class UpdateProjectModel
     {
         public int IdProject { get; set; }
 

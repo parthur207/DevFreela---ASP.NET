@@ -7,21 +7,21 @@ namespace DevFreela.Services.Projects
     public interface IProjects
     {
 
-        //public Task<ResponseModel<CreateProjectInputModel>> PostProject();
+        //public Task<ResponseModel<CreateProjectModel>> PostProject();
 
-        public Task<ResponseModel<CreateProjectInputModel>> GetSearch(string Search);
+        public Task<ResponseModel<CreateProjectModel>> GetSearch(string Search);
 
-        public Task<ResponseModel<CreateProjectInputModel>> GetById(int Id);
+        public Task<ResponseModel<CreateProjectModel>> GetById(int Id);
 
-        public Task<ResponseModel<UpdateProjectInputModel>> Put(int Id, UpdateProjectInputModel Model);
+        public Task<ResponseModel<UpdateProjectModel>> Put(int Id, UpdateProjectModel Model);
 
         //public Task<ResponseModel<CreateProjectInputModel>> Delete(int Id);
 
-        public Task<ResponseModel<CreateProjectInputModel>> Start(int Id);
+        public Task<ResponseModel<CreateProjectModel>> Start(int Id);
 
-        public Task<ResponseModel<CreateProjectInputModel>> Complete(int Id);
+        public Task<ResponseModel<CreateProjectModel>> Complete(int Id);
 
-        public Task<ResponseModel<CreateCommentInputModel>> PostComment();
+        //public Task<ResponseModel<CreateCommentModel>> PostComment();
 
 
     }

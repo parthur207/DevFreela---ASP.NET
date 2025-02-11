@@ -16,7 +16,7 @@ namespace DevFreela.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(CreateSkillInputModel model)
+        public async Task<IActionResult> Post(CreateSkillModel model)
         {
             return Created();
         }

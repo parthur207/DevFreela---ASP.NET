@@ -2,7 +2,7 @@
 
 namespace DevFreela.Models
 {
-    public class CreateProjectInputModel
+    public class CreateProjectModel
     {
 
         public string Title { get; set; }
@@ -12,7 +12,7 @@ namespace DevFreela.Models
         public decimal TotalCost { get; set; }
 
 
-        public Project ToProjectEntity() 
+        public ProjectEntity ToProjectEntity() 
             => new(Title,Description, IdClient, IdFreeLancer, TotalCost);
         
     }

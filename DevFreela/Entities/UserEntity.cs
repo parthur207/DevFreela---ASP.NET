@@ -1,8 +1,8 @@
 ﻿namespace DevFreela.Entities
 {
-    public class User : BaseEntity
+    public class UserEntity : BaseEntity
     {
-        public User(string fullName, string email, DateTime birthDate) 
+        public UserEntity(string fullName, string email, DateTime birthDate) 
             : base()
         {
             FullName = fullName;
@@ -23,12 +23,12 @@
 
         public bool Active { get; private set; }
 
-        public List<UserSkill> Skills { get; private set; }
+        public List<UserSkillEntity> Skills { get; private set; }
 
-        public List<ProjectComment> Comments { get; private set; }
+        public List<ProjectCommentEntity> Comments { get; private set; }
 
-        public List<Project> OwnedProjects { get; private set; }
+        public List<ProjectEntity> OwnedProjects { get; private set; }
 
-        public List<Project> FreeLancerProjects { get; private set; }
+        public List<ProjectEntity> FreeLancerProjects { get; private set; }
     }
 }

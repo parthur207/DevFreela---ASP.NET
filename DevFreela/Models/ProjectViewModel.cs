@@ -4,7 +4,7 @@ namespace DevFreela.Models
 {
     public class ProjectViewModel
     {
-        public ProjectViewModel(int id, string title, string description, int idClient, int idFreeLancer, string clientName, string freeLancerName, decimal totalCost, List<ProjectComment> comments)
+        public ProjectViewModel(int id, string title, string description, int idClient, int idFreeLancer, string clientName, string freeLancerName, decimal totalCost, List<ProjectCommentEntity> comments)
         {
             Id = id;
             Title = title;
@@ -31,12 +31,12 @@ namespace DevFreela.Models
 
         public string FreeLancerName { get; private set; }
 
-        public decimal TotalCost{ get; private set; }
-         
+        public decimal TotalCost { get; private set; }
+
         public List<string> Comments { get; private set; }
 
 
-        public static ProjectViewModel FromProjectEntity(Project entity)
+        public static ProjectViewModel ToProjectModel(ProjectEntity entity)
            => new ProjectViewModel(entity.Id, entity.Title, entity.Description, 
                entity.IdClient, entity.IdFreeLancer, entity.Client.FullName, 
                entity.FreeLancer.FullName, entity.TotalCost, entity.Comments);

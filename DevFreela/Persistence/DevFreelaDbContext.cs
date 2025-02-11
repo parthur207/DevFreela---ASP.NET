@@ -10,22 +10,22 @@ namespace DevFreela.Persistence
         {
         }
 
-        public DbSet<Project> Projects { get; set; }
+        public DbSet<ProjectEntity> Projects { get; set; }
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<UserEntity> Users { get; set; }
 
-        public DbSet<Skill> Skills { get; set; }
+        public DbSet<SkillEntity> Skills { get; set; }
 
-        public DbSet<UserSkill> UserSkills { get; set; }
+        public DbSet<UserSkillEntity> UserSkills { get; set; }
 
-        public DbSet<ProjectComment> ProjectComments { get; set; }
+        public DbSet<ProjectCommentEntity> ProjectComments { get; set; }
 
 
         //Configuração do relacionamento entre as entidades. Declaração de chaves primárias/estrangeiras
         protected override void OnModelCreating(ModelBuilder builder)
         {
 
-            builder.Entity<Project>(x => {
+            builder.Entity<ProjectEntity>(x => {
                 x.HasKey(x => x.Id);//chave primária
                 x.HasOne(x => x.FreeLancer)//Um FreeLancer
                     .WithMany(x => x.FreeLancerProjects)// Possui muitos projetos
@@ -38,23 +38,23 @@ namespace DevFreela.Persistence
                     .OnDelete(DeleteBehavior.Restrict);
         });
 
-            builder.Entity<User>(x =>
+            builder.Entity<UserEntity>(x =>
             {
                 x.HasKey(x => x.Id);//Chave primária
-                x.HasMany(x => x.Skills)// Muitas habilidade
-                    .WithOne(x => x.User)//Pertencem a um usuario
+                x.HasMany(x=>x.Skills)// Muitas habilidades
+                    .WithOne(x=>x.User)//Pertencem a um usuario
                     .HasForeignKey(x => x.IdUser)//Chave estrangeira
                     .OnDelete(DeleteBehavior.Restrict);
                     
             });
 
-            builder.Entity<Skill>(x => 
+            builder.Entity<SkillEntity>(x => 
             { 
                 x.HasKey(x => x.Id);
                 
             });
 
-            builder.Entity<UserSkill>(x =>
+            builder.Entity<UserSkillEntity>(x =>
             {
                 x.HasKey(x => x.Id);
                 x.HasOne(x => x.Skill)
@@ -63,7 +63,7 @@ namespace DevFreela.Persistence
                     .OnDelete(DeleteBehavior.Restrict);
             });
 
-            builder.Entity<ProjectComment>(x =>
+            builder.Entity<ProjectCommentEntity>(x =>
             {
                 x.HasKey(x => x.Id);
                 x.HasOne(x => x.Project)

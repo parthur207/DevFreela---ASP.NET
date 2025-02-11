@@ -2,12 +2,12 @@
 
 namespace DevFreela.Entities
 {
-    public class Project : BaseEntity
+    public class ProjectEntity : BaseEntity
     {
 
-        public Project(){ }
+        public ProjectEntity(){ }
      
-        public Project(string title, string description, int idClient, int idFreeLancer, decimal totalCost) 
+        public ProjectEntity(string title, string description, int idClient, int idFreeLancer, decimal totalCost) 
             : base()
         {
             Title = title;
@@ -26,10 +26,10 @@ namespace DevFreela.Entities
 
         public int IdClient { get; private set; }
 
-        public User Client { get; private set; }
+        public UserEntity Client { get; private set; }
         public int IdFreeLancer { get; private set; }
 
-        public User FreeLancer { get; private set; }
+        public UserEntity FreeLancer { get; private set; }
 
         public decimal TotalCost { get; private set; }
 
@@ -39,7 +39,7 @@ namespace DevFreela.Entities
 
         public ProjectStatusEnum Status { get; private set; }
 
-        public List<ProjectComment> Comments { get; set; }
+        public List<ProjectCommentEntity> Comments { get; set; }
 
         public void Cancel()
         {
