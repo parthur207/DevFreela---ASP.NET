@@ -27,19 +27,20 @@ namespace DevFreela.Models
 
         public int IdFreeLancer { get; private set; }
 
-        public string ClientName{ get; private set; }
+        public string ClientName { get; private set; }
 
         public string FreeLancerName { get; private set; }
 
-        public decimal TotalCost { get; private set; }
+        public Decimal TotalCost { get; private set; }
 
         public List<string> Comments { get; private set; }
 
 
         public static ProjectViewModel ToProjectModel(ProjectEntity entity)
-           => new ProjectViewModel(entity.Id, entity.Title, entity.Description, 
-               entity.IdClient, entity.IdFreeLancer, entity.Client.FullName, 
+        { 
+           return new ProjectViewModel(entity.Id, entity.Title, entity.Description,
+               entity.IdClient, entity.IdFreeLancer, entity.Client.FullName,
                entity.FreeLancer.FullName, entity.TotalCost, entity.Comments);
-        
+        }
     }
 }

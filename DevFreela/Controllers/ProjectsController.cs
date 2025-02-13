@@ -1,4 +1,5 @@
-﻿using DevFreela.Models;
+﻿using DevFreela.Entities;
+using DevFreela.Models;
 using DevFreela.Persistence;
 using DevFreela.Services.Projects;
 using Microsoft.AspNetCore.Mvc;
@@ -66,6 +67,13 @@ namespace DevFreela.Controllers
         {
 
             Model.IdProject = Id;
+
+            ProjectEntity teste = new ProjectEntity();
+
+            teste.Update(Model.Title, Model.Description, Model.TotalCost);
+
+
+            _contextInMemory.Projects.Add(Project)
 
             return NoContent();
         }

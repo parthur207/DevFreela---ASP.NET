@@ -42,10 +42,10 @@ namespace DevFreela.Persistence
             {
                 x.HasKey(x => x.Id);//Chave primária
                 x.HasMany(x=>x.Skills)// Muitas habilidades
-                    .WithOne(x=>x.User)//Pertencem a um usuario
+                    .WithOne(Users)//Pertencem a um usuario
                     .HasForeignKey(x => x.IdUser)//Chave estrangeira
                     .OnDelete(DeleteBehavior.Restrict);
-                    
+                 
             });
 
             builder.Entity<SkillEntity>(x => 
