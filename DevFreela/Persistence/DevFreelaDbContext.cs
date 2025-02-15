@@ -41,8 +41,9 @@ namespace DevFreela.Persistence
             builder.Entity<UserEntity>(x =>
             {
                 x.HasKey(x => x.Id);//Chave primária
+
                 x.HasMany(x=>x.Skills)// Muitas habilidades
-                    .WithOne(Users)//Pertencem a um usuario
+                    .WithOne(x=>x.User)
                     .HasForeignKey(x => x.IdUser)//Chave estrangeira
                     .OnDelete(DeleteBehavior.Restrict);
                  
