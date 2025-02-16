@@ -63,35 +63,45 @@ namespace DevFreela.Controllers
         }
 
         [HttpPut("{Id}")]
-        public IActionResult Put(int Id, UpdateProjectModel Model)
+        public IActionResult Put(int id, UpdateProjectModel Model)
         {
 
-            Model.IdProject = Id;
+            Model.IdProject = id;
 
-            ProjectEntity teste = new ProjectEntity();
+            var project = _contextInMemory.Projects.SingleOrDefault(x => x.Id == id);
 
-            teste.Update(Model.Title, Model.Description, Model.TotalCost);
+            if(project is null)
+            {
+                return NotFound();
+            }
 
+            project.Update(Model.Title, Model.Description, Model.TotalCost);
 
-            _contextInMemory.Projects.Add(Project)
+            _contextInMemory.Projects.Update(project);
 
             return NoContent();
         }
 
         [HttpDelete("{Id}")]
-        public async Task <IActionResult> Delete(int Id)
+        public async Task <IActionResult> Delete(int id)
         {
+            var project = _contextInMemory.Projects.SingleOrDefault(x => x.Id == id);
+
+            if (project is null)
+            {
+                return NotFound();
+            }
             return Ok();
         }
 
         [HttpPut("{Id}/start")]
-        public async Task <IActionResult> Start(int Id)
+        public async Task <IActionResult> Start(int id)
         {
             return NoContent();
         }
 
         [HttpPut("{Id}/complete")]
-        public async Task<IActionResult> Complete(int Id)
+        public async Task<IActionResult> Complete(int id)
         {
             return NoContent();
         }
@@ -99,7 +109,7 @@ namespace DevFreela.Controllers
 
 
         [HttpPost("coments/{Id}")]
-        public async Task<IActionResult> PostComment(int Id, CreateCommentModel Model)
+        public async Task<IActionResult> PostComment(int id, CreateCommentModel Model)
         {
             return Created();
         }   
