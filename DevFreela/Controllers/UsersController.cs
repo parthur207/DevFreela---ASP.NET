@@ -15,7 +15,7 @@ namespace DevFreela.Controllers
         }
 
         [HttpPost("{Id}/skills")]
-        public async Task<IActionResult> PostSkills(UsersSkillsInputModel Model)
+        public async Task<IActionResult> PostSkills(UsersSkillsModel Model)
         {
             return NoContent();
         }
