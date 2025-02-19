@@ -12,8 +12,7 @@ namespace DevFreela.Models
 
         public decimal TotalCost { get; set; }
 
-        public ProjectEntity ToUpdateProjectEntity(UpdateProjectModel model)
-           => new ProjectEntity(model.IdProject,model.Title, model.Description, model.TotalCost); 
+     //
 
         
     }

@@ -37,10 +37,9 @@ namespace DevFreela.Models
 
 
         public static ProjectViewModel ToProjectModel(ProjectEntity entity)
-        { 
-           return new ProjectViewModel(entity.Id, entity.Title, entity.Description,
+        =>new(entity.Id, entity.Title, entity.Description,
                entity.IdClient, entity.IdFreeLancer, entity.Client.FullName,
                entity.FreeLancer.FullName, entity.TotalCost, entity.Comments);
-        }
+        
     }
 }

@@ -5,7 +5,7 @@ namespace DevFreela.Persistence
 {
     public class DevFreelaDbContext : DbContext
     {
-        protected DevFreelaDbContext(DbContextOptions<DevFreelaDbContext> options)
+        public DevFreelaDbContext(DbContextOptions<DevFreelaDbContext> options)
             : base(options)
         {
         }

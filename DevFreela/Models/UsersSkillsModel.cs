@@ -1,6 +1,6 @@
 ﻿namespace DevFreela.Models
 {
-    public class UsersSkillsInputModel
+    public class UsersSkillsModel
     {
         public int[] SkillsIds { get; set; }
 

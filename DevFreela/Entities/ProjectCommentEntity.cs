@@ -1,4 +1,6 @@
-﻿namespace DevFreela.Entities
+﻿using DevFreela.Models;
+
+namespace DevFreela.Entities
 {
     public class ProjectCommentEntity : BaseEntity
     {
@@ -17,5 +19,7 @@
         public ProjectEntity Project { get; private set; }
 
         public int IdUser { get; private set; }
+
+    
     }
 }

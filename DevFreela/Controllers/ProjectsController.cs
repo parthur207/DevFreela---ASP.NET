@@ -43,7 +43,7 @@ namespace DevFreela.Controllers
                 .Include(x=>x.FreeLancer)
                 .Where(x=>!x.IsDeleted).ToList();
 
-            var model = projects.Select(ProjectItemViewModel.ToProjectModel).ToList();
+            var model= projects.Select(ProjectItemViewModel.ToProjectModel).ToList();
 
             return Ok(model);
         }
@@ -91,18 +91,47 @@ namespace DevFreela.Controllers
             {
                 return NotFound();
             }
+
+            project.SetAsDeleted();
+
+            _contextInMemory.Projects.Update(project);
+            _contextInMemory.SaveChanges();
+
             return Ok();
         }
 
         [HttpPut("{Id}/start")]
         public async Task <IActionResult> Start(int id)
         {
+            var project = _contextInMemory.Projects.SingleOrDefault(x => x.Id == id);
+
+            if (project is null)
+            {
+                return NotFound();
+            }
+
+            project.Start();
+
+            _contextInMemory.Projects.Update(project);
+            _contextInMemory.SaveChanges();
             return NoContent();
         }
 
         [HttpPut("{Id}/complete")]
         public async Task<IActionResult> Complete(int id)
         {
+
+            var project = _contextInMemory.Projects.SingleOrDefault(x => x.Id == id);
+
+            if (project is null)
+            {
+                return NotFound();
+            }
+
+            project.Complete();
+            _contextInMemory.Projects.Update(project);
+            _contextInMemory.SaveChanges();
+
             return NoContent();
         }
 
@@ -111,6 +140,17 @@ namespace DevFreela.Controllers
         [HttpPost("coments/{Id}")]
         public async Task<IActionResult> PostComment(int id, CreateCommentModel Model)
         {
+            var project = _contextInMemory.Projects.SingleOrDefault(x => x.Id == id);
+
+            if (project is null)
+            {
+                return NotFound();
+            }
+
+            var NewComment = Model.ToCommentEntity();
+
+            _contextInMemory.ProjectComments.Add(NewComment);
+            _contextInMemory.SaveChanges();
             return Created();
         }   
     }
