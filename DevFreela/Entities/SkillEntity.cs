@@ -1,4 +1,6 @@
-﻿namespace DevFreela.Entities
+﻿using DevFreela.Models;
+
+namespace DevFreela.Entities
 {
     public class SkillEntity : BaseEntity
     {
@@ -10,5 +12,10 @@
         public string Description { get; private set; }
 
         public List<UserSkillEntity> UserSkills { get; set; }
+
+
+       public SkillModel ToSkillModel(SkillEntity entity)
+        =>new (entity.Description);
+        
     }
 }

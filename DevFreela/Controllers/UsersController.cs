@@ -1,4 +1,5 @@
 ﻿using DevFreela.Models;
+using DevFreela.Persistence;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DevFreela.Controllers
@@ -8,15 +9,42 @@ namespace DevFreela.Controllers
     [Route("api/users")]
     public class UsersController : ControllerBase
     {
+        private readonly DevFreelaDbContext _dbContextInMemory;
+
+        public UsersController(DevFreelaDbContext devFreelaDbContext)
+        {
+            _dbContextInMemory = devFreelaDbContext;
+        }
+
+
+        [HttpGet]
+
+        public async Task<IActionResult> GetById(int id)
+        {
+            var UserEntity = _dbContextInMemory.Users
+                .SingleOrDefault(x => x.Id == id);
+            var UserModel= UserEntity.ToUserModel(UserEntity);
+
+
+            return Ok(UsersList);
+        }
         [HttpPost]
         public async Task<IActionResult> Post(CreateUserModel model)
         {
-            return Created();
+
+            var UserEntity = model.ToUserEntity();
+            _dbContextInMemory.Users.Add(UserEntity);
+            _dbContextInMemory.SaveChanges();
+
+            return NoContent();
         }
 
         [HttpPost("{Id}/skills")]
-        public async Task<IActionResult> PostSkills(UsersSkillsModel Model)
+        public async Task<IActionResult> PostSkills(UserSkillModel Model)
         {
+            var UserSkillEntity = Model.ToUserSkillEntity();
+            _dbContextInMemory.UserSkills.Add(UserSkillEntity);
+            _dbContextInMemory.SaveChanges();
             return NoContent();
         }
 

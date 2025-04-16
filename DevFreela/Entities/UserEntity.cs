@@ -1,4 +1,6 @@
-﻿namespace DevFreela.Entities
+﻿using DevFreela.Models;
+
+namespace DevFreela.Entities
 {
     public class UserEntity : BaseEntity
     {
@@ -30,5 +32,8 @@
         public List<ProjectEntity> OwnedProjects { get; private set; }
 
         public List<ProjectEntity> FreeLancerProjects { get; private set; }
+
+        public CreateUserModel ToUserModel()
+        => new(FullName,Email,BirthDate);
     }
 }

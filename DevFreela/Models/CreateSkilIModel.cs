@@ -7,7 +7,7 @@ namespace DevFreela.Models
 
         public string Description { get; set; }
 
-        public SkillEntity ToSkillModel()
+        public SkillEntity ToSkillEntity()
        => new(Description);
     }
 }

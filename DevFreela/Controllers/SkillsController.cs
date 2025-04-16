@@ -19,22 +19,32 @@ namespace DevFreela.Controllers
             _dbContexInMemory = _DbContext;
         }
 
-       [HttpGet]
-        public async Task<IActionResult> GetAll()
+        [HttpGet]
+        public async Task<IActionResult> GetAllSkills()
         {
+
+            List<SkillModel> SkillsList = new List<SkillModel>();
+
             var Skills = _dbContexInMemory.Skills.ToList();
-            return Ok(Skills);
+
+            foreach (var skill in Skills)
+            {
+                var SkillModel=skill.ToSkillModel(skill);
+                 SkillsList.Add(SkillModel);
+            }
+
+            return Ok(SkillsList);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(CreateSkillModel Model)
+        public async Task<IActionResult> PostSkill(CreateSkillModel Model)
         {
-            var entity = Model.ToSkillModel();
+            var entity = Model.ToSkillEntity();
 
             _dbContexInMemory.Skills.Add(entity);
             _dbContexInMemory.SaveChanges();
 
-            return Created();
+            return NoContent();
         }
     }
 }
