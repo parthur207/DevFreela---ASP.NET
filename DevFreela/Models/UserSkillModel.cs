@@ -11,6 +11,6 @@ namespace DevFreela.Models
 
 
         public UserSkillEntity ToUserSkillEntity(UserSkillModel Model)
-        => new(SkillsIds=Model.);
+        => new();
     }
 }

@@ -23,10 +23,10 @@ namespace DevFreela.Controllers
         {
             var UserEntity = _dbContextInMemory.Users
                 .SingleOrDefault(x => x.Id == id);
-            var UserModel= UserEntity.ToUserModel(UserEntity);
+            var UserModel= UserEntity.ToUserModel();
 
 
-            return Ok(UsersList);
+            return Ok(UserModel);
         }
         [HttpPost]
         public async Task<IActionResult> Post(CreateUserModel model)
