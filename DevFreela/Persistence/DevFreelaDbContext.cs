@@ -36,6 +36,8 @@ namespace DevFreela.Persistence
                     .WithMany(x => x.OwnedProjects)//Pode adquirir muitos projetos
                     .HasForeignKey(x => x.IdClient)//Chave estrangeira
                     .OnDelete(DeleteBehavior.Restrict);
+
+                
         });
 
             builder.Entity<UserEntity>(x =>

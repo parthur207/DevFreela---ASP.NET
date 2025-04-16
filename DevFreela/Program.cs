@@ -30,6 +30,8 @@ namespace DevFreela
 
             #endregion
 
+            //builder.Services.AddScoped<IConfigService, ConfigService>();
+
             builder.Services.AddScoped<IProjects,ProjectService>();
 
             // Adiciona serviços ao contêiner antes de Build()

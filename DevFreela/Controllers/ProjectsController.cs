@@ -49,13 +49,13 @@ namespace DevFreela.Controllers
         }
 
         [HttpGet("{Id}")]
-        public  IActionResult GetById(int Id)
+        public  IActionResult GetById(int id)
         {
             var project = _contextInMemory.Projects
                 .Include(x => x.Client)
                 .Include(x => x.FreeLancer)
                 .Include(x => x.Comments)
-                .SingleOrDefault(x => x.Id == Id);
+                .SingleOrDefault(x => x.Id == id);
 
             var model = ProjectViewModel.ToProjectModel(project);
 
@@ -78,6 +78,7 @@ namespace DevFreela.Controllers
             project.Update(Model.Title, Model.Description, Model.TotalCost);
 
             _contextInMemory.Projects.Update(project);
+            _contextInMemory.SaveChanges();
 
             return NoContent();
         }

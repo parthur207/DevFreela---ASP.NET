@@ -8,9 +8,6 @@ namespace DevFreela.Models
 
         public int Id{ get; set; }
 
-        public SkillEntity ToSk()
-        {
-
-        }
+      
     }
 }
