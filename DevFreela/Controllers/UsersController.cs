@@ -1,6 +1,8 @@
-﻿using DevFreela.Models;
+﻿using DevFreela.Entities;
+using DevFreela.Models;
 using DevFreela.Persistence;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DevFreela.Controllers
 {
@@ -17,19 +19,28 @@ namespace DevFreela.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet("{id}")]
 
         public async Task<IActionResult> GetById(int id)
         {
+
             var UserEntity = _dbContextInMemory.Users
+                .Include(x => x.Skills)
+                    .ThenInclude(x => x.Skill)
                 .SingleOrDefault(x => x.Id == id);
-            var UserModel= UserEntity.ToUserModel();
+
+            if(UserEntity is null)
+            {
+                return NotFound();
+            }
+
+            var UserModel= UserViewModel.ToUserViewModel(UserEntity);
 
 
             return Ok(UserModel);
         }
         [HttpPost]
-        public async Task<IActionResult> Post(CreateUserModel model)
+        public async Task<IActionResult> PostUser(CreateUserModel model)
         {
 
             var UserEntity = model.ToUserEntity();
@@ -40,10 +51,10 @@ namespace DevFreela.Controllers
         }
 
         [HttpPost("{Id}/skills")]
-        public async Task<IActionResult> PostSkills(UserSkillModel Model)
+        public async Task<IActionResult> PostSkills(int id, UserSkillModel Model)
         {
-            var UserSkillEntity = Model.ToUserSkillEntity();
-            _dbContextInMemory.UserSkills.Add(UserSkillEntity);
+            var UserSkillEntity = Model.SkillsIds.Select(x=>new UserSkillEntity(id, x)).ToList();
+            _dbContextInMemory.UserSkills.AddRange(UserSkillEntity);
             _dbContextInMemory.SaveChanges();
             return NoContent();
         }

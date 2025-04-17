@@ -4,7 +4,7 @@ namespace DevFreela.Entities
 {
     public class UserEntity : BaseEntity
     {
-        public UserEntity(string fullName, string email, DateTime birthDate) 
+        public UserEntity(string fullName, string email, DateTime birthDate)
             : base()
         {
             FullName = fullName;
@@ -17,7 +17,7 @@ namespace DevFreela.Entities
             Comments = [];
         }
 
-        public  string FullName { get; private set; }
+        public string FullName { get; private set; }
 
         public string Email { get; private set; }
 
@@ -33,7 +33,6 @@ namespace DevFreela.Entities
 
         public List<ProjectEntity> FreeLancerProjects { get; private set; }
 
-        public CreateUserModel ToUserModel()
-        => new(FullName,Email,BirthDate);
+
     }
 }

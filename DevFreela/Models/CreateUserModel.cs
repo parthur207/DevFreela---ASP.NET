@@ -18,7 +18,7 @@ namespace DevFreela.Models
 
         public DateTime BirthDate { get; set; }
 
-        public UserEntity ToUserEntity()
-            => new (FullName, Email, BirthDate);
+       public UserEntity ToUserEntity()
+        => new(FullName, Email, BirthDate);
     }
 }

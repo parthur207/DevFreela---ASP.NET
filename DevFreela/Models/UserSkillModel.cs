@@ -8,9 +8,5 @@ namespace DevFreela.Models
 
         public int Id{ get; set; }
 
-
-
-        public UserSkillEntity ToUserSkillEntity(UserSkillModel Model)
-        => new();
     }
 }
