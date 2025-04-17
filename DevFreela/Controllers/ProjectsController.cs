@@ -23,7 +23,7 @@ namespace DevFreela.Controllers
             _contextInMemory = ContextInMemory;
         }
 
-        [HttpPost("{ProjectModel}")]
+        [HttpPost]
         public IActionResult PostProject(CreateProjectModel Model)
         {
             var entity = Model.ToProjectEntity();
