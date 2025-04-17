@@ -35,7 +35,7 @@ namespace DevFreela.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetSearch(string search="")
+        public IActionResult GetSearch(string search ="")
         {
 
             var projects= _contextInMemory.Projects

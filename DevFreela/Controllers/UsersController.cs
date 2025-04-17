@@ -9,6 +9,8 @@ namespace DevFreela.Controllers
 
     [ApiController]
     [Route("api/users")]
+
+    //www.{}/{cadastro/login}/api/users/post
     public class UsersController : ControllerBase
     {
         private readonly DevFreelaDbContext _dbContextInMemory;
