@@ -170,7 +170,6 @@ namespace DevFreela.Services.Projects
         {
             ResponseModel<UpdateProjectModel> Resposta = new ResponseModel<UpdateProjectModel>();
 
-            Model.IdProject = Id;
 
             if (Model.TotalCost < _values.Minimum || Model.TotalCost > _values.Maximum)
             {
