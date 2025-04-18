@@ -61,6 +61,9 @@ namespace DevFreela.Controllers
                 .Include(x => x.Client)
                 .Include(x => x.FreeLancer)
                 .Include(x => x.Comments)
+                .Include(x=>x.Status)
+                .Include(x=>x.StartedAt)
+                .Include(x=>x.CompletedAt)
                 .SingleOrDefault(x => x.Id == id);
 
             if(project is null)
@@ -76,8 +79,6 @@ namespace DevFreela.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, UpdateProjectModel Model)
         {
-
-            Model.IdProject = id;
 
             var project = _contextInMemory.Projects.SingleOrDefault(x => x.Id == id);
 
@@ -149,7 +150,7 @@ namespace DevFreela.Controllers
 
 
 
-        [HttpPost("coments/{id}")]
+        [HttpPost("coments/{id}/{Model}")]
         public async Task<IActionResult> PostComment(int id, CreateCommentModel Model)
         {
             var project = _contextInMemory.Projects.SingleOrDefault(x => x.Id == id);
