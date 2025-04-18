@@ -4,7 +4,7 @@ namespace DevFreela.Models
 {
     public class ProjectViewModel
     {
-        public ProjectViewModel(int id, string title, string description, int idClient, int idFreeLancer, string clientName, string freeLancerName, decimal totalCost, Dictionary<int, string> comments)
+        public ProjectViewModel(int id, string title, string description, int idClient, int idFreeLancer, string clientName, string freeLancerName, decimal totalCost, List<ProjectCommentEntity> comments)
         {
             Id = id;
             Title = title;
@@ -14,8 +14,7 @@ namespace DevFreela.Models
             ClientName = clientName;
             FreeLancerName = freeLancerName;
             TotalCost = totalCost;
-            Comments = comments;
-
+            Comments = comments.Select(x=>x.Content).ToList();
         }
 
         public int Id { get; private set; }
@@ -34,15 +33,17 @@ namespace DevFreela.Models
 
         public Decimal TotalCost { get; private set; }
 
-        public Dictionary<int, string> Comments { get; private set; }
+        public List<string> Comments { get; private set; }
 
 
         public static ProjectViewModel ToProjectModel(ProjectEntity entity)
         {
-            var comments = entity.Comments.ToDictionary(x => x.Key.IdUser, x => x.Value.Content);
+            var dic = entity.Comments.ToDictionary(x => x.Key.IdUser, x => x.Value.Content);
             return new ProjectViewModel(entity.Id, entity.Title, entity.Description,
                     entity.IdClient, entity.IdFreeLancer, entity.Client.FullName,
-                    entity.FreeLancer.FullName, entity.TotalCost, comments);
-        }  
+                    entity.FreeLancer.FullName, entity.TotalCost, dic);
+        }
+        
+        
     }
 }
