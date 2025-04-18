@@ -16,7 +16,8 @@ namespace DevFreela.Models
 
         public static SkillViewModel ToSkillViewModel(SkillEntity entity)
         {
-            return new SkillViewModel(entity.Id, new List<string>{ entity.Description });
+            var skills = entity.UserSkills.Select(x => x.Skill.Description).ToList();
+            return new SkillViewModel(entity.Id, skills);
         }
     }
 }
