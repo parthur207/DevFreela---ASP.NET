@@ -1,5 +1,4 @@
-﻿using DevFreela.Controllers;
-using DevFreela.Entities;
+﻿using DevFreela.Entities;
 
 namespace DevFreela.Models
 {
@@ -17,7 +16,7 @@ namespace DevFreela.Models
 
         public static SkillViewModel ToSkillViewModel(SkillEntity entity)
         {
-            return new SkillViewModel(entity.Id, new List<string>{entity.Description });
+            return new SkillViewModel(entity.Id, new List<string>{ entity.Description });
         }
     }
 }
