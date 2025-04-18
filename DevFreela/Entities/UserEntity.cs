@@ -32,7 +32,5 @@ namespace DevFreela.Entities
         public List<ProjectEntity> OwnedProjects { get; private set; }
 
         public List<ProjectEntity> FreeLancerProjects { get; private set; }
-
-
     }
 }

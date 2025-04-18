@@ -20,7 +20,6 @@ namespace DevFreela.Entities
             Comments = [];
         }
 
-
         public string Title { get; private set; }
         public string Description { get; private set; }
 
