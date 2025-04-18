@@ -61,9 +61,6 @@ namespace DevFreela.Controllers
                 .Include(x => x.Client)
                 .Include(x => x.FreeLancer)
                 .Include(x => x.Comments)
-                .Include(x=>x.Status)
-                .Include(x=>x.StartedAt)
-                .Include(x=>x.CompletedAt)
                 .SingleOrDefault(x => x.Id == id);
 
             if(project is null)
