@@ -5,6 +5,7 @@ using DevFreela.Services.Projects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 
 namespace DevFreela.Controllers
 {
@@ -43,12 +44,17 @@ namespace DevFreela.Controllers
                 .Include(x=>x.FreeLancer)
                 .Where(x=>!x.IsDeleted).ToList();
 
+            if(projects is null)
+            {
+                return NotFound();
+            }
+
             var model= projects.Select(ProjectItemViewModel.ToProjectModel).ToList();
 
             return Ok(model);
         }
 
-        [HttpGet("{Id}")]
+        [HttpGet("{id}")]
         public  IActionResult GetById(int id)
         {
             var project = _contextInMemory.Projects
@@ -56,6 +62,11 @@ namespace DevFreela.Controllers
                 .Include(x => x.FreeLancer)
                 .Include(x => x.Comments)
                 .SingleOrDefault(x => x.Id == id);
+
+            if(project is null)
+            {
+                return NotFound();
+            }
 
             var model = ProjectViewModel.ToProjectModel(project);
 
