@@ -49,11 +49,11 @@ namespace DevFreela.Controllers
             var UserEntity = _dbContextInMemory.Users
                 .Include(x => x.Skills)
                     .ThenInclude(x => x.Skill)
-                .SingleOrDefault(x => x.Id == id);
+                .Where(x => x.Id == id);
 
            
 
-            var UserModel= UserViewModel.ToUserViewModel(UserEntity);
+            var UserModel= UserEntity.Select(UserViewModel.ToUserViewModel).SingleOrDefault();
 
             if (UserModel is null)
             {

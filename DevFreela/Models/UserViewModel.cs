@@ -21,7 +21,7 @@ namespace DevFreela.Models
         {
 
             var skills = entity.Skills.Select(x => x.Skill.Description).ToList();
-            return new UserViewModel(entity.FullName, entity.Email, entity.BirthDate, skills);
+            return new UserViewModel(entity.FullName, entity.Email, entity.BirthDate,skills);
         }
     }
 }
