@@ -44,7 +44,7 @@ namespace DevFreela.Controllers
                 .Include(x=>x.FreeLancer)
                 .Where(x=>!x.IsDeleted).ToList();
 
-            if(projects is null)
+            if(projects is null || !projects.Any())
             {
                 return NotFound();
             }

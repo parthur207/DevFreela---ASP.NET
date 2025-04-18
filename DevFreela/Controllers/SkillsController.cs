@@ -2,6 +2,7 @@
 using DevFreela.Models;
 using DevFreela.Persistence;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 
 namespace DevFreela.Controllers
@@ -21,10 +22,18 @@ namespace DevFreela.Controllers
 
         [HttpGet]
         public async Task<IActionResult> GetAllSkills()
-        { 
-            var Skills = _dbContexInMemory.Skills.ToList();
+        {
+            var Skills = _dbContexInMemory.Skills
+                .Include(x => x.UserSkills)
+                    .ThenInclude(x => x.User)
+                    .ToList();
 
             var SkillsModel = Skills.Select(SkillViewModel.ToSkillViewModel).ToList();
+
+            if (SkillsModel is null || !SkillsModel.Any())
+            {
+                return NotFound();
+            }
 
             return Ok(SkillsModel);
         }

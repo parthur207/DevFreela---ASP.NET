@@ -20,6 +20,27 @@ namespace DevFreela.Controllers
             _dbContextInMemory = devFreelaDbContext;
         }
 
+        [HttpGet]
+        public IActionResult GetAllUsers()
+        {
+
+            var users = _dbContextInMemory.Users
+                .Include(X => X.Skills)
+                    .ThenInclude(x => x.Skill)
+                .Include(x => x.OwnedProjects)
+                .Include(X => X.FreeLancerProjects)
+            .ToList();
+
+            var usersmodel =users.Select(UserViewModel.ToUserViewModel).ToList();
+
+            if (usersmodel is null || !usersmodel.Any())
+            {
+                return NotFound();
+            }
+
+            return Ok(usersmodel);
+        }
+
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
@@ -30,13 +51,14 @@ namespace DevFreela.Controllers
                     .ThenInclude(x => x.Skill)
                 .SingleOrDefault(x => x.Id == id);
 
-            if(UserEntity is null)
-            {
-                return NotFound();
-            }
+           
 
             var UserModel= UserViewModel.ToUserViewModel(UserEntity);
 
+            if (UserModel is null)
+            {
+                return NotFound();
+            }
 
             return Ok(UserModel);
         }
