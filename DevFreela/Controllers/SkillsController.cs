@@ -23,19 +23,19 @@ namespace DevFreela.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllSkills()
         {
-            var Skills = _dbContexInMemory.Skills
+            var skills = await _dbContexInMemory.Skills
                 .Include(x => x.UserSkills)
                     .ThenInclude(x => x.User)
-                    .ToList();
+                .ToListAsync(); 
 
-            var SkillsModel = Skills.Select(SkillViewModel.ToSkillViewModel).ToList();
+            var skillsModel = skills.Select(SkillViewModel.ToSkillViewModel).ToList();
 
-            if (SkillsModel is null || !SkillsModel.Any())
+            if (skillsModel is null || !skillsModel.Any())
             {
                 return NotFound();
             }
 
-            return Ok(SkillsModel);
+            return Ok(skillsModel);
         }
 
         [HttpPost]
