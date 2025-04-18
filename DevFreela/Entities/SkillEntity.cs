@@ -13,9 +13,5 @@ namespace DevFreela.Entities
 
         public List<UserSkillEntity> UserSkills { get; set; }
 
-
-       public SkillModel ToSkillModel(SkillEntity entity)
-        =>new (entity.Description);
-        
     }
 }

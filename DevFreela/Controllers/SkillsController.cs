@@ -21,19 +21,12 @@ namespace DevFreela.Controllers
 
         [HttpGet]
         public async Task<IActionResult> GetAllSkills()
-        {
-
-            List<SkillModel> SkillsList = new List<SkillModel>();
-
+        { 
             var Skills = _dbContexInMemory.Skills.ToList();
 
-            foreach (var skill in Skills)
-            {
-                var SkillModel=skill.ToSkillModel(skill);
-                 SkillsList.Add(SkillModel);
-            }
+            var SkillsModel = Skills.Select(SkillViewModel.ToSkillViewModel).ToList();
 
-            return Ok(SkillsList);
+            return Ok(SkillsModel);
         }
 
         [HttpPost]
