@@ -51,7 +51,7 @@ namespace DevFreela.Controllers
             return NoContent();
         }
 
-        [HttpPost("{Id}/skills")]
+        [HttpPost("{id}/skills")]
         public async Task<IActionResult> PostSkills(int id, UserSkillModel Model)
         {
             var UserSkillEntity = Model.SkillsIds.Select(x=>new UserSkillEntity(id, x)).ToList();
