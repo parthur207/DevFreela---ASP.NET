@@ -37,13 +37,9 @@ namespace DevFreela.Models
 
 
         public static ProjectViewModel ToProjectModel(ProjectEntity entity)
-        {
-            var dic = entity.Comments.ToDictionary(x => x.Key.IdUser, x => x.Value.Content);
-            return new ProjectViewModel(entity.Id, entity.Title, entity.Description,
-                    entity.IdClient, entity.IdFreeLancer, entity.Client.FullName,
-                    entity.FreeLancer.FullName, entity.TotalCost, dic);
-        }
-        
+        =>new(entity.Id, entity.Title, entity.Description,
+               entity.IdClient, entity.IdFreeLancer, entity.Client.FullName,
+               entity.FreeLancer.FullName, entity.TotalCost, entity.Comments);
         
     }
 }
