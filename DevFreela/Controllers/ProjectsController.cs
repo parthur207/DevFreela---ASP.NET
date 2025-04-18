@@ -147,7 +147,7 @@ namespace DevFreela.Controllers
 
 
 
-        [HttpPost("coments/{id}/{Model}")]
+        [HttpPost("coments/{id}")]
         public async Task<IActionResult> PostComment(int id, CreateCommentModel Model)
         {
             var project = _contextInMemory.Projects.SingleOrDefault(x => x.Id == id);
