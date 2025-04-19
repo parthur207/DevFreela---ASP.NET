@@ -5,6 +5,8 @@ using DevFreela.Persistence;
 using DevFreela.Services.Projects;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.JSInterop.Infrastructure;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace DevFreela
 {
@@ -19,14 +21,13 @@ namespace DevFreela
             );
 
             //Implemento de um banco de dados em memória (para testes)
-            builder.Services.AddDbContext<DevFreelaDbContext>(x => x.UseInMemoryDatabase("MyDbContextInMemory"));
+            //builder.Services.AddDbContext<DevFreelaDbContext>(x => x.UseInMemoryDatabase("MyDbContextInMemory"));
 
             #region Configuração do banco de dados SQL Server
+            var connectionstring = builder.Configuration.GetConnectionString("DevFreelaConnection"); 
 
-            /*builder.Services.AddDbContext<DevFreelaDbContext>(options =>
-             {
-                 options.UseSqlServer(builder.Configuration.GetConnectionString("DevFreelaConnection"));
-             });*/
+            builder.Services.AddDbContext<DevFreelaDbContext>(options => options.UseSqlServer(connectionstring));
+             
 
             #endregion
 

@@ -75,17 +75,16 @@ namespace DevFreela.Persistence
                 .OnDelete(DeleteBehavior.Restrict);
             });
         }
-        #region Implemento do uso do banco de dados em memoria para testes
+        /*#region Implemento do uso do banco de dados em memoria para testes
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseInMemoryDatabase("MyDbContextInMemory");
         }
 
-        #endregion
+        #endregion*/
 
         #region Configuração do OnConfiguring para comunicação com o DB utilizando a string de conexão declarada no arquivo do json
-        /*
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 
@@ -98,7 +97,7 @@ namespace DevFreela.Persistence
 
             optionsBuilder.UseSqlServer(connectionString);
 
-        }*/
+        }
 
         #endregion
 
