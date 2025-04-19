@@ -25,7 +25,8 @@ namespace DevFreela.Persistence
         protected override void OnModelCreating(ModelBuilder builder)
         {
 
-            builder.Entity<ProjectEntity>(x => {
+            builder.Entity<ProjectEntity>(x =>
+            {
                 x.HasKey(x => x.Id);//chave primária
                 x.HasOne(x => x.FreeLancer)//Um FreeLancer
                     .WithMany(x => x.FreeLancerProjects)// Possui muitos projetos
@@ -37,24 +38,24 @@ namespace DevFreela.Persistence
                     .HasForeignKey(x => x.IdClient)//Chave estrangeira
                     .OnDelete(DeleteBehavior.Restrict);
 
-                
-        });
+
+            });
 
             builder.Entity<UserEntity>(x =>
             {
                 x.HasKey(x => x.Id);//Chave primária
 
-                x.HasMany(x=>x.Skills)// Muitas habilidades
-                    .WithOne(x=>x.User)
+                x.HasMany(x => x.Skills)// Muitas habilidades
+                    .WithOne(x => x.User)
                     .HasForeignKey(x => x.IdUser)//Chave estrangeira
                     .OnDelete(DeleteBehavior.Restrict);
-                 
+
             });
 
-            builder.Entity<SkillEntity>(x => 
-            { 
+            builder.Entity<SkillEntity>(x =>
+            {
                 x.HasKey(x => x.Id);
-                
+
             });
 
             builder.Entity<UserSkillEntity>(x =>
@@ -75,31 +76,5 @@ namespace DevFreela.Persistence
                 .OnDelete(DeleteBehavior.Restrict);
             });
         }
-        /*#region Implemento do uso do banco de dados em memoria para testes
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseInMemoryDatabase("MyDbContextInMemory");
-        }
-
-        #endregion*/
-
-        #region Configuração do OnConfiguring para comunicação com o DB utilizando a string de conexão declarada no arquivo do json
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-
-            IConfigurationRoot configuration= new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json")
-                .Build();
-
-            string connectionString = configuration.GetConnectionString("DevFreelaConnection");
-
-            optionsBuilder.UseSqlServer(connectionString);
-
-        }
-
-        #endregion
-
     }
 }

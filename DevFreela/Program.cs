@@ -1,5 +1,3 @@
-
-
 using DevFreela.Models;
 using DevFreela.Persistence;
 using DevFreela.Services.Projects;
@@ -8,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.JSInterop.Infrastructure;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
-namespace DevFreela
+namespace DevFreela.Services
 {
     public class Program
     {
@@ -24,9 +22,9 @@ namespace DevFreela
             //builder.Services.AddDbContext<DevFreelaDbContext>(x => x.UseInMemoryDatabase("MyDbContextInMemory"));
 
             #region Configuração do banco de dados SQL Server
-            var connectionstring = builder.Configuration.GetConnectionString("DevFreelaConnection"); 
 
-            builder.Services.AddDbContext<DevFreelaDbContext>(options => options.UseSqlServer(connectionstring));
+
+            builder.Services.AddDbContext<DevFreelaDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DevFreelaConnection")));
              
 
             #endregion
