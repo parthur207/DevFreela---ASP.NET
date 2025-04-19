@@ -23,8 +23,10 @@ namespace DevFreela.Services
 
             #region Configuração do banco de dados SQL Server
 
+            var cnn = builder.Configuration.GetConnectionString("DevFreelaConnection");
+            Console.WriteLine($"Conexão: {cnn}");
 
-            builder.Services.AddDbContext<DevFreelaDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DevFreelaConnection")));
+            builder.Services.AddDbContext<DevFreelaDbContext>(options => options.UseSqlServer(cnn));
              
 
             #endregion
