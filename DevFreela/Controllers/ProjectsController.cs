@@ -42,7 +42,8 @@ namespace DevFreela.Controllers
             var projects= _contextInMemory.Projects
                 .Include(x=>x.Client)
                 .Include(x=>x.FreeLancer)
-                .Where(x=>!x.IsDeleted).ToList();
+                .Where(x=>!x.IsDeleted && search== null || x.Title.Contains(search))
+                .ToList();
 
             if(projects is null || !projects.Any())
             {
