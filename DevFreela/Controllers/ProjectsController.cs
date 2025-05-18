@@ -36,13 +36,14 @@ namespace DevFreela.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetSearch(string search ="")
+        public IActionResult GetSearch(string search ="", int size=3)
         {
 
             var projects= _contextInMemory.Projects
                 .Include(x=>x.Client)
                 .Include(x=>x.FreeLancer)
-                .Where(x=>!x.IsDeleted && search== null || x.Title.Contains(search))
+                .Where(x=>!x.IsDeleted && (search== null || x.Title.Contains(search) || x.Description.Contains(search)))
+                .Take(size)
                 .ToList();
 
             if(projects is null || !projects.Any())
