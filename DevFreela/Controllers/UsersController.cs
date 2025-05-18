@@ -1,10 +1,10 @@
-﻿using DevFreela.Entities;
-using DevFreela.Models;
-using DevFreela.Persistence;
+﻿using DevFreela.Application.Models;
+using DevFreela.Domain.Entities;
+using DevFreela.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace DevFreela.Controllers
+namespace DevFreela.API.Controllers
 {
 
     [ApiController]
@@ -76,8 +76,8 @@ namespace DevFreela.Controllers
         [HttpPost("{id}/skills")]
         public async Task<IActionResult> PostSkills(int id, UserSkillModel Model)
         {
-            var UserSkillEntity = Model.SkillsIds.Select(x=>new UserSkillEntity(id, x)).ToList();
-            _dbContextInMemory.UserSkills.AddRange(UserSkillEntity);
+            var UserSkill = Model.SkillsIds.Select(x=>new UserSkillEntity(id, x)).ToList();
+            _dbContextInMemory.UserSkills.AddRange(UserSkill);
             _dbContextInMemory.SaveChanges();
             return NoContent();
         }

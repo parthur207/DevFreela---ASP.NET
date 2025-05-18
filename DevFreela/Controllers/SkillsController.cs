@@ -1,12 +1,11 @@
-﻿using DevFreela.Entities;
-using DevFreela.Models;
-using DevFreela.Persistence;
+﻿using DevFreela.Application.Models;
+using DevFreela.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 
-namespace DevFreela.Controllers
+namespace DevFreela.API.Controllers
 {
 
     [ApiController]

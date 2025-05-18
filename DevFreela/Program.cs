@@ -1,12 +1,12 @@
-using DevFreela.Models;
-using DevFreela.Persistence;
-using DevFreela.Services.Projects;
+using DevFreela.Application.Models;
+using DevFreela.Application.Services.Projects;
+using DevFreela.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.JSInterop.Infrastructure;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
-namespace DevFreela.Services
+namespace DevFreela.API
 {
     public class Program
     {
