@@ -15,7 +15,9 @@ namespace DevFreela.Models
             FreeLancerName = freeLancerName;
             IsDeleted = isDeleted;
             TotalCost = totalCost;
-            Comments = comments.Select(x=>x.Content).ToList();
+            Comments = comments.Select(x => new { IdUser = x.IdUser, Content = x.Content })
+                .Cast<object>()
+                .ToList();
         }
 
         public int Id { get; private set; }
@@ -36,7 +38,7 @@ namespace DevFreela.Models
 
         public bool IsDeleted { get; private set; }
 
-        public List<string> Comments { get; private set; }
+        public List<Object> Comments { get; private set; }
 
 
         public static ProjectViewModel ToProjectModel(ProjectEntity entity)

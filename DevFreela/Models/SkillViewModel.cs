@@ -1,24 +1,23 @@
-﻿using DevFreela.Entities;
-
-namespace DevFreela.Models
+﻿public class SkillViewModel
 {
-    public class SkillViewModel
+    public SkillViewModel(int id, string skill)
     {
-        public SkillViewModel(int id, List<string> skills)
+        Id = id;
+        Skill = skill;
+    }
+
+    public int Id { get; set; }
+    public string Skill { get; set; }
+
+    public static List<SkillViewModel> ToListSkillViewModel(List<(int, string)> listTuple)
+    {
+        var skillsMapped = new List<SkillViewModel>();
+
+        foreach (var (id, skill) in listTuple)
         {
-            Id = id;
-            Skills = skills;
+            skillsMapped.Add(new SkillViewModel(id, skill));
         }
 
-        public int Id { get; set; }
-
-        public List<string> Skills { get; set; }
-
-        public static SkillViewModel ToSkillViewModel(SkillEntity entity)
-        {
-            var skills = entity.UserSkills.Select(x => x.Skill.Description).ToList();
-   
-            return new SkillViewModel(entity.Id, skills);
-        }
+        return skillsMapped;
     }
 }

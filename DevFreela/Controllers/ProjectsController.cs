@@ -147,15 +147,17 @@ namespace DevFreela.Controllers
 
 
 
-        [HttpPost("coments/{id}")]
-        public async Task<IActionResult> PostComment(int id, CreateCommentModel Model)
+        [HttpPost("coments")]
+        public async Task<IActionResult> PostComment([FromBody] CreateCommentModel Model)
         {
-            var project = _contextInMemory.Projects.SingleOrDefault(x => x.Id == id);
+            var project = _contextInMemory.Projects.SingleOrDefault(x => x.Id == Model.IdProject);
 
             if (project is null)
             {
                 return NotFound();
             }
+
+
 
             var NewComment = Model.ToCommentEntity();
 

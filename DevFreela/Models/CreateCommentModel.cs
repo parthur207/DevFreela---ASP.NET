@@ -1,4 +1,5 @@
 ﻿using DevFreela.Entities;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace DevFreela.Models
 {

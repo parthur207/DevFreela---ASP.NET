@@ -21,20 +21,21 @@ namespace DevFreela.Controllers
             _dbContexInMemory = _DbContext;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllSkills()
+        [HttpGet("all")]
+        public async Task<IActionResult> GettAllSkills()
         {
-            var Skills = _dbContexInMemory.Skills
-                 .Include(x => x.UserSkills)
-                     .ThenInclude(x => x.User)
-                     .ToList();
+            List<(int,string)> ListSkillsEntity = _dbContexInMemory.Skills
+                 .AsEnumerable()
+                .Select(x =>(x.Id,x.Description))
+                .ToList();
 
-            var SkillsModel = Skills.Select(SkillViewModel.ToSkillViewModel).ToList();
 
-            if (SkillsModel is null || !SkillsModel.Any())
+            if (ListSkillsEntity is null)
             {
-                return NotFound();
+                return NoContent();
             }
+
+            var SkillsModel = SkillViewModel.ToListSkillViewModel(ListSkillsEntity);
 
             return Ok(SkillsModel);
         }
