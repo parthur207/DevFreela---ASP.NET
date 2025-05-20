@@ -1,5 +1,6 @@
-﻿using DevFreela.Application.Models;
-using DevFreela.Application.Services.Projects;
+﻿using DevFreela.Application.Interfaces;
+using DevFreela.Application.Models;
+using DevFreela.Application.ViewModels;
 using DevFreela.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,11 +14,11 @@ namespace DevFreela.API.Controllers
     [Route("api/projects")]
     public class ProjectsController : ControllerBase
     {
-        private readonly  IProjects _projectService;
+        private readonly  IProjectInterface _projectService;
 
         private readonly DevFreelaDbContext _contextInMemory;
 
-        public ProjectsController(IProjects ProjectService, DevFreelaDbContext ContextInMemory)
+        public ProjectsController(IProjectInterface ProjectService, DevFreelaDbContext ContextInMemory)
         {
             _projectService = ProjectService;
             _contextInMemory = ContextInMemory;
@@ -157,8 +158,6 @@ namespace DevFreela.API.Controllers
             {
                 return NotFound();
             }
-
-
 
             var NewComment = Model.ToCommentEntity();
 

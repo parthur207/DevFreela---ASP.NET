@@ -1,6 +1,4 @@
-﻿
-
-namespace DevFreela.Application.Models
+﻿namespace DevFreela.Application.ViewModels
 {
     public class UserSkillModel
     {

@@ -1,5 +1,6 @@
+using DevFreela.Application.Interfaces;
 using DevFreela.Application.Models;
-using DevFreela.Application.Services.Projects;
+using DevFreela.Application.Services;
 using DevFreela.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -33,7 +34,7 @@ namespace DevFreela.API
 
             //builder.Services.AddScoped<IConfigService, ConfigService>();
 
-            builder.Services.AddScoped<IProjects,ProjectService>();
+            builder.Services.AddScoped<IProjectInterface,ProjectService>();
 
             // Adiciona serviços ao contêiner antes de Build()
             builder.Services.AddControllersWithViews();
