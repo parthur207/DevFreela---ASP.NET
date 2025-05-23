@@ -1,15 +1,16 @@
-﻿using DevFreela.Application.Models;
+﻿using DevFreela.Application.DTOs;
 using DevFreela.Application.ViewModels;
 using DevFreela.Domain.Entities;
+using DevFreela.Domain.Models;
 
 
 namespace DevFreela.Application.Interfaces
 {
     public interface IProjectInterface
     {
-         Task<ResponseModel<List<ProjectViewModel>>> GetSearch(string Search);
+        Task<ResponseModel<List<ProjectDTO>>> GetSearch(string Search);
 
-         Task<ResponseModel<ProjectViewModel>> GetById(int Id);
+        Task<ResponseModel<ProjectItemDTO>> GetById(int Id);
 
         Task<ResponseModel<int>> InsertProject(CreateProjectModel ProjectModel);
 
