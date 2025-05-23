@@ -1,4 +1,5 @@
-﻿using DevFreela.Application.Models;
+﻿using DevFreela.Application.Mappers;
+using DevFreela.Domain.Models;
 using DevFreela.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
@@ -34,7 +35,7 @@ namespace DevFreela.API.Controllers
                 return NoContent();
             }
 
-            var SkillsModel = SkillViewModel.ToListSkillViewModel(ListSkillsEntity);
+            var SkillsModel = SkillMappers.ToListSkillViewModel(ListSkillsEntity);
 
             return Ok(SkillsModel);
         }

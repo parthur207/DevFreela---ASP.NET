@@ -1,6 +1,6 @@
-﻿using DevFreela.Application.Models;
-using DevFreela.Application.ViewModels;
+﻿using DevFreela.Application.Mappers;
 using DevFreela.Domain.Entities;
+using DevFreela.Domain.Models;
 using DevFreela.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -32,7 +32,7 @@ namespace DevFreela.API.Controllers
                 .Include(X => X.FreeLancerProjects)
             .ToList();
 
-            var usersmodel =users.Select(UserViewModel.ToUserViewModel).ToList();
+            var usersmodel =users.Select(UserMapper.ToUserViewModel).ToList();
 
             if (usersmodel is null || !usersmodel.Any())
             {
@@ -54,7 +54,7 @@ namespace DevFreela.API.Controllers
 
            
 
-            var UserModel= UserEntity.Select(UserViewModel.ToUserViewModel).SingleOrDefault();
+            var UserModel= UserEntity.Select(UserMapper.ToUserViewModel).SingleOrDefault();
 
             if (UserModel is null)
             {

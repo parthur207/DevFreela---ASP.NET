@@ -1,12 +1,12 @@
 ﻿using DevFreela.Application.Interfaces;
-using DevFreela.Application.Models;
+using DevFreela.Application.Mappers;
 using DevFreela.Application.ViewModels;
 using DevFreela.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-
+using DevFreela.Domain.Models;
 namespace DevFreela.API.Controllers
 {
 
@@ -51,7 +51,7 @@ namespace DevFreela.API.Controllers
                 return NotFound();
             }
 
-            var model= projects.Select(ProjectItemViewModel.ToProjectModel).ToList();
+            var model= projects.Select(ProjectMapper.ToProjectModel).ToList();
 
             return Ok(model);
         }
@@ -70,7 +70,7 @@ namespace DevFreela.API.Controllers
                 return NotFound();
             }
 
-            var model = ProjectViewModel.ToProjectModel(project);
+            var model = ProjectMapper.ToProjectModel(project);
 
             return Ok(model);
         }

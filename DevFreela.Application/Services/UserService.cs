@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DevFreela.Application.Mappers
+namespace DevFreela.Application.Services
 {
-    public class SkillsMappers
+    internal class UserService
     {
     }
 }

@@ -1,6 +1,6 @@
 ﻿
 
-namespace DevFreela.Application.Models
+namespace DevFreela.Domain.Models
 {
     public class UpdateProjectModel
     {

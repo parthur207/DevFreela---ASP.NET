@@ -1,6 +1,6 @@
 ﻿using DevFreela.Domain.Entities;
 
-namespace DevFreela.Application.Models
+namespace DevFreela.Domain.Models
 {
     public class CreateProjectModel
     {
