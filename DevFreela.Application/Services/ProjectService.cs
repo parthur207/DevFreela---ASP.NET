@@ -22,12 +22,33 @@ namespace DevFreela.Application.Services
             _dbContext = DbContext;
         }
 
-        public Task<ResponseModel<object?>> Complete(int Id)
+        public async Task<ResponseModel<ProjectViewModel>> Complete(int Id)
         {
-            ResponseModel<object?> response = new ResponseModel<object?>();
+            ResponseModel<ProjectViewModel> response = new ResponseModel<ProjectViewModel>();
+
+            try
+            {
+                var project = await _dbContext.Projects
+                    .SingleOrDefaultAsync(x => x.Id == Id);
+
+                project.Complete();
+                _dbContext.Projects.Update(project);
+                await _dbContext.SaveChangesAsync();
+
+                response.Status = true;
+                response.Message = "O status do projecto foi alterado para 'finalizado'.";
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.Content = null;
+                response.Message = ex.Message;
+                response.Status = false;
+                return response;
+            }
         }
 
-        public Task<ResponseModel<object?>> Delete(int Id)
+        public Task<ResponseModel<ProjectViewModel>> Delete(int Id)
         {
             throw new NotImplementedException();
         }

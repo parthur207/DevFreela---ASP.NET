@@ -2,6 +2,7 @@
 {
     public class ResponseModel <T>
     {
+        public ResponseModel() { }
         public ResponseModel(T? content, string? message, bool status)
         {
             Content = content;
@@ -11,6 +12,6 @@
 
         public T? Content { get; set; }
         public string? Message { get; set; }
-        public bool Status { get; set; } = true;
+        public bool Status { get; set; }
     }
 }
