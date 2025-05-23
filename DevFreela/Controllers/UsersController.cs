@@ -1,4 +1,5 @@
 ﻿using DevFreela.Application.Mappers;
+using DevFreela.Application.Models;
 using DevFreela.Domain.Entities;
 using DevFreela.Domain.Models;
 using DevFreela.Infrastructure.Persistence;

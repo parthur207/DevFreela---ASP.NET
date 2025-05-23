@@ -10,7 +10,6 @@ namespace DevFreela.Application.DTOs
 {
     public class ProjectItemDTO
     {
-
         public ProjectItemDTO(int id, string title, string clientName, string freeLancerName, decimal totalCost)
         {
             Id = id;

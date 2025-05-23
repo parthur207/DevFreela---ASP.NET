@@ -8,8 +8,7 @@ namespace DevFreela.Domain.Models
         public int IdProject { get; set; }
         public int IdUser { get; set; }
 
-        public ProjectCommentEntity ToCommentEntity()
-            =>new (Content,IdProject, IdUser);
+       
         
     }
 }

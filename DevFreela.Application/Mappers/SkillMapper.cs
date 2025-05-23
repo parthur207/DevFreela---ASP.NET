@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace DevFreela.Application.Mappers
 {
-    public class SkillMappers
+    public class SkillMapper
     {
-        public static List<SkillDTO> ToListSkillViewModel(List<(int, string)> listTuple)
+        public static List<SkillDTO> ToListSkillDTO(List<(int, string)> listTuple)
         {
             var skillsMapped = new List<SkillDTO>();
 

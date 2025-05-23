@@ -35,7 +35,7 @@ namespace DevFreela.API.Controllers
                 return NoContent();
             }
 
-            var SkillsModel = SkillMappers.ToListSkillViewModel(ListSkillsEntity);
+            var SkillsModel = SkillMapper.ToListSkillViewModel(ListSkillsEntity);
 
             return Ok(SkillsModel);
         }

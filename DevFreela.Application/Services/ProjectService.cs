@@ -1,9 +1,14 @@
-﻿using DevFreela.Application.Interfaces;
+﻿using DevFreela.Application.DTOs;
+using DevFreela.Application.Interfaces;
+using DevFreela.Application.Mappers;
 using DevFreela.Application.Models;
 using DevFreela.Application.ViewModels;
+using DevFreela.Domain.Models;
 using DevFreela.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 
 namespace DevFreela.Application.Services
@@ -22,9 +27,9 @@ namespace DevFreela.Application.Services
             _dbContext = DbContext;
         }
 
-        public async Task<ResponseModel<ProjectViewModel>> Complete(int Id)
+        public async Task<SimpleResponseModel> Complete(int Id)
         {
-            ResponseModel<ProjectViewModel> response = new ResponseModel<ProjectViewModel>();
+            SimpleResponseModel response = new SimpleResponseModel();
 
             try
             {
@@ -41,46 +46,154 @@ namespace DevFreela.Application.Services
             }
             catch (Exception ex)
             {
-                response.Content = null;
                 response.Message = ex.Message;
                 response.Status = false;
                 return response;
             }
         }
 
-        public Task<ResponseModel<ProjectViewModel>> Delete(int Id)
+        public async Task<SimpleResponseModel> Delete(int Id)
+        {
+            SimpleResponseModel response = new SimpleResponseModel();
+
+            try
+            {
+                var project = _dbContext.Projects
+                    .SingleOrDefault(x => x.Id == Id);
+
+                project.SetAsDeleted();
+                _dbContext.Projects.Update(project);
+                await _dbContext.SaveChangesAsync();
+
+                response.Status = true;
+                response.Message = "O projecto foi deletado com sucesso.";
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+                response.Status = false;
+                return response; 
+            }
+        }
+
+        public async Task<ResponseModel<ProjectItemDTO>> GetById(int id)
+        {
+
+            ResponseModel<ProjectItemDTO> response = new ResponseModel<ProjectItemDTO>();
+            try
+            {
+                var project = await _dbContext.Projects
+                    .Include(x=>x.Client)
+                    .Include(x=>x.FreeLancer)
+                    .SingleOrDefaultAsync(x => x.Id == id);
+
+                if (project is null)
+                {
+                    response.Status = false;
+                    response.Message = "Nenhum projeto foi encontrado.";
+                    return response;
+                }
+
+                var projectMapped = ProjectMapper.ToProjectItemModel(project);
+
+                response.Content = projectMapped;
+                response.Status = true;
+                response.Message = string.Empty;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+                response.Status = false;
+                return response;
+            }
+        }
+
+        public async Task<ResponseModel<List<ProjectDTO>>> GetSearch(string Search, int N)
+        {
+            ResponseModel<List<ProjectDTO>> response = new ResponseModel<List<ProjectDTO>>();
+
+            try
+            {
+                var projects=await _dbContext.Projects
+                    .Include(x => x.Client)
+                    .Include(x => x.FreeLancer)
+                    .Where(x => !x.IsDeleted && (Search == null || x.Title.Contains(Search) || x.Description.Contains(Search)))
+                    .Take(N)
+                    .ToListAsync(); 
+            }
+            catch (Exception ex)
+            {
+                response.Status = false;
+                response.Message = ex.Message;
+                return response;
+            }
+        }
+
+        public async Task<SimpleResponseModel> InsertComment(int id, CreateCommentModel CommentModel)
+        {
+            SimpleResponseModel response = new SimpleResponseModel();
+            try
+            {
+                var commentEntity = Comment.ToCommentEntity(id);
+
+                await _dbContext.Comments.AddAsync();
+
+                response.Status = true;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.Status = false;
+                response.Message = ex.Message;
+                return response;
+            }
+        }
+
+        public Task<SimpleResponseModel> InsertProject(CreateProjectModel ProjectModel)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ResponseModel<ProjectViewModel>> GetById(int Id)
+        public Task<SimpleResponseModel> Start(int Id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ResponseModel<List<ProjectViewModel>>> GetSearch(string Search)
+        public async Task<SimpleResponseModel> Update(int id, UpdateProjectModel ProjectUpdateModel)
         {
-            throw new NotImplementedException();
-        }
 
-        public Task<ResponseModel<object?>> InsertComment(int id, CreateCommentModel CommentModel)
-        {
-            throw new NotImplementedException();
-        }
+            SimpleResponseModel response = new SimpleResponseModel();
 
-        public Task<ResponseModel<int>> InsertProject(CreateProjectModel ProjectModel)
-        {
-            throw new NotImplementedException();
-        }
+            try
+            {
+                var project = await _dbContext.Projects.SingleOrDefaultAsync(x => x.Id == id);
 
-        public Task<ResponseModel<object?>> Start(int Id)
-        {
-            throw new NotImplementedException();
-        }
+                if (project is null)
+                {
+                    response.Status = false;
+                    response.Message= "Nenhum projeto foi encontrado.";
+                    return response;
+                }
 
-        public Task<ResponseModel<object?>> Update(int Id, UpdateProjectModel ProjectUpdateModel)
-        {
-            throw new NotImplementedException();
+                project.Update(ProjectUpdateModel.Title, ProjectUpdateModel.Description, ProjectUpdateModel.TotalCost);
+
+                await _dbContext.Projects.AddAsync(project);
+                await _dbContext.SaveChangesAsync();
+
+                response.Status = true;
+                response.Message = "O projeto foi atualizado com sucesso.";
+                return response;
+            }
+            catch (Exception ex)
+            {
+                return new SimpleResponseModel
+                {
+                    Status = false,
+                    Message = ex.Message
+                };
+            }
         }
     }
 }

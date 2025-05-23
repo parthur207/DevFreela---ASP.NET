@@ -1,11 +1,8 @@
 ﻿using DevFreela.Application.Interfaces;
 using DevFreela.Application.Mappers;
-using DevFreela.Application.ViewModels;
 using DevFreela.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 using DevFreela.Domain.Models;
 namespace DevFreela.API.Controllers
 {

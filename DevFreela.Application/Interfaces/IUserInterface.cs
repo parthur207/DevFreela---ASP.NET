@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DevFreela.Application.Interfaces
 {
-    internal interface IUserInterface
+    public interface IUserInterface
     {
     }
 }
