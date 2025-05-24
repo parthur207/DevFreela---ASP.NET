@@ -15,12 +15,11 @@ namespace DevFreela.API.Controllers
     public class SkillsController : ControllerBase
     {
 
-        private readonly DevFreelaDbContext _dbContexInMemory;
         private readonly ISkillInterface _skillInterface;
 
-        public SkillsController(DevFreelaDbContext _DbContext)
+        public SkillsController(ISkillInterface skillInterface)
         {
-            _dbContexInMemory = _DbContext;
+            _skillInterface = skillInterface;
         }
 
         [HttpGet("all")]
@@ -37,7 +36,7 @@ namespace DevFreela.API.Controllers
                 return NoContent();
             }
 
-            var SkillsModel = SkillMapper.ToListSkillViewModel(ListSkillsEntity);
+            var SkillsModel = SkillMapper.ToListSkillDTO(ListSkillsEntity);
 
             return Ok(SkillsModel);
         }
