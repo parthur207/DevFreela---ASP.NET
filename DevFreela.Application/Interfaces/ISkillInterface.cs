@@ -1,10 +1,11 @@
-﻿using DevFreela.Domain.Models;
+﻿using DevFreela.Application.DTOs;
+using DevFreela.Domain.Models;
 
 namespace DevFreela.Application.Interfaces
 {
     public interface ISkillInterface
     {
-        Task<ResponseModel<List<(int Id, string Description)>>> GetAllSkillsAsync();
+        Task<ResponseModel<List<SkillDTO>>> GetAllSkillsAsync();
 
         Task<SimpleResponseModel> InsetSkill(CreateSkillModel Model);
     }

@@ -11,13 +11,13 @@ namespace DevFreela.Application.Mappers
 {
     public class SkillMapper
     {
-        public static List<SkillDTO> ToListSkillDTO(List<(int, string)> listTuple)
+        public static List<SkillDTO> ToListSkillDTO(List<SkillEntity> Skills)
         {
             var skillsMapped = new List<SkillDTO>();
 
-            foreach (var (id, skill) in listTuple)
+            foreach (var s in Skills)
             {
-                skillsMapped.Add(new SkillDTO(id, skill));
+                skillsMapped.Add(new SkillDTO(s.Description));
             }
 
             return skillsMapped;
