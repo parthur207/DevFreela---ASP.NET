@@ -19,7 +19,5 @@ namespace DevFreela.Domain.Entities
         public ProjectEntity Project { get; private set; }
 
         public int IdUser { get; private set; }
-
-    
     }
 }

@@ -10,7 +10,6 @@
         }
 
         public int IdUser { get; private set; }
-
         public UserEntity User { get; private set; }
         public int IdSkill{ get; private set; }
         public SkillEntity Skill { get; set; }

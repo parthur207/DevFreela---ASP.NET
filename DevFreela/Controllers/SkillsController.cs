@@ -25,31 +25,24 @@ namespace DevFreela.API.Controllers
         [HttpGet("all")]
         public async Task<IActionResult> GettAllSkills()
         {
-            List<(int,string)> ListSkillsEntity = _dbContexInMemory.Skills
-                 .AsEnumerable()
-                .Select(x =>(x.Id,x.Description))
-                .ToList();
-
-
-            if (ListSkillsEntity is null)
+            var response = await _skillInterface.GetAllSkillsAsync();
+            if (response.Status is false)
             {
-                return NoContent();
+                return NotFound(response);
             }
 
-            var SkillsModel = SkillMapper.ToListSkillDTO(ListSkillsEntity);
-
-            return Ok(SkillsModel);
+            return Ok(response);
         }
 
         [HttpPost]
         public async Task<IActionResult> PostSkill(CreateSkillModel Model)
         {
-            var entity = Model.ToSkillEntity();
-
-            _dbContexInMemory.Skills.Add(entity);
-            _dbContexInMemory.SaveChanges();
-
-            return NoContent();
+           var response = await _skillInterface.InsetSkill(Model);
+            if (response.Status is false)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
         }
     }
 }

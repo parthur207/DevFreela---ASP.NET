@@ -7,6 +7,6 @@ namespace DevFreela.Application.Interfaces
     {
         Task<ResponseModel<List<SkillDTO>>> GetAllSkillsAsync();
 
-        Task<SimpleResponseModel> InsetSkill(CreateSkillModel Model);
+        Task<SimpleResponseModel> InsertSkill(CreateSkillModel Model);
     }
 }

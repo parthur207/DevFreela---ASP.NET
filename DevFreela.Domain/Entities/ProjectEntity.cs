@@ -4,8 +4,6 @@ namespace DevFreela.Domain.Entities
 {
     public class ProjectEntity : BaseEntity
     {
-
-        public ProjectEntity(){ }
      
         public ProjectEntity(string title, string description, int idClient, int idFreeLancer, decimal totalCost) 
             : base()

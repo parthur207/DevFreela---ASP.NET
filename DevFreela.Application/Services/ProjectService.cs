@@ -129,7 +129,7 @@ namespace DevFreela.Application.Services
                     .Take(N)
                     .ToListAsync();
 
-                if (projects is null)
+                if (projects is null || projects.Count==0)
                 {
                     response.Status = false;
                     response.Message = "Nenhum projeto foi encontrado.";

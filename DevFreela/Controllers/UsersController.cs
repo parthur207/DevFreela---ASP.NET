@@ -25,10 +25,10 @@ namespace DevFreela.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllUsers()
+        public async Task<IActionResult> GetAllUsers()
         {
+            var response= await _userInterface.GetAllUsersAsync();
 
-           
             return Ok();
         }
 
@@ -47,8 +47,8 @@ namespace DevFreela.API.Controllers
             return NoContent();
         }
 
-        [HttpPost("{id}/skills")]
-        public async Task<IActionResult> PostSkills(int id, UserSkillModel Model)
+        [HttpPost("{id}/userSkills")]
+        public async Task<IActionResult> PostUserSkills(int id, UserSkillModel Model)
         {
             return NoContent();
         }
