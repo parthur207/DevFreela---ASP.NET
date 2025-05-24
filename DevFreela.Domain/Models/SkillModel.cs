@@ -10,8 +10,5 @@ namespace DevFreela.Domain.Models
             Description = description;
         }
         public string Description { get; set; }
-
-        public SkillEntity ToSkillEntity()
-            => new (Description );
     }
 }

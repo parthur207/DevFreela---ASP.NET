@@ -1,4 +1,6 @@
 ﻿using DevFreela.Application.DTOs;
+using DevFreela.Domain.Entities;
+using DevFreela.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,5 +22,8 @@ namespace DevFreela.Application.Mappers
 
             return skillsMapped;
         }
+
+        public static SkillEntity ToSkillEntity(CreateSkillModel model)
+            => new(model.Description);
     }
 }

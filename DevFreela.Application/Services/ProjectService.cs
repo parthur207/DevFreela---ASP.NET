@@ -52,21 +52,28 @@ namespace DevFreela.Application.Services
             }
         }
 
-        public async Task<SimpleResponseModel> Delete(int Id)
+        public async Task<SimpleResponseModel> Delete(int id)
         {
             SimpleResponseModel response = new SimpleResponseModel();
 
             try
             {
-                var project = _dbContext.Projects
-                    .SingleOrDefault(x => x.Id == Id);
+                var projectEntity = _dbContext.Projects
+                    .SingleOrDefault(x => x.Id == id);
 
-                project.SetAsDeleted();
-                _dbContext.Projects.Update(project);
+                if (projectEntity is null)
+                {
+                    response.Message = "Projeto inexistente.";
+                    response.Status = false;
+                    return response;
+                }
+
+                projectEntity.SetAsDeleted();
+                _dbContext.Projects.Update(projectEntity);
                 await _dbContext.SaveChangesAsync();
 
                 response.Status = true;
-                response.Message = "O projecto foi deletado com sucesso.";
+                response.Message = "O status do projeto foi modificado para 'Deletado'.";
                 return response;
             }
             catch (Exception ex)
@@ -77,10 +84,10 @@ namespace DevFreela.Application.Services
             }
         }
 
-        public async Task<ResponseModel<ProjectItemDTO>> GetById(int id)
+        public async Task<ResponseModel<ProjectDTO>> GetById(int id)
         {
 
-            ResponseModel<ProjectItemDTO> response = new ResponseModel<ProjectItemDTO>();
+            ResponseModel<ProjectDTO> response = new ResponseModel<ProjectDTO>();
             try
             {
                 var project = await _dbContext.Projects
@@ -95,11 +102,10 @@ namespace DevFreela.Application.Services
                     return response;
                 }
 
-                var projectMapped = ProjectMapper.ToProjectItemModel(project);
+                var projectMapped = ProjectMapper.ToProjectDTO(project);
 
                 response.Content = projectMapped;
                 response.Status = true;
-                response.Message = string.Empty;
                 return response;
             }
             catch (Exception ex)
@@ -110,9 +116,9 @@ namespace DevFreela.Application.Services
             }
         }
 
-        public async Task<ResponseModel<List<ProjectDTO>>> GetSearch(string Search, int N)
+        public async Task<ResponseModel<List<ProjectItemDTO>>> GetSearch(string Search, int N)
         {
-            ResponseModel<List<ProjectDTO>> response = new ResponseModel<List<ProjectDTO>>();
+            ResponseModel<List<ProjectItemDTO>> response = new ResponseModel<List<ProjectItemDTO>>();
 
             try
             {
@@ -121,7 +127,22 @@ namespace DevFreela.Application.Services
                     .Include(x => x.FreeLancer)
                     .Where(x => !x.IsDeleted && (Search == null || x.Title.Contains(Search) || x.Description.Contains(Search)))
                     .Take(N)
-                    .ToListAsync(); 
+                    .ToListAsync();
+
+                if (projects is null)
+                {
+                    response.Status = false;
+                    response.Message = "Nenhum projeto foi encontrado.";
+                    return response;
+                }
+
+                foreach (var p in projects)
+                {
+                    var projectMapped=ProjectMapper.ToProjectItemDTO(p);
+                    response.Content.Add(projectMapped);
+                }
+                response.Status = true;
+                return response;
             }
             catch (Exception ex)
             {
@@ -136,9 +157,10 @@ namespace DevFreela.Application.Services
             SimpleResponseModel response = new SimpleResponseModel();
             try
             {
-                var commentEntity = Comment.ToCommentEntity(id);
+                var commentEntity = CommentMapper.ToCommentEntity(CommentModel);
 
-                await _dbContext.Comments.AddAsync();
+                await _dbContext.ProjectComments.AddAsync(commentEntity);
+                await _dbContext.SaveChangesAsync();
 
                 response.Status = true;
                 return response;
@@ -151,14 +173,64 @@ namespace DevFreela.Application.Services
             }
         }
 
-        public Task<SimpleResponseModel> InsertProject(CreateProjectModel ProjectModel)
+        public async Task<SimpleResponseModel> InsertProject(CreateProjectModel ProjectModel)
         {
-            throw new NotImplementedException();
+            SimpleResponseModel response = new SimpleResponseModel();
+
+            try
+            {
+                var projectEntity = ProjectMapper.ToProjectEntity(ProjectModel);
+
+                if (projectEntity is null)
+                {
+                    response.Status = false;
+                    response.Message = "Ocorreu uma falha na criação do projeto. Certifique que todos os parâmetros estejam preenchidos.";
+                    return response;
+                }
+
+                await _dbContext.Projects.AddAsync(projectEntity);
+                await _dbContext.SaveChangesAsync();
+
+                response.Message = "Projeto criado com sucesso.";
+                response.Status = true;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.Status = false;
+                response.Message = ex.Message;
+                return response;
+            }
         }
 
-        public Task<SimpleResponseModel> Start(int Id)
+        public async Task<SimpleResponseModel> Start(int id)
         {
-            throw new NotImplementedException();
+            SimpleResponseModel response = new SimpleResponseModel();
+            try
+            {
+                var projectEntity = await _dbContext.Projects.SingleOrDefaultAsync(x=>x.Id==id);
+
+                if (projectEntity is null)
+                {
+                    response.Status = false;
+                    response.Message = "Projeto inexistente.";
+                    return response;
+                }
+
+                projectEntity.Start();
+                _dbContext.Projects.Update(projectEntity);
+                await _dbContext.SaveChangesAsync();
+
+                response.Message = "O status do projeto foi alterado para 'Iniciado'.";
+                response.Status = true;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.Status = false;
+                response.Message = ex.Message;
+                return response;
+            }
         }
 
         public async Task<SimpleResponseModel> Update(int id, UpdateProjectModel ProjectUpdateModel)

@@ -26,21 +26,8 @@ namespace DevFreela.API.Controllers
         public IActionResult GetAllUsers()
         {
 
-            var users = _dbContextInMemory.Users
-                .Include(X => X.Skills)
-                    .ThenInclude(x => x.Skill)
-                .Include(x => x.OwnedProjects)
-                .Include(X => X.FreeLancerProjects)
-            .ToList();
-
-            var usersmodel =users.Select(UserMapper.ToUserViewModel).ToList();
-
-            if (usersmodel is null || !usersmodel.Any())
-            {
-                return NotFound();
-            }
-
-            return Ok(usersmodel);
+           
+            return Ok();
         }
 
 
@@ -48,29 +35,12 @@ namespace DevFreela.API.Controllers
         public async Task<IActionResult> GetById(int id)
         {
 
-            var UserEntity = _dbContextInMemory.Users
-                .Include(x => x.Skills)
-                    .ThenInclude(x => x.Skill)
-                .Where(x => x.Id == id);
-
-           
-
-            var UserModel= UserEntity.Select(UserMapper.ToUserViewModel).SingleOrDefault();
-
-            if (UserModel is null)
-            {
-                return NotFound();
-            }
-
-            return Ok(UserModel);
+          
+            return Ok();
         }
         [HttpPost]
         public async Task<IActionResult> PostUser(CreateUserModel model)
         {
-
-            var UserEntity = model.ToUserEntity();
-            _dbContextInMemory.Users.Add(UserEntity);
-            _dbContextInMemory.SaveChanges();
 
             return NoContent();
         }
@@ -78,9 +48,6 @@ namespace DevFreela.API.Controllers
         [HttpPost("{id}/skills")]
         public async Task<IActionResult> PostSkills(int id, UserSkillModel Model)
         {
-            var UserSkill = Model.SkillsIds.Select(x=>new UserSkillEntity(id, x)).ToList();
-            _dbContextInMemory.UserSkills.AddRange(UserSkill);
-            _dbContextInMemory.SaveChanges();
             return NoContent();
         }
 

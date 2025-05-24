@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace DevFreela.Application.Mappers
 {
-    internal class CommentMapper
+    public class CommentMapper
     {
-        public ProjectCommentEntity ToCommentEntity(CreateCommentModel model)
-           => new(Content, IdProject, IdUser);
+        public static ProjectCommentEntity ToCommentEntity(CreateCommentModel model)
+           => new(model.Content, model.IdProject, model.IdUser);
     }
 }

@@ -6,9 +6,9 @@ namespace DevFreela.Application.Interfaces
 {
     public interface IProjectInterface
     {
-        Task<ResponseModel<List<ProjectDTO>>> GetSearch(string Search);
+        Task<ResponseModel<List<ProjectItemDTO>>> GetSearch(string Search, int N);
 
-        Task<ResponseModel<ProjectItemDTO>> GetById(int Id);
+        Task<ResponseModel<ProjectDTO>> GetById(int Id);
 
         Task<SimpleResponseModel> InsertProject(CreateProjectModel ProjectModel);
 
