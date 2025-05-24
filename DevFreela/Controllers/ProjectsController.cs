@@ -23,7 +23,7 @@ namespace DevFreela.API.Controllers
 
         [HttpPost]
         public async IActionResult PostProject(CreateProjectModel Model)
-        {1
+        {
             var response = await _projectService.InsertProject(Model);
             if (response.Status is false)
             {
