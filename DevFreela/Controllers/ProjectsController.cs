@@ -13,154 +13,114 @@ namespace DevFreela.API.Controllers
     {
         private readonly  IProjectInterface _projectService;
 
-        private readonly DevFreelaDbContext _contextInMemory;
-
-        public ProjectsController(IProjectInterface ProjectService, DevFreelaDbContext ContextInMemory)
+        public ProjectsController(IProjectInterface ProjectService)
         {
             _projectService = ProjectService;
-            _contextInMemory = ContextInMemory;
         }
 
         [HttpPost]
-        public async IActionResult PostProject(CreateProjectModel Model)
+        public async Task<IActionResult> PostProject(CreateProjectModel Model)
         {
             var response = await _projectService.InsertProject(Model);
             if (response.Status is false)
             {
-                return BadRequest(response.Message);
+                return BadRequest(response);
             }
             return CreatedAtAction(nameof(GetById), new { Id=1}, Model);
         }
 
-        [HttpGet]
-        public IActionResult GetSearch(string search ="", int size=3)
+        [HttpGet("get/search")]
+        public async Task<IActionResult> GetSearch([FromQuery] string search ="", [FromQuery] int size=3)
         {
 
-            var projects= _contextInMemory.Projects
-                .Include(x=>x.Client)
-                .Include(x=>x.FreeLancer)
-                .Where(x=>!x.IsDeleted && (search== null || x.Title.Contains(search) || x.Description.Contains(search)))
-                .Take(size)
-                .ToList();
+            var response= await _projectService.GetSearch(search, size);
 
-            if(projects is null || !projects.Any())
+            if (response.Status is false)
             {
-                return NotFound();
+                return NotFound(response);
             }
 
-            var model= projects.Select(ProjectMapper.ToProjectModel).ToList();
-
-            return Ok(model);
+            return Ok(response);
         }
 
-        [HttpGet("{id}")]
-        public  IActionResult GetById(int id)
+        [HttpGet("get/{idProject}")]
+        public  async Task<IActionResult> GetById([FromQuery] int idProject)
         {
-            var project = _contextInMemory.Projects
-                .Include(x => x.Client)
-                .Include(x => x.FreeLancer)
-                .Include(x => x.Comments)
-                .SingleOrDefault(x => x.Id == id);
+            var response= await _projectService.GetById(idProject);
 
-            if(project is null)
+            if (response.Status is false)
             {
-                return NotFound();
+                return NotFound(response);
             }
 
-            var model = ProjectMapper.ToProjectModel(project);
-
-            return Ok(model);
+            return Ok(response);
         }
 
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, UpdateProjectModel Model)
+        [HttpPut("update/{id}")]
+        public async Task<IActionResult> Put(int id, UpdateProjectModel Model)
         {
+            var response = await _projectService.Update(id, Model);
 
-            var project = _contextInMemory.Projects.SingleOrDefault(x => x.Id == id);
-
-            if(project is null)
+            if (response.Status is false)
             {
-                return NotFound();
+                return BadRequest(response);
             }
 
-            project.Update(Model.Title, Model.Description, Model.TotalCost);
-
-            _contextInMemory.Projects.Update(project);
-            _contextInMemory.SaveChanges();
-
-            return NoContent();
+            return Ok(response);
         }
 
-        [HttpDelete("{id}")]
-        public async Task <IActionResult> Delete(int id)
+        [HttpDelete("delete/{id}")]
+        public async Task <IActionResult> Delete([FromRoute] int id)
         {
-            var project = _contextInMemory.Projects.SingleOrDefault(x => x.Id == id);
+          var response = await _projectService.Delete(id);
 
-            if (project is null)
+            if (response.Status is false)
             {
-                return NotFound();
+                return BadRequest(response);
             }
 
-            project.SetAsDeleted();
-
-            _contextInMemory.Projects.Update(project);
-            _contextInMemory.SaveChanges();
-
-            return Ok();
+            return Ok(response);
         }
 
-        [HttpPut("{id}/start")]
-        public async Task <IActionResult> Start(int id)
+        [HttpPut("start/{id}")]
+        public async Task <IActionResult> Start([FromRoute] int id)
         {
-            var project = _contextInMemory.Projects.SingleOrDefault(x => x.Id == id);
+            var response= await _projectService.Start(id);
 
-            if (project is null)
+            if (response.Status is false)
             {
-                return NotFound();
+                return BadRequest(response);
             }
 
-            project.Start();
-
-            _contextInMemory.Projects.Update(project);
-            _contextInMemory.SaveChanges();
-            return NoContent();
+            return Ok(response);
         }
 
-        [HttpPut("{id}/complete")]
-        public async Task<IActionResult> Complete(int id)
+        [HttpPut("complete/{id}")]
+        public async Task<IActionResult> Complete([FromRoute]int id)
         {
 
-            var project = _contextInMemory.Projects.SingleOrDefault(x => x.Id == id);
+            var response= await _projectService.Complete(id);
 
-            if (project is null)
+            if (response.Status is false)
             {
-                return NotFound();
+                return BadRequest();
             }
 
-            project.Complete();
-            _contextInMemory.Projects.Update(project);
-            _contextInMemory.SaveChanges();
-
-            return NoContent();
+            return Ok(response);
         }
-
 
 
         [HttpPost("coments")]
         public async Task<IActionResult> PostComment([FromBody] CreateCommentModel Model)
         {
-            var project = _contextInMemory.Projects.SingleOrDefault(x => x.Id == Model.IdProject);
+            var response= await _projectService.InsertComment(Model.IdProject, Model);
 
-            if (project is null)
+            if (response.Status is false)
             {
-                return NotFound();
+                return BadRequest(response);
             }
 
-            var NewComment = Model.ToCommentEntity();
-
-            _contextInMemory.ProjectComments.Add(NewComment);
-            _contextInMemory.SaveChanges();
-            return Created();
+            return Ok(response);
         }   
     }
 }
