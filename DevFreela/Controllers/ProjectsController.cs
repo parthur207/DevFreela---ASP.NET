@@ -22,13 +22,13 @@ namespace DevFreela.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult PostProject(CreateProjectModel Model)
-        {
-            var entity = Model.ToProjectEntity();
-
-            _contextInMemory.Projects.Add(entity);
-            _contextInMemory.SaveChanges();
-
+        public async IActionResult PostProject(CreateProjectModel Model)
+        {1
+            var response = await _projectService.InsertProject(Model);
+            if (response.Status is false)
+            {
+                return BadRequest(response.Message);
+            }
             return CreatedAtAction(nameof(GetById), new { Id=1}, Model);
         }
 
