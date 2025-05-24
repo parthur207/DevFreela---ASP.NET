@@ -1,4 +1,5 @@
-﻿using DevFreela.Application.Mappers;
+﻿using DevFreela.Application.Interfaces;
+using DevFreela.Application.Mappers;
 using DevFreela.Domain.Models;
 using DevFreela.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,7 @@ namespace DevFreela.API.Controllers
     {
 
         private readonly DevFreelaDbContext _dbContexInMemory;
+        private readonly ISkillInterface _skillInterface;
 
         public SkillsController(DevFreelaDbContext _DbContext)
         {

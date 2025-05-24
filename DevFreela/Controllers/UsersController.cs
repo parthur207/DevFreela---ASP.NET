@@ -1,4 +1,5 @@
-﻿using DevFreela.Application.Mappers;
+﻿using DevFreela.Application.Interfaces;
+using DevFreela.Application.Mappers;
 using DevFreela.Application.Models;
 using DevFreela.Domain.Entities;
 using DevFreela.Domain.Models;
@@ -16,6 +17,7 @@ namespace DevFreela.API.Controllers
     public class UsersController : ControllerBase
     {
         private readonly DevFreelaDbContext _dbContextInMemory;
+        private readonly IUserInterface _userInterface;
 
         public UsersController(DevFreelaDbContext devFreelaDbContext)
         {
