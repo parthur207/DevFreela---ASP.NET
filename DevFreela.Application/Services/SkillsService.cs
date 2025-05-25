@@ -56,7 +56,7 @@ namespace DevFreela.Application.Services
                     return response;
                 }
 
-                var SkillMapped = Model.ToSkillEntity();
+                var SkillMapped = SkillMapper.ToSkillEntity(Model);
 
                 await _dbContext.AddAsync(SkillMapped);
                 await _dbContext.SaveChangesAsync();

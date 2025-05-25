@@ -1,4 +1,4 @@
-﻿using DevFreela.Application.ViewModels;
+﻿
 using DevFreela.Domain.Entities;
 using System;
 using System.Collections.Generic;

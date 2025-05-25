@@ -2,7 +2,6 @@
 using DevFreela.Application.Interfaces;
 using DevFreela.Application.Mappers;
 using DevFreela.Application.Models;
-using DevFreela.Application.ViewModels;
 using DevFreela.Domain.Models;
 using DevFreela.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;

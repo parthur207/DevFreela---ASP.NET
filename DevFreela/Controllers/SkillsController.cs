@@ -37,7 +37,7 @@ namespace DevFreela.API.Controllers
         [HttpPost]
         public async Task<IActionResult> PostSkill(CreateSkillModel Model)
         {
-           var response = await _skillInterface.InsetSkill(Model);
+           var response = await _skillInterface.InsertSkill(Model);
             if (response.Status is false)
             {
                 return BadRequest(response);

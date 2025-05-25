@@ -1,5 +1,5 @@
 ﻿using DevFreela.Application.DTOs;
-using DevFreela.Application.ViewModels;
+
 using DevFreela.Domain.Entities;
 using DevFreela.Domain.Models;
 using System;
