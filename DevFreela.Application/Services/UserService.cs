@@ -61,7 +61,7 @@ namespace DevFreela.Application.Services
             try
             {
                 var user = _dbContext.Users
-                    .SingleOrDefault(x => x.Email == email );
+                    .SingleOrDefault(x => x.Email == email);
 
                 if (user is null)
                 {
@@ -95,11 +95,11 @@ namespace DevFreela.Application.Services
                     response.Message = "O usuário não pode ser nulo.";
                     return response;
                 }
-                var userMapped=UserMapper.ToUserEntity(userModel);
+                var userMapped = UserMapper.ToUserEntity(userModel);
                 await _dbContext.Users.AddAsync(userMapped);
-                await _dbContext.SaveChangesAsync();   
+                await _dbContext.SaveChangesAsync();
 
-                response.Status= true;
+                response.Status = true;
                 response.Message = "Usuário criado com sucesso.";
 
                 return response;
@@ -111,57 +111,5 @@ namespace DevFreela.Application.Services
                 return response;
             }
         }
-
-        public async Task<SimpleResponseModel> InsertUserSkill(string email, UserSkillModel Model)
-        {
-            SimpleResponseModel response = new SimpleResponseModel();
-
-            try
-            {
-                if (Model is null)
-                {
-                    response.Status = false;
-                    response.Message = "A habilidade não pode ser nula.";
-                    return response;
-                }
-
-                var user = _dbContext.Users
-                    .SingleOrDefault(x => x.Email == email);
-
-                if (user is null)
-                {
-                    response.Status = false;
-                    response.Message = "Usuário não encontrado.";
-                    return response;
-                }
-
-                for(int i=0;i<Model.SkillsIds.Length; i++)
-                {
-                    var skill= _dbContext.Skills
-                        .Any(x => x.Id == Model.SkillsIds[i]);
-
-                    if (skill is false)
-                    {
-                        response.Message += $"\nNão foi encontrado habilidades associadas aos seguintes Ids: {Model.SkillsIds[i]} ";
-                    }
-                    else
-                    {
-
-                        _dbContext.UserSkills.Update();
-                        _dbContext.SaveChanges();
-                    }
-                }
-                
-                
-                response.Status = true;
-                response.Message = "Habilidade adicionada com sucesso.";
-                return Task.FromResult(response);
-            }
-            catch (Exception ex)
-            {
-                response.Message = ex.Message;
-                response.Status = false;
-                return Task.FromResult(response);
-            }
     }
 }
