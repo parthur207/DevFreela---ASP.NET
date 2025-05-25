@@ -12,8 +12,7 @@
 
         public DateTime CreatedAt { get; private set; }
 
-        public bool IsDeleted { get; private set; }
-
+        public bool IsDeleted { get; private set; } = false;
 
         public void SetAsDeleted()
         {

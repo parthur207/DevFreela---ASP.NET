@@ -13,7 +13,6 @@ namespace DevFreela.Domain.Entities
             IdClient = idClient;
             IdFreeLancer = idFreeLancer;
             TotalCost = totalCost;
-
             Status = ProjectStatusEnum.Created;
             Comments = [];
         }
