@@ -16,7 +16,7 @@ namespace DevFreela.API.Controllers
     {
 
         private readonly ISkillInterface _skillInterface;
-
+            
         public SkillsController(ISkillInterface skillInterface)
         {
             _skillInterface = skillInterface;
@@ -26,6 +26,7 @@ namespace DevFreela.API.Controllers
         public async Task<IActionResult> GettAllSkills()
         {
             var response = await _skillInterface.GetAllSkillsAsync();
+
             if (response.Status is false)
             {
                 return NotFound(response);
@@ -37,7 +38,8 @@ namespace DevFreela.API.Controllers
         [HttpPost]
         public async Task<IActionResult> PostSkill(CreateSkillModel Model)
         {
-           var response = await _skillInterface.InsertSkill(Model);
+            var response = await _skillInterface.CreateSkillAsync(Model);
+
             if (response.Status is false)
             {
                 return BadRequest(response);

@@ -20,7 +20,7 @@ namespace DevFreela.Application.Services
             _dbContext = dbContext;
         }
 
-        public async Task<SimpleResponseModel> InsertUserSkillAsync(UserSkillModel Model)
+        public async Task<SimpleResponseModel> CreateUserSkillAsync(UserSkillModel Model)
         {
             var response = new SimpleResponseModel();
 

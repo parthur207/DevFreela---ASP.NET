@@ -13,15 +13,18 @@ namespace DevFreela.API.Controllers
     [ApiController]
     [Route("api/users")]
 
-    //www.{}/{cadastro/login}/api/users/post
+    //www.{domínio}/{cadastro/login}/api/users/
     public class UsersController : ControllerBase
     {
         private readonly DevFreelaDbContext _dbContextInMemory;
         private readonly IUserInterface _userInterface;
+        private readonly IUserSkillInterface _userSkillInterface;
 
-        public UsersController(DevFreelaDbContext devFreelaDbContext)
+        public UsersController(DevFreelaDbContext devFreelaDbContext,IUserInterface userInterface, IUserSkillInterface userSkillInterface)
         {
             _dbContextInMemory = devFreelaDbContext;
+            _userInterface = userInterface;
+            _userSkillInterface = userSkillInterface;
         }
 
         [HttpGet]
@@ -29,32 +32,54 @@ namespace DevFreela.API.Controllers
         {
             var response= await _userInterface.GetAllUsersAsync();
 
-            return Ok();
+            if (response.Status is false)
+            {
+                return NotFound(response);
+            }
+
+            return Ok(response);
         }
 
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById([FromQuery] string email)
         {
+            var response= await _userInterface.GetByEmailAsync(email);
 
-          
-            return Ok();
+            if (response.Status is false)
+            {
+                return NotFound(response);
+            }
+
+            return Ok(response);
         }
         [HttpPost]
-        public async Task<IActionResult> PostUser(CreateUserModel model)
+        public async Task<IActionResult> PostUser([FromBody] CreateUserModel model)
         {
+            var response = await _userInterface.CreateUserAsync(model);
 
-            return NoContent();
+            if (response.Status is false) 
+            {
+                return BadRequest(response);
+            }
+
+            return Ok(response);
         }
 
         [HttpPost("{id}/userSkills")]
-        public async Task<IActionResult> PostUserSkills(int id, UserSkillModel Model)
+        public async Task<IActionResult> PostUserSkills([FromRoute]int id, [FromBody] UserSkillModel Model)
         {
-            return NoContent();
+            var response = await _userSkillInterface.CreateUserSkillAsync(Model);
+
+            if (response.Status is false)
+            {
+                return BadRequest(response);
+            }
+        return Ok(response);
         }
 
         [HttpPut("{id}/profile-picture")]
-        public async Task<IActionResult> PostProfilePicture(IFormFile FilePicture)
+        public async Task<IActionResult> PostProfilePicture([FromBody] IFormFile FilePicture)
         {
             
             var description = $"file name: {FilePicture.FileName}, file size: {FilePicture.Length}";

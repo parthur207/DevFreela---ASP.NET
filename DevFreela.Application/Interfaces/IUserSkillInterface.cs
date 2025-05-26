@@ -10,6 +10,6 @@ namespace DevFreela.Application.Interfaces
 {
     public interface IUserSkillInterface
     {
-        Task<SimpleResponseModel> InsertUserSkillAsync(UserSkillModel model); 
+        Task<SimpleResponseModel> CreateUserSkillAsync(UserSkillModel model); 
     }
 }

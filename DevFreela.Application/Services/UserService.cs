@@ -84,7 +84,7 @@ namespace DevFreela.Application.Services
             }
         }
 
-        public async Task<SimpleResponseModel> InsertUser(CreateUserModel userModel)
+        public async Task<SimpleResponseModel> CreateUserAsync(CreateUserModel userModel)
         {
             SimpleResponseModel response = new SimpleResponseModel();
             try

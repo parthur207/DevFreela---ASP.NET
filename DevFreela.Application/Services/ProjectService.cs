@@ -26,7 +26,7 @@ namespace DevFreela.Application.Services
             _dbContext = DbContext;
         }
 
-        public async Task<SimpleResponseModel> Complete(int Id)
+        public async Task<SimpleResponseModel> CompleteAsync(int Id)
         {
             SimpleResponseModel response = new SimpleResponseModel();
 
@@ -51,7 +51,7 @@ namespace DevFreela.Application.Services
             }
         }
 
-        public async Task<SimpleResponseModel> Delete(int id)
+        public async Task<SimpleResponseModel> DeleteAsync(int id)
         {
             SimpleResponseModel response = new SimpleResponseModel();
 
@@ -83,7 +83,7 @@ namespace DevFreela.Application.Services
             }
         }
 
-        public async Task<ResponseModel<ProjectDTO>> GetById(int id)
+        public async Task<ResponseModel<ProjectDTO>> GetByIdAsync(int id)
         {
 
             ResponseModel<ProjectDTO> response = new ResponseModel<ProjectDTO>();
@@ -115,7 +115,7 @@ namespace DevFreela.Application.Services
             }
         }
 
-        public async Task<ResponseModel<List<ProjectItemDTO>>> GetSearch(string Search, int N)
+        public async Task<ResponseModel<List<ProjectItemDTO>>> GetSearchAsync(string Search, int N)
         {
             ResponseModel<List<ProjectItemDTO>> response = new ResponseModel<List<ProjectItemDTO>>();
 
@@ -151,7 +151,7 @@ namespace DevFreela.Application.Services
             }
         }
 
-        public async Task<SimpleResponseModel> InsertComment(int id, CreateCommentModel CommentModel)
+        public async Task<SimpleResponseModel> CreateCommentAsync(int id, CreateCommentModel CommentModel)
         {
             SimpleResponseModel response = new SimpleResponseModel();
             try
@@ -172,7 +172,7 @@ namespace DevFreela.Application.Services
             }
         }
 
-        public async Task<SimpleResponseModel> InsertProject(CreateProjectModel ProjectModel)
+        public async Task<SimpleResponseModel> CreateProjectAsync(CreateProjectModel ProjectModel)
         {
             SimpleResponseModel response = new SimpleResponseModel();
 
@@ -202,7 +202,7 @@ namespace DevFreela.Application.Services
             }
         }
 
-        public async Task<SimpleResponseModel> Start(int id)
+        public async Task<SimpleResponseModel> StartAsync(int id)
         {
             SimpleResponseModel response = new SimpleResponseModel();
             try
@@ -232,7 +232,7 @@ namespace DevFreela.Application.Services
             }
         }
 
-        public async Task<SimpleResponseModel> Update(int id, UpdateProjectModel ProjectUpdateModel)
+        public async Task<SimpleResponseModel> UpdateAsync(int id, UpdateProjectModel ProjectUpdateModel)
         {
 
             SimpleResponseModel response = new SimpleResponseModel();

@@ -21,7 +21,7 @@ namespace DevFreela.API.Controllers
         [HttpPost]
         public async Task<IActionResult> PostProject(CreateProjectModel Model)
         {
-            var response = await _projectService.InsertProject(Model);
+            var response = await _projectService.CreateProjectAsync(Model);
             if (response.Status is false)
             {
                 return BadRequest(response);
@@ -33,7 +33,7 @@ namespace DevFreela.API.Controllers
         public async Task<IActionResult> GetSearch([FromQuery] string search ="", [FromQuery] int size=3)
         {
 
-            var response= await _projectService.GetSearch(search, size);
+            var response= await _projectService.GetSearchAsync(search, size);
 
             if (response.Status is false)
             {
@@ -46,7 +46,7 @@ namespace DevFreela.API.Controllers
         [HttpGet("get/{idProject}")]
         public  async Task<IActionResult> GetById([FromQuery] int idProject)
         {
-            var response= await _projectService.GetById(idProject);
+            var response= await _projectService.GetByIdAsync(idProject);
 
             if (response.Status is false)
             {
@@ -59,7 +59,7 @@ namespace DevFreela.API.Controllers
         [HttpPut("update/{id}")]
         public async Task<IActionResult> Put(int id, UpdateProjectModel Model)
         {
-            var response = await _projectService.Update(id, Model);
+            var response = await _projectService.UpdateAsync(id, Model);
 
             if (response.Status is false)
             {
@@ -72,7 +72,7 @@ namespace DevFreela.API.Controllers
         [HttpDelete("delete/{id}")]
         public async Task <IActionResult> Delete([FromRoute] int id)
         {
-          var response = await _projectService.Delete(id);
+          var response = await _projectService.DeleteAsync(id);
 
             if (response.Status is false)
             {
@@ -85,7 +85,7 @@ namespace DevFreela.API.Controllers
         [HttpPut("start/{id}")]
         public async Task <IActionResult> Start([FromRoute] int id)
         {
-            var response= await _projectService.Start(id);
+            var response= await _projectService.StartAsync(id);
 
             if (response.Status is false)
             {
@@ -99,7 +99,7 @@ namespace DevFreela.API.Controllers
         public async Task<IActionResult> Complete([FromRoute]int id)
         {
 
-            var response= await _projectService.Complete(id);
+            var response= await _projectService.CompleteAsync(id);
 
             if (response.Status is false)
             {
@@ -113,7 +113,7 @@ namespace DevFreela.API.Controllers
         [HttpPost("coments")]
         public async Task<IActionResult> PostComment([FromBody] CreateCommentModel Model)
         {
-            var response= await _projectService.InsertComment(Model.IdProject, Model);
+            var response= await _projectService.CreateCommentAsync(Model.IdProject, Model);
 
             if (response.Status is false)
             {

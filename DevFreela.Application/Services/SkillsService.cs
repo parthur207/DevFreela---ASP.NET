@@ -44,7 +44,7 @@ namespace DevFreela.Application.Services
             }
         }
 
-        public async Task<SimpleResponseModel> InsertSkill(CreateSkillModel Model)
+        public async Task<SimpleResponseModel> CreateSkillAsync(CreateSkillModel Model)
         {
             SimpleResponseModel response = new SimpleResponseModel();
             try

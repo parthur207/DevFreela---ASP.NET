@@ -13,6 +13,6 @@ namespace DevFreela.Application.Interfaces
     {
         Task<ResponseModel<List<UserDTO>>> GetAllUsersAsync();
         Task<ResponseModel<UserDTO>> GetByEmailAsync(string email);
-        Task<SimpleResponseModel> InsertUser(CreateUserModel userModel);
+        Task<SimpleResponseModel> CreateUserAsync(CreateUserModel userModel);
     }
 }
