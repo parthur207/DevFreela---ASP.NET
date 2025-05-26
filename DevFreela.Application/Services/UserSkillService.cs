@@ -26,7 +26,7 @@ namespace DevFreela.Application.Services
 
             try
             {
-                if (!await _dbContext.Users.AnyAsync(x => x.Id == Model.UserId))
+                if (!await _dbContext.Users.AnyAsync(x => x.Id == Model.UserId) || Model.UserId is nuint)
                 {
                     response.Status = false;
                     response.Message = "Usuário não encontrado.";
