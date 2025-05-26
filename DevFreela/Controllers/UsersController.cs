@@ -1,11 +1,8 @@
 ﻿using DevFreela.Application.Interfaces;
-using DevFreela.Application.Mappers;
 using DevFreela.Application.Models;
-using DevFreela.Domain.Entities;
 using DevFreela.Domain.Models;
 using DevFreela.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace DevFreela.API.Controllers
 {
@@ -27,7 +24,7 @@ namespace DevFreela.API.Controllers
             _userSkillInterface = userSkillInterface;
         }
 
-        [HttpGet]
+        [HttpGet("all")]
         public async Task<IActionResult> GetAllUsers()
         {
             var response= await _userInterface.GetAllUsersAsync();
@@ -41,7 +38,7 @@ namespace DevFreela.API.Controllers
         }
 
 
-        [HttpGet("{id}")]
+        [HttpGet("email")]
         public async Task<IActionResult> GetById([FromQuery] string email)
         {
             var response= await _userInterface.GetByEmailAsync(email);
@@ -66,8 +63,8 @@ namespace DevFreela.API.Controllers
             return Ok(response);
         }
 
-        [HttpPost("{id}/userSkills")]
-        public async Task<IActionResult> PostUserSkills([FromRoute]int id, [FromBody] UserSkillModel Model)
+        [HttpPost("userSkills")]
+        public async Task<IActionResult> PostUserSkills([FromBody] UserSkillModel Model)
         {
             var response = await _userSkillInterface.CreateUserSkillAsync(Model);
 
@@ -79,7 +76,7 @@ namespace DevFreela.API.Controllers
         }
 
         [HttpPut("{id}/profile-picture")]
-        public async Task<IActionResult> PostProfilePicture([FromBody] IFormFile FilePicture)
+        public async Task<IActionResult> PostProfilePicture([FromRoute] int id, IFormFile FilePicture)
         {
             
             var description = $"file name: {FilePicture.FileName}, file size: {FilePicture.Length}";

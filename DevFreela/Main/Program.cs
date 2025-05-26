@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.JSInterop.Infrastructure;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
-namespace DevFreela.API
+namespace DevFreela.API.Main
 {
     public class Program
     {
@@ -33,9 +33,12 @@ namespace DevFreela.API
 
             #endregion
 
-            //builder.Services.AddScoped<IConfigService, ConfigService>();
+            
 
             builder.Services.AddScoped<IProjectInterface,ProjectService>();
+            builder.Services.AddScoped<ISkillInterface, SkillsService>();
+            builder.Services.AddScoped<IUserInterface,UserService>();
+            builder.Services.AddScoped<IUserSkillInterface, UserSkillService>();
 
             // Adiciona serviços ao contêiner antes de Build()
             builder.Services.AddControllersWithViews();

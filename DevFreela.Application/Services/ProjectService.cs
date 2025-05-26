@@ -35,6 +35,13 @@ namespace DevFreela.Application.Services
                 var project = await _dbContext.Projects
                     .SingleOrDefaultAsync(x => x.Id == Id);
 
+                if (project is null)
+                {
+                    response.Message = "Projeto inexistente.";
+                    response.Status = false;
+                    return response;
+                }
+
                 project.Complete();
                 _dbContext.Projects.Update(project);
                 await _dbContext.SaveChangesAsync();
@@ -117,7 +124,7 @@ namespace DevFreela.Application.Services
 
         public async Task<ResponseModel<List<ProjectItemDTO>>> GetSearchAsync(string Search, int N)
         {
-            ResponseModel<List<ProjectItemDTO>> response = new ResponseModel<List<ProjectItemDTO>>();
+            ResponseModel<List<ProjectItemDTO>> response = new ResponseModel<List<ProjectItemDTO>> { Content = new List<ProjectItemDTO>() };
 
             try
             {
@@ -154,13 +161,22 @@ namespace DevFreela.Application.Services
         public async Task<SimpleResponseModel> CreateCommentAsync(int id, CreateCommentModel CommentModel)
         {
             SimpleResponseModel response = new SimpleResponseModel();
+
             try
             {
                 var commentEntity = CommentMapper.ToCommentEntity(CommentModel);
 
+                if (commentEntity is null)
+                {
+                    response.Status = false;
+                    response.Message = "Não é possível a criação de comentários nulos.";
+                    return response;
+                }
+
                 await _dbContext.ProjectComments.AddAsync(commentEntity);
                 await _dbContext.SaveChangesAsync();
 
+                response.Message = "Comentário criado com sucesso.";
                 response.Status = true;
                 return response;
             }
@@ -244,7 +260,7 @@ namespace DevFreela.Application.Services
                 if (project is null)
                 {
                     response.Status = false;
-                    response.Message= "Nenhum projeto foi encontrado.";
+                    response.Message= "Projeto inexistente.";
                     return response;
                 }
 

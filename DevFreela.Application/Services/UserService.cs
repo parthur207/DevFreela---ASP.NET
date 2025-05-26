@@ -24,7 +24,7 @@ namespace DevFreela.Application.Services
 
         public async Task<ResponseModel<List<UserDTO>>> GetAllUsersAsync()
         {
-            ResponseModel<List<UserDTO>> response = new ResponseModel<List<UserDTO>>();
+            ResponseModel<List<UserDTO>> response = new ResponseModel<List<UserDTO>> { Content = new List<UserDTO>() };
 
             try
             {

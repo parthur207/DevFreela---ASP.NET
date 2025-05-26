@@ -1,8 +1,5 @@
 ﻿using DevFreela.Application.Interfaces;
-using DevFreela.Application.Mappers;
-using DevFreela.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using DevFreela.Domain.Models;
 namespace DevFreela.API.Controllers
 {
@@ -19,7 +16,7 @@ namespace DevFreela.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostProject(CreateProjectModel Model)
+        public async Task<IActionResult> PostProject([FromBody]CreateProjectModel Model)
         {
             var response = await _projectService.CreateProjectAsync(Model);
             if (response.Status is false)
@@ -44,7 +41,7 @@ namespace DevFreela.API.Controllers
         }
 
         [HttpGet("get/{idProject}")]
-        public  async Task<IActionResult> GetById([FromQuery] int idProject)
+        public  async Task<IActionResult> GetById([FromRoute] int idProject)
         {
             var response= await _projectService.GetByIdAsync(idProject);
 
@@ -57,7 +54,7 @@ namespace DevFreela.API.Controllers
         }
 
         [HttpPut("update/{id}")]
-        public async Task<IActionResult> Put(int id, UpdateProjectModel Model)
+        public async Task<IActionResult> Put([FromRoute]int id, [FromBody]UpdateProjectModel Model)
         {
             var response = await _projectService.UpdateAsync(id, Model);
 
@@ -103,7 +100,7 @@ namespace DevFreela.API.Controllers
 
             if (response.Status is false)
             {
-                return BadRequest();
+                return BadRequest(response);
             }
 
             return Ok(response);
