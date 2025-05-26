@@ -28,7 +28,7 @@ namespace DevFreela.Application.Services
 
             try
             {
-                var users = await _dbContext.Users
+                var users = await _dbContext.Users.Include(x=>x.Skills).ThenInclude(x=>x.Skill)
                     .ToListAsync();
 
                 if (users is null || users.Count == 0)
@@ -60,8 +60,8 @@ namespace DevFreela.Application.Services
 
             try
             {
-                var user = _dbContext.Users
-                    .SingleOrDefault(x => x.Email == email);
+                var user = await _dbContext.Users.Include(x=>x.Skills).ThenInclude(x=>x.Skill)
+                    .SingleOrDefaultAsync(x => x.Email == email);
 
                 if (user is null)
                 {
