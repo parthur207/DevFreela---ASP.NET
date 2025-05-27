@@ -98,6 +98,7 @@ namespace DevFreela.Application.Services
             {
                 var project = await _dbContext.Projects
                     .Include(x=>x.Client)
+                    .Include(X=>X.Comments)
                     .Include(x=>x.FreeLancer)
                     .SingleOrDefaultAsync(x => x.Id == id);
 
@@ -265,8 +266,6 @@ namespace DevFreela.Application.Services
                 }
 
                 project.Update(ProjectUpdateModel.Title, ProjectUpdateModel.Description, ProjectUpdateModel.TotalCost);
-
-                await _dbContext.Projects.AddAsync(project);
                 await _dbContext.SaveChangesAsync();
 
                 response.Status = true;

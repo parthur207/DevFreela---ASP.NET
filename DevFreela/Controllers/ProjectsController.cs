@@ -23,7 +23,7 @@ namespace DevFreela.API.Controllers
             {
                 return BadRequest(response);
             }
-            return CreatedAtAction(nameof(GetById), new { Id=1}, Model);
+            return Ok(response);
         }
 
         [HttpGet("get/search")]
