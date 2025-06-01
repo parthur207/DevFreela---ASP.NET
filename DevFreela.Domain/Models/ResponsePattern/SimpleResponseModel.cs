@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DevFreela.Domain.Models
+namespace DevFreela.Domain.Models.ResponsePattern
 {
     public class SimpleResponseModel
     {

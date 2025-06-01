@@ -1,6 +1,7 @@
 ﻿using DevFreela.Application.DTOs;
 using DevFreela.Application.Models;
 using DevFreela.Domain.Models;
+using DevFreela.Domain.Models.ResponsePattern;
 using System;
 using System.Collections.Generic;
 using System.Linq;

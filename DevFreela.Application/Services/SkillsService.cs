@@ -2,6 +2,7 @@
 using DevFreela.Application.Interfaces;
 using DevFreela.Application.Mappers;
 using DevFreela.Domain.Models;
+using DevFreela.Domain.Models.ResponsePattern;
 using DevFreela.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
