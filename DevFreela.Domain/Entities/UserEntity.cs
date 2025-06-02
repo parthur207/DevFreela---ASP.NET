@@ -1,4 +1,6 @@
 ﻿
+using DevFreela.Domain.Enums;
+
 namespace DevFreela.Domain.Entities
 {
     public class UserEntity : BaseEntity
@@ -21,7 +23,7 @@ namespace DevFreela.Domain.Entities
         public string Email { get; private set; }
 
         public DateTime BirthDate { get; private set; }
-
+        public RolesTypesEnum Role { get; private set; } 
         public bool Active { get; private set; }
 
         public List<UserSkillEntity> Skills { get; private set; }

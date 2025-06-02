@@ -7,20 +7,20 @@ namespace DevFreela.Application.Interfaces
 {
     public interface IProjectInterface
     {
-        Task<ResponseModel<List<ProjectItemDTO>>> GetSearchAsync(string Search, int N);
+        Task<ResponseModel<List<ProjectItemDTO>>> GetSearch(string Search, int N);
 
-        Task<ResponseModel<ProjectDTO>> GetByIdAsync(int Id);
+        Task<ResponseModel<ProjectDTO>> GetByProjectId(int Id);
 
-        Task<SimpleResponseModel> CreateProjectAsync(CreateProjectModel ProjectModel);
+        Task<SimpleResponseModel> CreateProject(CreateProjectModel ProjectModel, int FreeLanceId);
 
-        Task<SimpleResponseModel> UpdateAsync(int Id, UpdateProjectModel ProjectUpdateModel);
+        Task<SimpleResponseModel> UpdateProject(int Id, UpdateProjectModel ProjectUpdateModel);
 
-        Task<SimpleResponseModel> DeleteAsync(int Id);
+        Task<SimpleResponseModel> DeleteProject(int Id);
 
-        Task<SimpleResponseModel> StartAsync(int Id);
+        Task<SimpleResponseModel> StartProject(int Id);
 
-        Task<SimpleResponseModel> CompleteAsync(int Id);
+        Task<SimpleResponseModel> CompleteProject(int Id);
 
-        Task<SimpleResponseModel> CreateCommentAsync(int id, CreateCommentModel CommentModel);
+        Task<SimpleResponseModel> CreateCommentProject(int Id, CreateCommentModel CommentModel);
     }
 }

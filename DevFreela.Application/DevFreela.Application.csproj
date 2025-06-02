@@ -8,7 +8,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DevFreela.Domain\DevFreela.Domain.csproj" />
-    <ProjectReference Include="..\DevFreela.Infrastructure\DevFreela.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Interfaces\GenericInterface\" />
+    <Folder Include="Interfaces\AdminInterface\" />
+    <Folder Include="Interfaces\FreeLancerInterface\" />
   </ItemGroup>
 
 </Project>

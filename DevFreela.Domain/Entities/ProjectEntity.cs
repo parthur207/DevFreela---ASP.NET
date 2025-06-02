@@ -5,7 +5,7 @@ namespace DevFreela.Domain.Entities
     public class ProjectEntity : BaseEntity
     {
      
-        public ProjectEntity(string title, string description, int idClient, int idFreeLancer, decimal totalCost) 
+        public ProjectEntity(string title, string description, int? idClient, int idFreeLancer, decimal totalCost) 
             : base()
         {
             Title = title;
@@ -20,7 +20,7 @@ namespace DevFreela.Domain.Entities
         public string Title { get; private set; }
         public string Description { get; private set; }
 
-        public int IdClient { get; private set; }
+        public int? IdClient { get; private set; }
 
         public UserEntity Client { get; private set; }
         public int IdFreeLancer { get; private set; }
