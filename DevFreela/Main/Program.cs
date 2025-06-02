@@ -28,9 +28,9 @@ namespace DevFreela.API.Main
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title = "{Project_Name} API",
+                    Title = "DevFreela API",
                     Version = "v1",
-                    Description = "API - {Description}",
+                    Description = "API - Plataforma de comercialização de soluções digitais.",
                     Contact = new OpenApiContact
                     {
                         Name = "Paulo Andrade",
@@ -72,8 +72,8 @@ namespace DevFreela.API.Main
             });
 
             //banco de dados InMemory
-            builder.Services.AddDbContext<DbContextInMemory>(options =>
-                options.UseInMemoryDatabase("DbContextInMemory"));
+            builder.Services.AddDbContext<DevFreelaDbContext>(options =>
+                options.UseInMemoryDatabase("DevFreelaDbContext"));
 
             //Banco de dados SQL
             /*var cnn = builder.Configuration.GetConnectionString("DefaultConnection");
