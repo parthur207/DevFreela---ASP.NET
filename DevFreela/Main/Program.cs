@@ -2,10 +2,15 @@ using DevFreela.Application.Interfaces;
 using DevFreela.Application.Models;
 using DevFreela.Application.Services;
 using DevFreela.Domain.Models;
+using DevFreela.Infrastructure.Auth;
 using DevFreela.Infrastructure.Persistence;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.JSInterop.Infrastructure;
+using Microsoft.OpenApi.Models;
+using System.Text;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace DevFreela.API.Main
@@ -16,53 +21,115 @@ namespace DevFreela.API.Main
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.Configure<FreeLancerTotalCostConfig> (
-                builder.Configuration.GetSection("FreeLancerTotalCost")
-            );
-
-            //Implemento de um banco de dados em memória (para testes)
-            //builder.Services.AddDbContext<DevFreelaDbContext>(x => x.UseInMemoryDatabase("MyDbContextInMemory"));
-
-            #region Configuração do banco de dados SQL Server
-
-            var cnn = builder.Configuration.GetConnectionString("DevFreelaConnection");
-            Console.WriteLine($"Conexão: {cnn}");
-
-            builder.Services.AddDbContext<DevFreelaDbContext>(options => options.UseSqlServer(cnn));
-             
-
-            #endregion
-
-            
-
-            builder.Services.AddScoped<IProjectInterface,ProjectService>();
-            builder.Services.AddScoped<ISkillInterface, SkillsService>();
-            builder.Services.AddScoped<IUserInterface,UserService>();
-            builder.Services.AddScoped<IUserSkillInterface, UserSkillService>();
-
-            // Adiciona serviços ao contêiner antes de Build()
             builder.Services.AddControllersWithViews();
 
-            // Registra o Swagger
-            builder.Services.AddSwaggerGen(); 
+            //Configuração do Swagger
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "{Project_Name} API",
+                    Version = "v1",
+                    Description = "API - {Description}",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Paulo Andrade",
+                        Email = "parthur207@gmail.com"
+                    }
+                });
+
+                var securityScheme = new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Description = "Informe o token JWT: Bearer {seu token}",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer",
+                    BearerFormat = "JWT",
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    }
+                };
+
+                c.AddSecurityDefinition("Bearer", securityScheme);
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[] {}
+                    }
+                });
+            });
+
+            //banco de dados InMemory
+            builder.Services.AddDbContext<DbContextInMemory>(options =>
+                options.UseInMemoryDatabase("DbContextInMemory"));
+
+            //Banco de dados SQL
+            /*var cnn = builder.Configuration.GetConnectionString("DefaultConnection");
+            Console.WriteLine($"Conexão: {cnn}");
+
+            builder.Services.AddDbContext<DbContextInMemory>(options => options.UseSqlServer(cnn));*/
+
+
+            builder.Services.AddScoped<IProjectInterface, ProjectService>();
+            builder.Services.AddScoped<ISkillInterface, SkillsService>();
+            builder.Services.AddScoped<IUserSkillInterface, UserSkillService>();
+            builder.Services.AddScoped<IUserInterface, UserService>();
+
+            builder.Services.AddTransient<IJwtInterface, JwtService>();
+
+            //Autenticação JWT
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                        ValidAudience = builder.Configuration["Jwt:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+                    };
+                });
+
+            //Autorização
+            builder.Services.AddAuthorization();
 
             var app = builder.Build();
 
-            // Configura o middleware do pipeline de requisições
+            //pipeline HTTP
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "DevFreela API v1");
-                    c.RoutePrefix = string.Empty; // Acessa diretamente na raiz "/"
                 });
             }
 
+
+            app.UseHttpsRedirection();
+
             app.UseAuthentication();
             app.UseAuthorization();
+
             app.MapControllers();
+
             app.Run();
         }
     }
+
 }

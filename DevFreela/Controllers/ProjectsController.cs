@@ -5,7 +5,7 @@ namespace DevFreela.API.Controllers
 {
 
     [ApiController]
-    [Route("api/projects")]
+    [Route("api/projects/admin")]
     public class ProjectsController : ControllerBase
     {
         private readonly  IProjectInterface _projectService;
