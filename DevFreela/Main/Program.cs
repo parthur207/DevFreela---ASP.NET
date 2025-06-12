@@ -1,4 +1,5 @@
 using DevFreela.Application.Interfaces;
+using DevFreela.Application.Interfaces.AdminInterface;
 using DevFreela.Application.Models;
 using DevFreela.Application.Services;
 using DevFreela.Domain.Models;

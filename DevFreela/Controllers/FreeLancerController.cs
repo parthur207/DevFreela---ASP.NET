@@ -1,4 +1,4 @@
-﻿using DevFreela.Application.Interfaces;
+﻿using DevFreela.Application.Interfaces.AdminInterface;
 using DevFreela.Domain.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

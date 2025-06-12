@@ -1,6 +1,6 @@
-﻿using DevFreela.Application.Interfaces;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using DevFreela.Domain.Models;
+using DevFreela.Application.Interfaces.AdminInterface;
 namespace DevFreela.API.Controllers
 {
 

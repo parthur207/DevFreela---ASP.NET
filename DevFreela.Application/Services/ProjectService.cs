@@ -1,5 +1,5 @@
 ﻿using DevFreela.Application.DTOs;
-using DevFreela.Application.Interfaces;
+using DevFreela.Application.Interfaces.AdminInterface;
 using DevFreela.Application.Mappers;
 using DevFreela.Application.Models;
 using DevFreela.Domain.Models;

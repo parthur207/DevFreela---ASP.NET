@@ -3,7 +3,7 @@ using DevFreela.Domain.Models;
 using DevFreela.Domain.Models.ResponsePattern;
 
 
-namespace DevFreela.Application.Interfaces
+namespace DevFreela.Application.Interfaces.AdminInterface
 {
     public interface IProjectInterface
     {
