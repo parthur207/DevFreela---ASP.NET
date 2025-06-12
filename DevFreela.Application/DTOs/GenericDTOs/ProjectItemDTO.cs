@@ -1,12 +1,11 @@
-﻿
-using DevFreela.Domain.Entities;
+﻿using DevFreela.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DevFreela.Application.DTOs
+namespace DevFreela.Application.DTOs.GenericDTOs
 {
     public class ProjectItemDTO
     {

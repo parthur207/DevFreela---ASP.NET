@@ -1,6 +1,5 @@
 ﻿using DevFreela.Domain.Entities;
 using DevFreela.Domain.Enums;
-using DevFreela.Domain.Roles;
 using System.ComponentModel.DataAnnotations;
 
 namespace DevFreela.Domain.Models
@@ -48,7 +47,7 @@ namespace DevFreela.Domain.Models
         [DataType(DataType.Password)]
         [StringLength(100, MinimumLength = 8, ErrorMessage = "Senha deve ter no mínimo 8 caracteres")]
         [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$",
-    ErrorMessage = "Senha deve conter letras maiúsculas, minúsculas, números e caracteres especiais")]
+        ErrorMessage = "Senha deve conter letras maiúsculas, minúsculas, números e caracteres especiais")]
         public string Password { get; set; }
 
         [Required(ErrorMessage = "A Confirmação de senha é obrigatória.")]

@@ -1,4 +1,4 @@
-﻿using DevFreela.Application.DTOs;
+﻿using DevFreela.Application.DTOs.GenericDTOs;
 using DevFreela.Application.Models;
 using DevFreela.Domain.Models;
 using DevFreela.Domain.Models.ResponsePattern;

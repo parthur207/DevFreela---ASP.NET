@@ -1,4 +1,4 @@
-﻿using DevFreela.Application.DTOs;
+﻿using DevFreela.Application.DTOs.GenericDTOs;
 using DevFreela.Application.Interfaces.GenericInterface;
 using DevFreela.Application.Mappers;
 using DevFreela.Domain.Models;
@@ -9,10 +9,10 @@ using System.Collections.Generic;
 
 namespace DevFreela.Application.Services
 {
-    public class SkillsService : ISkillInterface
+    public class SkillsService : IGenericSkillInterface
     {
 
-        private readonly DevFreelaDbContext _dbContext;
+        private readonly DevFreelaDbContext _dbContext;//Alterar para injeção de dependecia repository
         public SkillsService(DevFreelaDbContext dbContext)
         {
             _dbContext = dbContext;

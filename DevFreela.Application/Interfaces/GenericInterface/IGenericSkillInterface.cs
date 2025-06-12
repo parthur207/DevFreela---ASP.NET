@@ -1,10 +1,10 @@
-﻿using DevFreela.Application.DTOs;
+﻿using DevFreela.Application.DTOs.GenericDTOs;
 using DevFreela.Domain.Models;
 using DevFreela.Domain.Models.ResponsePattern;
 
 namespace DevFreela.Application.Interfaces.GenericInterface
 {
-    public interface ISkillInterface
+    public interface IGenericSkillInterface
     {
         Task<ResponseModel<List<SkillDTO>>> GetAllSkillsAsync();
 

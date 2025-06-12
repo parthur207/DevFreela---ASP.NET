@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DevFreela.Application.Interfaces.GenericInterface
+namespace DevFreela.Application.DTOs.AdminDTOs
 {
-    internal interface Interface1
+    internal class AdminProjectDTOs
     {
     }
 }

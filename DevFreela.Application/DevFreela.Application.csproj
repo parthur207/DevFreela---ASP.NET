@@ -11,7 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Interfaces\FreeLancerInterface\" />
+    <Folder Include="Services\GenericService\" />
+    <Folder Include="Services\FreelancerService\" />
   </ItemGroup>
 
 </Project>

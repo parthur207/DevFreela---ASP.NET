@@ -1,4 +1,4 @@
-﻿using DevFreela.Application.DTOs;
+﻿using DevFreela.Application.DTOs.GenericDTOs;
 using DevFreela.Domain.Entities;
 using DevFreela.Domain.Models;
 using System;

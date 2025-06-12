@@ -6,10 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DevFreela.Application.Interfaces
+namespace DevFreela.Application.Interfaces.GenericInterface
 {
-    public interface IUserSkillInterface
+    public interface IGenericUserSkillInterface
     {
-        Task<SimpleResponseModel> CreateUserSkillAsync(UserSkillModel model); 
+        Task<SimpleResponseModel> CreateUserSkill(UserSkillModel model);
     }
 }

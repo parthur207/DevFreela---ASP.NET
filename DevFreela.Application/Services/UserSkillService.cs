@@ -14,7 +14,7 @@ namespace DevFreela.Application.Services
 {
     public class UserSkillService : IUserSkillInterface
     {
-        private readonly DevFreelaDbContext _dbContext;
+        private readonly DevFreelaDbContext _dbContext; //Alterar para injeção de dependecia repository
         public UserSkillService(DevFreelaDbContext dbContext)
         {
             _dbContext = dbContext;

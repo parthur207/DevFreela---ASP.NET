@@ -15,9 +15,9 @@ namespace DevFreela.API.Controllers
     public class SkillsController : ControllerBase
     {
 
-        private readonly ISkillInterface _skillInterface;
+        private readonly IGenericSkillInterface _skillInterface;
             
-        public SkillsController(ISkillInterface skillInterface)
+        public SkillsController(IGenericSkillInterface skillInterface)
         {
             _skillInterface = skillInterface;
         }

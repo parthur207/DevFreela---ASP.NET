@@ -85,7 +85,7 @@ namespace DevFreela.API.Main
 
 
             builder.Services.AddScoped<IProjectInterface, ProjectService>();
-            builder.Services.AddScoped<ISkillInterface, SkillsService>();
+            builder.Services.AddScoped<IGenericSkillInterface, SkillsService>();
             builder.Services.AddScoped<IUserSkillInterface, UserSkillService>();
             builder.Services.AddScoped<IAdminUserInterface, UserService>();
 

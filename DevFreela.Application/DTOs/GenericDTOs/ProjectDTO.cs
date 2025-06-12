@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DevFreela.Application.DTOs
+namespace DevFreela.Application.DTOs.GenericDTOs
 {
     public class ProjectDTO
     {

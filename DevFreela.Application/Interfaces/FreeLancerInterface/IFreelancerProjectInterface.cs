@@ -1,15 +1,16 @@
-﻿using DevFreela.Application.DTOs.GenericDTOs;
-using DevFreela.Domain.Models;
+﻿using DevFreela.Application.DTOs;
 using DevFreela.Domain.Models.ResponsePattern;
+using DevFreela.Domain.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-
-namespace DevFreela.Application.Interfaces.AdminInterface
+namespace DevFreela.Application.Interfaces.FreeLancerInterface
 {
-    public interface IAdminProjectInterface
+    internal interface IFreelancerProjectInterface
     {
-        Task<ResponseModel<List<ProjectItemDTO>>> GetSearch(string Search, int N);
-
-        Task<ResponseModel<ProjectDTO>> GetByProjectId(int Id);
 
         Task<SimpleResponseModel> CreateProject(CreateProjectModel ProjectModel, int FreeLanceId);
 

@@ -1,18 +1,16 @@
-﻿using DevFreela.Application.DTOs;
+﻿using DevFreela.Application.DTOs.GenericDTOs;
 using DevFreela.Application.Interfaces.AdminInterface;
 using DevFreela.Application.Mappers;
 using DevFreela.Application.Models;
 using DevFreela.Domain.Entities;
 using DevFreela.Domain.Models;
 using DevFreela.Domain.Models.ResponsePattern;
-using DevFreela.Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore;
 
 namespace DevFreela.Application.Services
 {
     public class UserService : IAdminUserInterface
     {
-        private readonly DevFreelaDbContext _dbContext;
+        private readonly DevFreelaDbContext _dbContext;//Alterar para injeção de dependecia repository
         public UserService(DevFreelaDbContext dbContext)
         {
             _dbContext = dbContext;

@@ -1,4 +1,4 @@
-﻿using DevFreela.Application.DTOs;
+﻿using DevFreela.Application.DTOs.GenericDTOs;
 using DevFreela.Application.Interfaces.AdminInterface;
 using DevFreela.Application.Mappers;
 using DevFreela.Application.Models;
@@ -18,7 +18,7 @@ namespace DevFreela.Application.Services
 
         private readonly FreeLancerTotalCostConfig _values;
 
-        private readonly DevFreelaDbContext _dbContext;
+        private readonly DevFreelaDbContext _dbContext;//Alterar para injeção de dependecia repository
 
         public ProjectService(IOptions<FreeLancerTotalCostConfig> Config, DevFreelaDbContext DbContext) //MyDbContext DbContext)
         {
