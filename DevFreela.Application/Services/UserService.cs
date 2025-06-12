@@ -1,5 +1,5 @@
 ﻿using DevFreela.Application.DTOs;
-using DevFreela.Application.Interfaces;
+using DevFreela.Application.Interfaces.AdminInterface;
 using DevFreela.Application.Mappers;
 using DevFreela.Application.Models;
 using DevFreela.Domain.Entities;
@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DevFreela.Application.Services
 {
-    public class UserService : IUserInterface
+    public class UserService : IAdminUserInterface
     {
         private readonly DevFreelaDbContext _dbContext;
         public UserService(DevFreelaDbContext dbContext)

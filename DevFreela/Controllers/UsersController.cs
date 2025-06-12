@@ -1,4 +1,5 @@
 ﻿using DevFreela.Application.Interfaces;
+using DevFreela.Application.Interfaces.AdminInterface;
 using DevFreela.Application.Models;
 using DevFreela.Domain.Models;
 using DevFreela.Infrastructure.Persistence;
@@ -14,10 +15,10 @@ namespace DevFreela.API.Controllers
     public class UsersController : ControllerBase
     {
         private readonly DevFreelaDbContext _dbContextInMemory;
-        private readonly IUserInterface _userInterface;
+        private readonly IAdminUserInterface _userInterface;
         private readonly IUserSkillInterface _userSkillInterface;
 
-        public UsersController(DevFreelaDbContext devFreelaDbContext,IUserInterface userInterface, IUserSkillInterface userSkillInterface)
+        public UsersController(DevFreelaDbContext devFreelaDbContext,IAdminUserInterface userInterface, IUserSkillInterface userSkillInterface)
         {
             _dbContextInMemory = devFreelaDbContext;
             _userInterface = userInterface;

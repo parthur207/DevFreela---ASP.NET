@@ -1,5 +1,5 @@
 ﻿using DevFreela.Application.DTOs;
-using DevFreela.Application.Interfaces;
+using DevFreela.Application.Interfaces.GenericInterface;
 using DevFreela.Application.Mappers;
 using DevFreela.Domain.Models;
 using DevFreela.Domain.Models.ResponsePattern;

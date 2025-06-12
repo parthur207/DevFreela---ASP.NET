@@ -8,12 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DevFreela.Application.Interfaces
+namespace DevFreela.Application.Interfaces.AdminInterface
 {
-    public interface IUserInterface
+    public interface IAdminUserInterface
     {
         Task<ResponseModel<List<UserDTO>>> GetAllUsersAsync();
         Task<ResponseModel<UserDTO>> GetByEmailAsync(string email);
-        Task<SimpleResponseModel> CreateUserAsync(CreateUserModel userModel);
     }
 }

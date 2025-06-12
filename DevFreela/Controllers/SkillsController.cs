@@ -1,4 +1,4 @@
-﻿using DevFreela.Application.Interfaces;
+﻿using DevFreela.Application.Interfaces.GenericInterface;
 using DevFreela.Application.Mappers;
 using DevFreela.Domain.Models;
 using DevFreela.Infrastructure.Persistence;

@@ -5,7 +5,7 @@ using DevFreela.Domain.Models.ResponsePattern;
 
 namespace DevFreela.Application.Interfaces.AdminInterface
 {
-    public interface IProjectInterface
+    public interface IAdminProjectInterface
     {
         Task<ResponseModel<List<ProjectItemDTO>>> GetSearch(string Search, int N);
 
