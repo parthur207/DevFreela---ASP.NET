@@ -1,5 +1,7 @@
 ﻿using DevFreela.Application.Interfaces.AdminInterface;
+using DevFreela.Domain.Enums;
 using DevFreela.Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,6 +9,7 @@ namespace DevFreela.API.Controllers
 {
     [Route("api/freelancer")]
     [ApiController]
+    [Authorize(Roles = nameof(RolesTypesEnum.FreeLancer))]
     public class FreelancerProjectsController : ControllerBase
     {
         //private readonly 

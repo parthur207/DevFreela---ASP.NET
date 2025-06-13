@@ -1,13 +1,15 @@
 ﻿using DevFreela.Application.Interfaces.AdminInterface;
+using DevFreela.Domain.Enums;
 using DevFreela.Infrastructure.Persistence;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Web.Http;
 
 namespace DevFreela.API.Controllers.AdminControllers
 {
     [Route("api/admin/users")]
     [ApiController]
+    [Authorize(Roles = nameof(RolesTypesEnum.Admin))]
 
     public class AdminUsersControllers : ControllerBase
     {
@@ -23,9 +25,9 @@ namespace DevFreela.API.Controllers.AdminControllers
         }
 
         [HttpGet("all")]
-        public async Task<IActionResult> GetAllUsers()
+        public async Task<IActionResult> GetAllUsers([FromQuery] int Size=5)
         {
-            var response = await _userInterface.GetAllUsersAsync();
+            
 
             if (response.Status is false)
             {
@@ -37,7 +39,7 @@ namespace DevFreela.API.Controllers.AdminControllers
 
 
         [HttpGet("email")]
-        public async Task<IActionResult> GetById([FromQuery] string email)
+        public async Task<IActionResult> GetByEmail([FromQuery] string email)
         {
             var response = await _userInterface.GetByEmailAsync(email);
 
@@ -48,5 +50,32 @@ namespace DevFreela.API.Controllers.AdminControllers
 
             return Ok(response);
         }
+
+        [HttpGet("freelancers")]
+        public async Task<IActionResult> GetAllFreelancers([FromQuery] int Size=5)
+        {
+
+            if (response.Status is false)
+            {
+                return NotFound(response);
+            }
+
+            return Ok(response);
+        }
+
+        [HttpGet("clients")]
+        public async Task<IActionResult> GetAllClients([FromQuery] int Size = 5)
+        {
+
+            if (response.Status is false)
+            {
+                return NotFound(response);
+            }
+
+            return Ok(response);
+        }
+
+
+
     }
 }
