@@ -7,14 +7,9 @@ namespace DevFreela.API.Controllers
 {
     [Route("api/freelancer")]
     [ApiController]
-    public class FreeLancerController : ControllerBase
+    public class FreelancerProjectsController : ControllerBase
     {
-        private readonly IProjectInterface _projectService;
-
-        public FreeLancerController(IProjectInterface ProjectService)
-        {
-            _projectService = ProjectService;
-        }
+        //private readonly 
 
         [HttpPost]
         public async Task<IActionResult> PostProject([FromBody] CreateProjectModel Model)
@@ -27,7 +22,7 @@ namespace DevFreela.API.Controllers
             return Ok(response);
         }
 
-        [HttpGet("get/search")]
+        [HttpGet("project/search")]
         public async Task<IActionResult> GetSearch([FromQuery] string search = "", [FromQuery] int size = 3)
         {
 

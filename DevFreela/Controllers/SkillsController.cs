@@ -36,7 +36,7 @@ namespace DevFreela.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostSkill([FromBody] CreateSkillModel Model)
+        public async Task<IActionResult> PostSkill([FromBody] CreateSkillModel Model) 
         {
             var response = await _skillInterface.CreateSkillAsync(Model);
 
