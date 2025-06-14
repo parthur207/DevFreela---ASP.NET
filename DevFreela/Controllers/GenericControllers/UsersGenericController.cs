@@ -24,7 +24,7 @@ namespace DevFreela.API.Controllers.GenericControllers
             return Ok();
         }
 
-
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] CreateUserModel model)
         {

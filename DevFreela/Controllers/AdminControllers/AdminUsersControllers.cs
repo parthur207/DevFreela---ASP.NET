@@ -75,6 +75,31 @@ namespace DevFreela.API.Controllers.AdminControllers
             return Ok(response);
         }
 
+        [HttpDelete("inactive")]
+        public async Task<IActionResult> InactiveUser([FromQuery] int Size = 5)
+        {
+
+            if (response.Status is false)
+            {
+                return NotFound(response);
+            }
+
+            return Ok(response);
+        }
+
+        [HttpPut("active")]
+        public async Task<IActionResult> ActiveUser([FromQuery] string EmailUser)
+        {
+
+            if (response.Status is false)
+            {
+                return NotFound(response);
+            }
+
+            return Ok(response);
+        }
+
+
 
 
     }

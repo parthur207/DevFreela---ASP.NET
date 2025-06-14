@@ -21,6 +21,5 @@ namespace DevFreela.Application.Interfaces.AdminInterface
 
         Task<SimpleResponseModel> CompleteProject(int Id);
 
-        Task<SimpleResponseModel> CreateCommentProject(int Id, CreateCommentModel CommentModel);
     }
 }

@@ -23,6 +23,7 @@ namespace DevFreela.Domain.Entities
         public int? IdClient { get; private set; }
 
         public UserEntity Client { get; private set; }
+
         public int IdFreeLancer { get; private set; }
 
         public UserEntity FreeLancer { get; private set; }
@@ -31,19 +32,40 @@ namespace DevFreela.Domain.Entities
 
         public DateTime? StartedAt{ get; private set; }
 
-        public DateTime? CompletedAt { get; private set; }
+        public DateTime? AvailableAt { get; private set; }
+
+        public DateTime? SoldAt { get; private set; }
 
         public ProjectStatusEnum Status { get; private set; }
 
         public List<ProjectCommentEntity> Comments { get; set; }
 
+
+        public void SetPaymentPeding()
+        {
+            if (Status == ProjectStatusEnum.Created)
+            {
+                Status = ProjectStatusEnum.PaymentPending;
+            }
+        }
+
+        public void Suspend()
+        {
+            if (Status== ProjectStatusEnum.Created || Status is ProjectStatusEnum.PaymentPending)
+            {
+                Status = ProjectStatusEnum.Suspended;
+            }
+        }
+
         public void Cancel()
         {
-            if (Status==ProjectStatusEnum.InProgress || Status==ProjectStatusEnum.Suspended)
+            if (Status==ProjectStatusEnum.Created || Status == ProjectStatusEnum.InProgress || Status==ProjectStatusEnum.Suspended || Status== ProjectStatusEnum.Available)
             {
                 Status = ProjectStatusEnum.Cancelled;
             }
         }
+
+
 
         public void Start()
         {
@@ -55,24 +77,26 @@ namespace DevFreela.Domain.Entities
             }
         }
 
-        public void Complete()
+        public void MakeAvailable()
         {
-            if (Status==ProjectStatusEnum.PaymentPending || Status==ProjectStatusEnum.InProgress)
+            if (Status==ProjectStatusEnum.InProgress || Status==ProjectStatusEnum.Suspended)
             {
-                Status = ProjectStatusEnum.Completed;
-                CompletedAt = DateTime.Now;
+                Status = ProjectStatusEnum.Available;
+                AvailableAt = DateTime.Now;
             }
         }
 
-        public void SetPaymentPeding()
+        public void MakeAsSold()
         {
-            if (Status==ProjectStatusEnum.InProgress) 
+            if (Status == ProjectStatusEnum.PaymentPending)
             {
-                Status = ProjectStatusEnum.PaymentPending;
+                Status = ProjectStatusEnum.Sold;
+                SoldAt = DateTime.Now;
             }
         }
 
-        public void Update(string title, string description, decimal totalcost)
+
+        public void UpdateProject(string title, string description, decimal totalcost)
         {
             Title = title;
             Description = description;
