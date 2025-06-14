@@ -1,4 +1,4 @@
-﻿namespace DevFreela.Application.Models
+﻿namespace DevFreela.Domain.Models.Creations
 {
     public class CreateUserSkillModel
     {

@@ -3,7 +3,8 @@ using DevFreela.Application.Interfaces.AdminInterface;
 using DevFreela.Application.Mappers;
 using DevFreela.Application.Models;
 using DevFreela.Domain.Entities;
-using DevFreela.Domain.Models;
+using DevFreela.Domain.Models.Creations;
+using DevFreela.Domain.Models.PatternResult;
 using DevFreela.Domain.Models.ResponsePattern;
 
 namespace DevFreela.Application.Services

@@ -2,7 +2,7 @@
 using DevFreela.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace DevFreela.Domain.Models
+namespace DevFreela.Domain.Models.Creations
 {
     public class CreateUserModel
     {
@@ -23,12 +23,12 @@ namespace DevFreela.Domain.Models
         }
 
 
-        [Required(ErrorMessage="O informe do nome é obrigatório.")]
+        [Required(ErrorMessage = "O informe do nome é obrigatório.")]
         [StringLength(100, ErrorMessage = "O nome deve ter no máximo 100 caracteres.")]
         public string FullName { get; set; }
 
 
-        [Required(ErrorMessage ="O informe do e-mail é obrigatório.")]
+        [Required(ErrorMessage = "O informe do e-mail é obrigatório.")]
         [EmailAddress(ErrorMessage = "O e-mail informado não é válido.")]
         public string Email { get; set; }
 

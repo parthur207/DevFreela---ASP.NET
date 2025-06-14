@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DevFreela.Application.Repositories.Client
+namespace DevFreela.Application.Repositories.AdminRepository
 {
-    internal interface IClientProjectRepository
+    internal interface IAdminClientRepository
     {
     }
 }

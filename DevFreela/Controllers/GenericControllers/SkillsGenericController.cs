@@ -2,7 +2,7 @@
 using DevFreela.Application.Mappers;
 using DevFreela.Application.Models;
 using DevFreela.Domain.Enums;
-using DevFreela.Domain.Models;
+using DevFreela.Domain.Models.Creations;
 using DevFreela.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,21 +21,26 @@ namespace DevFreela.API.Controllers.GenericControllers
     public class SkillsGenericController : ControllerBase
     {
 
-        private readonly ISkillGenericInterface _skillInterface;
-            
-        public SkillsGenericController(ISkillGenericInterface skillInterface)
+        private readonly ISkillGenericInterface _skillGenericService;
+
+        public SkillsGenericController(ISkillGenericInterface skillGenericService)
         {
-            _skillInterface = skillInterface;
+            _skillGenericService = skillGenericService;
         }
 
         [HttpGet("all")]
         public async Task<IActionResult> GetAllSkills()
         {
-            var response = await _skillInterface.GetAllSkillsAsync();
+            var response = await _skillGenericService.GetAllSkills();
 
-            if (response.Status is false)
+            if (response.Status is ResponseStatusEnum.NotFound)
             {
                 return NotFound(response);
+            }
+
+            if (response.Status is ResponseStatusEnum.Error)
+            {
+                return BadRequest(response);
             }
 
             return Ok(response);
@@ -44,9 +49,9 @@ namespace DevFreela.API.Controllers.GenericControllers
         [HttpPost("create")]
         public async Task<IActionResult> PostSkill([FromBody] CreateSkillModel Model) 
         {
-            var response = await _skillInterface.CreateSkillAsync(Model);
+            var response = await _skillGenericService.CreateSkill(Model);
 
-            if (response.Status is false)
+            if (response.Status is  ResponseStatusEnum.Error)
             {
                 return BadRequest(response);
             }

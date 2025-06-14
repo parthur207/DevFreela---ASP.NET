@@ -10,9 +10,4 @@
     <ProjectReference Include="..\DevFreela.Domain\DevFreela.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\GenericService\" />
-    <Folder Include="Services\FreelancerService\" />
-  </ItemGroup>
-
 </Project>

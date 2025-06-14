@@ -1,5 +1,8 @@
-﻿using DevFreela.Domain.Enums;
-using DevFreela.Domain.Models;
+﻿using DevFreela.Application.Interfaces.GenericInterface;
+using DevFreela.Domain.Enums;
+using DevFreela.Domain.Models.Creations;
+using DevFreela.Domain.Models.Updates;
+using DevFreela.Infrastructure.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -11,7 +14,14 @@ namespace DevFreela.API.Controllers.GenericControllers
     public class GenericController : ControllerBase
     {
 
-        //private readonly _IAuth
+        private readonly IUserGenericInterface _userGenericService;
+        private readonly IJwtInterface _jwtService;
+
+        public GenericController(IUserGenericInterface userGenericService, IJwtInterface jwtService)
+        {
+            _userGenericService = userGenericService;
+            _jwtService= jwtService;
+        }
 
 
         [AllowAnonymous]
@@ -19,25 +29,30 @@ namespace DevFreela.API.Controllers.GenericControllers
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
 
-            //var response = await _authService.LoginService(model);
+            var Response = await _userGenericService.LoginGeneric(model);
 
+            if (Response.Status is ResponseStatusEnum.Error)
+            {
+                return BadRequest(Response);
+            }
+            var Token = _jwtService.GenerateToken(Response.Content.Item1, nameof(Response.Content.Item2));
 
-            return Ok();
+            return Ok(new { Message = "Login efetuado com sucesso.", Token = Token });
         }
-
+        
 
         [AllowAnonymous]
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] CreateUserModel model)
         {
-            //var response = await _authService.RegisterService(model);
+            var Response = await _userGenericService.RegisterGeneric(model);
 
-            if (/*response.Status is false*/ false) // Replace with actual condition
+            if (Response.Status is ResponseStatusEnum.Error)
             {
-                return BadRequest(/*response*/); // Replace with actual response
+                return BadRequest(Response);
             }
-            return Ok(/*response*/); // Replace with actual response
 
+            return Ok(Response);
         }
 
 
@@ -45,13 +60,17 @@ namespace DevFreela.API.Controllers.GenericControllers
         [HttpPost("changePassword")]
         public async Task<IActionResult> ChangePassword([FromBody] UpdatePasswordModel model)
         {
-            //var response = await _authService.ForgotPasswordService(model);
+            
+            var  userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
-            if (/*response.Status is false*/ false) // Replace with actual condition
+            var Response =await _userGenericService.ChangePasswordGeneric(userId, model);
+
+            if (Response.Status is ResponseStatusEnum.Error)
             {
-                return BadRequest(/*response*/); // Replace with actual response
+                return BadRequest(Response);
             }
-            return Ok(/*response*/); // Replace with actual response
+
+            return Ok(Response);
         }
 
 
@@ -61,7 +80,7 @@ namespace DevFreela.API.Controllers.GenericControllers
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             
-            var description = $"file name: {FilePicture.FileName}, file size: {FilePicture.Length}";
+            var description = $"Nome do arquivo: {FilePicture.FileName}, Tamanho do arquivo: {FilePicture.Length}";
 
             //processar a imagem e implemento do armazenamento do banco de dados
             return Ok(description);

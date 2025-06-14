@@ -1,11 +1,11 @@
 ﻿using DevFreela.Domain.Entities;
 using System.ComponentModel.DataAnnotations;
 
-namespace DevFreela.Domain.Models
+namespace DevFreela.Domain.Models.Creations
 {
     public class CreateProjectModel
     {
-        [Required(ErrorMessage ="É obrigatório o informe de um título para o projeto.")]
+        [Required(ErrorMessage = "É obrigatório o informe de um título para o projeto.")]
         [StringLength(100, ErrorMessage = "O título deve ter no máximo 70 caracteres.")]
         public string Title { get; set; }
 
@@ -13,6 +13,6 @@ namespace DevFreela.Domain.Models
         [StringLength(500, ErrorMessage = "A descrição deve ter no máximo 500 caracteres.")]
         public string Description { get; set; }
 
-        public decimal TotalCost { get; set; }  
+        public decimal TotalCost { get; set; }
     }
 }

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DevFreela.Application.Repositories.Freelancer
+namespace DevFreela.Application.Repositories.FreelancerRepository
 {
-    internal interface IFreelancerProjectRepository
+    internal interface IFreelancerSkillRepository
     {
     }
 }

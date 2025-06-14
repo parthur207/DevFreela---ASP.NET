@@ -1,9 +1,11 @@
 ﻿using DevFreela.Application.DTOs.GenericDTOs;
 using DevFreela.Application.Models;
 using DevFreela.Domain.Models;
+using DevFreela.Domain.Models.PatternResult;
 using DevFreela.Domain.Models.ResponsePattern;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,11 +15,11 @@ namespace DevFreela.Application.Interfaces.AdminInterface
     public interface IAdminUsersInterface
     {
         //Querys
-        Task<ResponseModel<List<UserDTO>>> GetAllUsersAdmin();
+        Task<ResponseModel<List<UserDTO>>> GetAllUsersAdmin(int Size);
         Task<ResponseModel<UserDTO>> GetUserByEmailAdmin(string Email);
-        Task<ResponseModel<List<UserDTO>>> GetAllFreelancersAdmin();
-        Task<ResponseModel<List<UserDTO>>> GetAllClientsAdmin();
-        Task<ResponseModel<List<UserDTO>>> GetAllUsersInactiveAdmin();
+        Task<ResponseModel<List<UserDTO>>> GetAllFreelancersAdmin(int Size);
+        Task<ResponseModel<List<UserDTO>>> GetAllClientsAdmin(int Size);
+        Task<ResponseModel<List<UserDTO>>> GetAllUsersInactiveAdmin(int Size);
 
         //Commands
         Task<SimpleResponseModel> InactiveUserAdmin(string Email);

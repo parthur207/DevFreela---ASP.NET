@@ -1,6 +1,6 @@
 ﻿using DevFreela.Application.DTOs.AdminFreelancerDTOs;
 using DevFreela.Domain.Entities;
-using DevFreela.Domain.Models;
+using DevFreela.Domain.Models.Creations;
 using System;
 using System.Collections.Generic;
 using System.Linq;

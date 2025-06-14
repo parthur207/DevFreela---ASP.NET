@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DevFreela.Application.Repositories.Admin
+namespace DevFreela.Domain.Enums
 {
-    internal class IAdminSkillRepository
+    public enum ResponseStatusEnum
     {
+        Success = 1,
+        NotFound = 2,
+        Error = 3
     }
 }

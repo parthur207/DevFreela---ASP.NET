@@ -3,8 +3,7 @@ using DevFreela.Application.DTOs.AdminFreelancerDTOs;
 using DevFreela.Application.DTOs.GenericDTOs;
 using DevFreela.Domain.Enums;
 using DevFreela.Domain.Models;
-using DevFreela.Domain.Models.ResponsePattern;
-
+using DevFreela.Domain.Models.PatternResult;
 
 namespace DevFreela.Application.Interfaces.AdminInterface
 {

@@ -1,31 +1,39 @@
 ﻿using DevFreela.Application.DTOs;
 using DevFreela.Domain.Models.ResponsePattern;
-using DevFreela.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DevFreela.Application.DTOs.AdminFreelancerDTOs;
+using DevFreela.Domain.Enums;
+using DevFreela.Domain.Models.Creations;
+using DevFreela.Domain.Models.Updates;
+using DevFreela.Domain.Models.PatternResult;
 
 namespace DevFreela.Application.Interfaces.FreeLancerInterface
 {
-    internal interface IFreelancerProjectInterface
+    public interface IFreelancerProjectInterface
     {
         //Querys
+        Task<ResponseModel<List<AdminFreelancerProjectDTO>>> GetAllMyProjectsByNameOrDescription(int FreeLanceId, string NameOrDescription, int Size);
 
-        Task<List<AdminFreelancerProjectDTO>> GetAllMyProjectsAsync(int FreeLanceId);
+        Task<ResponseModel<List<AdminFreelancerProjectDTO>>> GetAllMyProjectsByStatus(int FreeLanceId, ProjectStatusEnum Status, int Size);
 
         //Commands
-        Task<SimpleResponseModel> CreateProject(CreateProjectModel ProjectModel, int FreeLanceId);
+        Task<SimpleResponseModel> CreateProject(int FreeLanceId, CreateProjectModel ProjectModel);
 
-        Task<SimpleResponseModel> UpdateProject(int Id, UpdateProjectModel ProjectUpdateModel);
+        Task<SimpleResponseModel> UpdateProject(int IdProject, int userId, UpdateProjectModel model);
 
-        Task<SimpleResponseModel> DeleteProject(int Id);
+        Task<SimpleResponseModel> DeleteProject(int IdProject, int userId);
 
-        Task<SimpleResponseModel> StartProject(int Id);
+        Task<SimpleResponseModel> StartProject(int IdProject, int userId);
 
-        Task<SimpleResponseModel> CompleteProject(int Id);
+        Task<SimpleResponseModel> CompleteProject(int IdProject, int userId);
+
+        Task<SimpleResponseModel> SuspendProject(int IdProject, int userId);
+
+        Task<SimpleResponseModel> MakeProjectAvailable(int IdProject, int userId);
 
     }
 }

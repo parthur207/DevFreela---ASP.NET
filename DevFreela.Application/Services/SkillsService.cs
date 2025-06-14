@@ -1,7 +1,8 @@
 ﻿using DevFreela.Application.DTOs.AdminFreelancerDTOs;
 using DevFreela.Application.Interfaces.GenericInterface;
 using DevFreela.Application.Mappers;
-using DevFreela.Domain.Models;
+using DevFreela.Domain.Models.Creations;
+using DevFreela.Domain.Models.PatternResult;
 using DevFreela.Domain.Models.ResponsePattern;
 using DevFreela.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;

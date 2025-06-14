@@ -1,4 +1,4 @@
-﻿using DevFreela.Application.Models;
+﻿using DevFreela.Domain.Models.Creations;
 using DevFreela.Domain.Models.ResponsePattern;
 using System;
 using System.Collections.Generic;
@@ -10,6 +10,6 @@ namespace DevFreela.Application.Interfaces.FreeLancerInterface
 {
     public interface IFreelancerUserSkillInterface
     {
-        Task<SimpleResponseModel> CreateUserSkill(CreateUserSkillModel model);
+        Task<SimpleResponseModel> CreateUserSkill(int UserId, CreateUserSkillModel model);
     }
 }

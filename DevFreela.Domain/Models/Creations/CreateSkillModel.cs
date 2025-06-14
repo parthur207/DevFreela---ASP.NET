@@ -1,11 +1,11 @@
 ﻿using DevFreela.Domain.Entities;
 
-namespace DevFreela.Domain.Models
+namespace DevFreela.Domain.Models.Creations
 {
-    public class SkillModel
+    public class CreateSkillModel
     {
 
-        public SkillModel(string description)
+        public CreateSkillModel(string description)
         {
             Description = description;
         }

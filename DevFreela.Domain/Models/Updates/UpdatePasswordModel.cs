@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DevFreela.Domain.Models
+namespace DevFreela.Domain.Models.Updates
 {
     public class UpdatePasswordModel
     {
@@ -27,6 +27,6 @@ namespace DevFreela.Domain.Models
         [DataType(DataType.Password)]
         [StringLength(100, MinimumLength = 8, ErrorMessage = "Senha deve ter no mínimo 8 caracteres.")]
         [Compare("NewPassword", ErrorMessage = "A confirmação da nova senha não confere com a nova senha.")]
-        public string ConfirmNewPassword { get; set; }  
+        public string ConfirmNewPassword { get; set; }
     }
 }

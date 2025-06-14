@@ -1,11 +1,12 @@
 ﻿using DevFreela.Domain.Models.ResponsePattern;
-using DevFreela.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DevFreela.Application.DTOs.GenericDTOs;
+using DevFreela.Domain.Models.Creations;
+using DevFreela.Domain.Models.PatternResult;
 
 namespace DevFreela.Application.Interfaces.GenericInterface
 {
@@ -18,6 +19,6 @@ namespace DevFreela.Application.Interfaces.GenericInterface
 
 
         //Commands
-        Task<SimpleResponseModel> CreateCommentProject(int Id, CreateCommentModel CommentModel);
+        Task<SimpleResponseModel> CreateCommentProject(int UserId, CreateCommentModel CommentModel);
     }
 }

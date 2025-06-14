@@ -1,4 +1,5 @@
-﻿using DevFreela.Domain.Enums;
+﻿using DevFreela.Application.Interfaces.ClientInterface;
+using DevFreela.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,59 +13,94 @@ namespace DevFreela.API.Controllers.ClientControllers
     public class ClientProjectsController : ControllerBase
     {
 
+        private readonly IClientProjectsInterface _clientProjectsService;
 
-        [HttpGet("getPurchased")]
-        public async Task<IActionResult> GetPurchasedProjects([FromQuery] string search = "", [FromQuery] int size = 3)
+        public ClientProjectsController(IClientProjectsInterface clientProjectsService)
         {
-
-            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-            //var response = 
-
-            if (response.Status is false)
-            {
-                return NotFound(response);
-            }
-            return Ok(response);
+            _clientProjectsService = clientProjectsService;
         }
 
-        [HttpGet("getPurchased/{nameOrDescription}")]
+
+        [HttpGet("getPurchased")]
+        public async Task<IActionResult> GetPurchasedProjects([FromQuery] string nameOrDescription = "", [FromQuery] int size = 3)
+        {
+            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+            var Response =  await _clientProjectsService.GetPurchasedProjectsClient(userId, nameOrDescription, size);
+
+            if (Response.Status is ResponseStatusEnum.NotFound)
+            {
+                return NotFound(Response);
+            }
+
+            if (Response.Status is ResponseStatusEnum.Error)
+            {
+                return BadRequest(Response);
+            }
+
+            return Ok(Response);
+        }
 
 
         [HttpPatch("Buy/{idProject}")]
         public async Task<IActionResult> BuyProject([FromRoute] int idProject)
         {
-          
-            //var response = 
+            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
-            if (response.Status is false)
+            var Response = await _clientProjectsService.BuyProjectClient(userId, idProject);
+
+            if (Response.Status is ResponseStatusEnum.NotFound)
             {
-                return BadRequest(response);
+                return NotFound(Response);
             }
-            return Ok(response);
+
+            if (Response.Status is ResponseStatusEnum.Error)
+            {
+                return BadRequest(Response);
+            }
+
+            return Ok(Response);
         }
 
         [HttpPatch("Pay/{idProject}")]
         public async Task<IActionResult> MakePayment([FromRoute] int idProject)
         {
-            //var response = 
 
-            if (response.Status is false)
+            int UserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+            var Response = await _clientProjectsService.MakePaymentClient(UserId, idProject);
+
+            if (Response.Status is ResponseStatusEnum.NotFound)
             {
-                return BadRequest(response);
+                return NotFound(Response);
             }
-            return Ok(response);
+
+            if (Response.Status is ResponseStatusEnum.Error)
+            {
+                return BadRequest(Response);
+            }
+            return Ok(Response);
         }
 
         [HttpPatch("cancel/purchase/{idProject}")]
         public async Task<IActionResult> CancelPurchase([FromRoute] int idProject)
         {
-            //var response = 
 
-            if (response.Status is false)
+            int UserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+            var Response = await _clientProjectsService.CancelPurchaseClient(UserId, idProject);
+
+            if (Response.Status is ResponseStatusEnum.NotFound)
             {
-                return BadRequest(response);
+                return NotFound(Response);
             }
-            return Ok(response);
+
+            if (Response.Status is ResponseStatusEnum.Error)
+            {
+                return BadRequest(Response);
+            }
+
+            return Ok(Response);
         }
 
 

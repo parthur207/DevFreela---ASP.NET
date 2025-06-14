@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DevFreela.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,6 @@ namespace DevFreela.Domain.Models.ResponsePattern
         public SimpleResponseModel() { }
 
         public string? Message { get; set; }
-        public bool Status { get; set; }
+        public ResponseStatusEnum Status { get; set; }
     }
 }

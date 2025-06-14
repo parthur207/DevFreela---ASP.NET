@@ -26,9 +26,35 @@ namespace DevFreela.API.Controllers.AdminControllers
         {
             
             var Response= await _adminUserService.GetAllUsersAdmin(Size);
-            if (Response.Status is false)
+
+            if (Response.Status is ResponseStatusEnum.NotFound)
             {
                 return NotFound(Response);
+            }
+
+            if (Response.Status is ResponseStatusEnum.Error)
+            {
+                return BadRequest(Response);
+            }
+
+            return Ok(Response);
+        }
+
+
+        [HttpGet("all/incactive")]
+        public async Task<IActionResult> GetAllUsersInactive([FromQuery] int Size = 5)
+        {
+
+            var Response = await _adminUserService.GetAllUsersInactiveAdmin(Size);
+
+            if (Response.Status is ResponseStatusEnum.NotFound)
+            {
+                return NotFound(Response);
+            }
+
+            if (Response.Status is ResponseStatusEnum.Error)
+            {
+                return BadRequest(Response);
             }
 
             return Ok(Response);
@@ -40,9 +66,14 @@ namespace DevFreela.API.Controllers.AdminControllers
         {
             var Response = await _adminUserService.GetUserByEmailAdmin(email);
 
-            if (Response.Status is false)
+            if (Response.Status is ResponseStatusEnum.NotFound)
             {
                 return NotFound(Response);
+            }
+
+            if (Response.Status is ResponseStatusEnum.Error)
+            {
+                return BadRequest(Response);
             }
 
             return Ok(Response);
@@ -53,9 +84,14 @@ namespace DevFreela.API.Controllers.AdminControllers
         {
             var Response= await _adminUserService.GetAllFreelancersAdmin(Size);
 
-            if (Response.Status is false)
+            if (Response.Status is ResponseStatusEnum.NotFound)
             {
                 return NotFound(Response);
+            }
+
+            if (Response.Status is ResponseStatusEnum.Error)
+            {
+                return BadRequest(Response);
             }
 
             return Ok(Response);
@@ -67,9 +103,14 @@ namespace DevFreela.API.Controllers.AdminControllers
 
             var Response = await _adminUserService.GetAllClientsAdmin(Size);
 
-            if (Response.Status is false)
+            if (Response.Status is ResponseStatusEnum.NotFound)
             {
                 return NotFound(Response);
+            }
+
+            if (Response.Status is ResponseStatusEnum.Error)
+            {
+                return BadRequest(Response);
             }
 
             return Ok(Response);
@@ -80,7 +121,12 @@ namespace DevFreela.API.Controllers.AdminControllers
         {
             var Response = await _adminUserService.InactiveUserAdmin(Email);
 
-            if (Response.Status is false)
+            if (Response.Status is ResponseStatusEnum.NotFound)
+            {
+                return NotFound(Response);
+            }
+
+            if (Response.Status is ResponseStatusEnum.Error)
             {
                 return BadRequest(Response);
             }
@@ -94,16 +140,17 @@ namespace DevFreela.API.Controllers.AdminControllers
 
             var Response= await _adminUserService.ActivateUserAdmin(Email);
 
-            if (Response.Status is false)
+            if (Response.Status is ResponseStatusEnum.NotFound)
             {
                 return NotFound(Response);
             }
 
+            if (Response.Status is ResponseStatusEnum.Error)
+            {
+                return BadRequest(Response);
+            }
+
             return Ok(Response);
         }
-
-
-
-
     }
 }

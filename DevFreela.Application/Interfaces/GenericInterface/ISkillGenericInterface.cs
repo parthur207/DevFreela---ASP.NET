@@ -1,5 +1,6 @@
 ﻿using DevFreela.Application.DTOs.AdminFreelancerDTOs;
-using DevFreela.Domain.Models;
+using DevFreela.Domain.Models.Creations;
+using DevFreela.Domain.Models.PatternResult;
 using DevFreela.Domain.Models.ResponsePattern;
 
 namespace DevFreela.Application.Interfaces.GenericInterface

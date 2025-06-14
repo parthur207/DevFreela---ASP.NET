@@ -22,15 +22,21 @@ namespace DevFreela.API.Controllers.AdminControllers
         }
 
         [HttpGet("get/search")]
-        public async Task<IActionResult> GetSearch([FromQuery] string search = "", [FromQuery] int size = 5)
+        public async Task<IActionResult> GetSearchAdm([FromQuery] string search = "", [FromQuery] int size = 5)
         {
 
             var response = await _adminProjectsService.GetSearchAdmin(search, size);
 
-            if (response.Status is false)
+            if (response.Status is ResponseStatusEnum.NotFound)
             {
                 return NotFound(response);
             }
+
+            if (response.Status is ResponseStatusEnum.Error)
+            {
+                return BadRequest(response);
+            }
+
 
             return Ok(response);
         }
@@ -40,9 +46,14 @@ namespace DevFreela.API.Controllers.AdminControllers
         {
             var response = await _adminProjectsService.GetAllProjectsByStatusAdmin(status, Size);
 
-            if (response.Status is false)
+            if (response.Status is ResponseStatusEnum.NotFound)
             {
                 return NotFound(response);
+            }
+
+            if (response.Status is ResponseStatusEnum.Error)
+            {
+                return BadRequest(response);
             }
 
             return Ok(response);
@@ -53,9 +64,14 @@ namespace DevFreela.API.Controllers.AdminControllers
         {
             var response = await _adminProjectsService.GetAllProjectsByFreelancerAdmin(EmailFreelancer);
 
-            if (response.Status is false)
+            if (response.Status is ResponseStatusEnum.NotFound)
             {
                 return NotFound(response);
+            }
+
+            if (response.Status is ResponseStatusEnum.Error)
+            {
+                return BadRequest(response);
             }
 
             return Ok(response);
@@ -66,10 +82,15 @@ namespace DevFreela.API.Controllers.AdminControllers
         {
             var response = await _adminProjectsService.GetAllProjectsByClientAdmin(EmailClient);
 
-            if (response.Status is false)
+            if (response.Status is ResponseStatusEnum.NotFound)
             {
                 return NotFound(response);
             }
+
+            if (response.Status is ResponseStatusEnum.Error)
+            {
+                return BadRequest(response);
+            }   
 
             return Ok(response);
         }
