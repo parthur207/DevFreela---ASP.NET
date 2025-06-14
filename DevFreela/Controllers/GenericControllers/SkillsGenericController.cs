@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using System.Data;
 using System.Security.Claims;
 
-namespace DevFreela.API.Controllers
+namespace DevFreela.API.Controllers.GenericControllers
 {
 
     [ApiController]
@@ -21,9 +21,9 @@ namespace DevFreela.API.Controllers
     public class SkillsGenericController : ControllerBase
     {
 
-        private readonly IGenericSkillInterface _skillInterface;
+        private readonly ISkillGenericInterface _skillInterface;
             
-        public SkillsGenericController(IGenericSkillInterface skillInterface)
+        public SkillsGenericController(ISkillGenericInterface skillInterface)
         {
             _skillInterface = skillInterface;
         }
@@ -45,22 +45,6 @@ namespace DevFreela.API.Controllers
         public async Task<IActionResult> PostSkill([FromBody] CreateSkillModel Model) 
         {
             var response = await _skillInterface.CreateSkillAsync(Model);
-
-            if (response.Status is false)
-            {
-                return BadRequest(response);
-            }
-
-            return Ok(response);
-        }
-
-        [HttpPatch("bind")]
-        public async Task<IActionResult> PostUserSkill([FromBody] UserSkillModel Model)
-        {
-
-            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-
-            var response = await _skillInterface.UpdateSkillAsync(Model);
 
             if (response.Status is false)
             {

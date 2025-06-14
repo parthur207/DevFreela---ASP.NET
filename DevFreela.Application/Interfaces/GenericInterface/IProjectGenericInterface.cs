@@ -9,13 +9,12 @@ using DevFreela.Application.DTOs.GenericDTOs;
 
 namespace DevFreela.Application.Interfaces.GenericInterface
 {
-    public interface IGenericProjectInterface
+    public interface IProjectGenericInterface
     {
 
         //Querys
-        Task<ResponseModel<List<ProjectItemDTO>>> GetSearch(string Search, int N);
-
-        Task<ResponseModel<ProjectDTO>> GetByProjectId(int Id);
+        Task<ResponseModel<List<ProjectDTO>>> GetAllProjects(string search, int Size);
+        Task<ResponseModel<List<ProjectDTO>>> GetAllProjectsByOwner(string NameOrEmail, int Size);
 
 
         //Commands

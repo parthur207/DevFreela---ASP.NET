@@ -14,89 +14,92 @@ namespace DevFreela.API.Controllers.AdminControllers
     public class AdminUsersControllers : ControllerBase
     {
 
-        private readonly IAdminUserInterface _userInterface;
-        private readonly IUserSkillInterface _userSkillInterface;
+        private readonly IAdminUsersInterface _adminUserService;
 
-        public AdminUsersControllers(IAdminUserInterface userInterface, IUserSkillInterface userSkillInterface)
+        public AdminUsersControllers(IAdminUsersInterface adminUserService)
         {
-         
-            _userInterface = userInterface;
-            _userSkillInterface = userSkillInterface;
+            _adminUserService = adminUserService;
         }
 
         [HttpGet("all")]
         public async Task<IActionResult> GetAllUsers([FromQuery] int Size=5)
         {
             
-
-            if (response.Status is false)
+            var Response= await _adminUserService.GetAllUsersAdmin(Size);
+            if (Response.Status is false)
             {
-                return NotFound(response);
+                return NotFound(Response);
             }
 
-            return Ok(response);
+            return Ok(Response);
         }
 
 
         [HttpGet("email")]
         public async Task<IActionResult> GetByEmail([FromQuery] string email)
         {
-            var response = await _userInterface.GetByEmailAsync(email);
+            var Response = await _adminUserService.GetUserByEmailAdmin(email);
 
-            if (response.Status is false)
+            if (Response.Status is false)
             {
-                return NotFound(response);
+                return NotFound(Response);
             }
 
-            return Ok(response);
+            return Ok(Response);
         }
 
         [HttpGet("freelancers")]
         public async Task<IActionResult> GetAllFreelancers([FromQuery] int Size=5)
         {
+            var Response= await _adminUserService.GetAllFreelancersAdmin(Size);
 
-            if (response.Status is false)
+            if (Response.Status is false)
             {
-                return NotFound(response);
+                return NotFound(Response);
             }
 
-            return Ok(response);
+            return Ok(Response);
         }
 
         [HttpGet("clients")]
         public async Task<IActionResult> GetAllClients([FromQuery] int Size = 5)
         {
 
-            if (response.Status is false)
+            var Response = await _adminUserService.GetAllClientsAdmin(Size);
+
+            if (Response.Status is false)
             {
-                return NotFound(response);
+                return NotFound(Response);
             }
 
-            return Ok(response);
+            return Ok(Response);
         }
 
         [HttpDelete("inactive")]
-        public async Task<IActionResult> InactiveUser([FromQuery] int Size = 5)
+        public async Task<IActionResult> InactiveUser([FromQuery] string Email)
         {
+            var Response = await _adminUserService.InactiveUserAdmin(Email);
 
-            if (response.Status is false)
+            if (Response.Status is false)
             {
-                return NotFound(response);
+                return BadRequest(Response);
             }
 
-            return Ok(response);
+            return Ok(Response);
         }
 
         [HttpPut("active")]
-        public async Task<IActionResult> ActiveUser([FromQuery] string EmailUser)
+        public async Task<IActionResult> ActiveUser([FromQuery] string Email)
         {
 
-            if (response.Status is false)
+            var Response= await _adminUserService.ActivateUserAdmin(Email);
+
+            if (Response.Status is false)
             {
-                return NotFound(response);
+                return NotFound(Response);
             }
 
-            return Ok(response);
+            return Ok(Response);
         }
 
 

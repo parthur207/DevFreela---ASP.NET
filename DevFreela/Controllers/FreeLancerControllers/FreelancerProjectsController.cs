@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-namespace DevFreela.API.Controllers
+namespace DevFreela.API.Controllers.FreelancerControllers
 {
     [Route("api/freelancer")]
     [ApiController]
@@ -33,8 +33,8 @@ namespace DevFreela.API.Controllers
             return Ok(response);
         }
 
-        [HttpGet("MyProject/{idProject}")]
-        public async Task<IActionResult> GetMyProjectById([FromRoute] int idProject)
+        [HttpGet("MyProject/NameOrDescription")]
+        public async Task<IActionResult> GetMyProjectByNameOrDescription([FromQuery] string NameOrDescription)
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 

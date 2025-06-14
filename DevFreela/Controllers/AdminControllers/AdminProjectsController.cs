@@ -1,4 +1,5 @@
-﻿using DevFreela.Application.Services;
+﻿using DevFreela.Application.Interfaces.AdminInterface;
+using DevFreela.Application.Services;
 using DevFreela.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -12,30 +13,19 @@ namespace DevFreela.API.Controllers.AdminControllers
     [Authorize(Roles = nameof(RolesTypesEnum.Admin))]
     public class AdminProjectsController : ControllerBase
     {
-        /*private readonly ProjectService _projectService;
-        public AdminProjectsController(ProjectService projectService)
+
+        private readonly IAdminProjectsInterface _adminProjectsService;
+
+        public AdminProjectsController(IAdminProjectsInterface adminProjectsService)
         {
-            _projectService = projectService;
-        }*/
-
-        [HttpGet("get/search")]
-        public async Task<IActionResult> GetSearch([FromQuery] string search = "", [FromQuery] int size = 3)
-        {
-
-            var response = await _projectService.GetSearchAsync(search, size);
-
-            if (response.Status is false)
-            {
-                return NotFound(response);
-            }
-
-            return Ok(response);
+            _adminProjectsService = adminProjectsService;
         }
 
-        [HttpGet("get/{idProject}")]
-        public async Task<IActionResult> GetById([FromRoute] int idProject)
+        [HttpGet("get/search")]
+        public async Task<IActionResult> GetSearch([FromQuery] string search = "", [FromQuery] int size = 5)
         {
-            var response = await _projectService.GetByIdAsync(idProject);
+
+            var response = await _adminProjectsService.GetSearchAdmin(search, size);
 
             if (response.Status is false)
             {
@@ -46,9 +36,9 @@ namespace DevFreela.API.Controllers.AdminControllers
         }
 
         [HttpGet("getAll/status")]
-        public async Task<IActionResult> GetAllByStatus([FromQuery] ProjectStatusEnum status)
+        public async Task<IActionResult> GetAllByStatus([FromQuery] ProjectStatusEnum status, [FromQuery] int Size=5)
         {
-            var response = await _projectService.GetByIdAsync(idProject);
+            var response = await _adminProjectsService.GetAllProjectsByStatusAdmin(status, Size);
 
             if (response.Status is false)
             {
@@ -59,9 +49,9 @@ namespace DevFreela.API.Controllers.AdminControllers
         }
 
         [HttpGet("get/freelancer")]
-        public async Task<IActionResult> GetByFreelancer([FromQuery] string EmailFreelancer)
+        public async Task<IActionResult> GetAllProjectsByFreelancer([FromQuery] string EmailFreelancer)
         {
-            var response = await _projectService.GetByIdAsync(EmailFreelancer);
+            var response = await _adminProjectsService.GetAllProjectsByFreelancerAdmin(EmailFreelancer);
 
             if (response.Status is false)
             {
@@ -72,9 +62,9 @@ namespace DevFreela.API.Controllers.AdminControllers
         }
 
         [HttpGet("get/client")]
-        public async Task<IActionResult> GetByClient([FromQuery] string EmailClient)
+        public async Task<IActionResult> GetAllProjectsByClient([FromQuery] string EmailClient)
         {
-            var response = await _projectService.GetByIdAsync(EmailClient);
+            var response = await _adminProjectsService.GetAllProjectsByClientAdmin(EmailClient);
 
             if (response.Status is false)
             {
@@ -83,8 +73,5 @@ namespace DevFreela.API.Controllers.AdminControllers
 
             return Ok(response);
         }
-
-
-
     }
 }

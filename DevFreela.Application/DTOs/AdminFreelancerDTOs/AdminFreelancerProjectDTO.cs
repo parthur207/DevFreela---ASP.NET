@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DevFreela.Application.DTOs.AdminDTOs
+namespace DevFreela.Application.DTOs.AdminFreelancerDTOs
 {
-    internal class AdminProjectDTOs
+    public class AdminFreelancerProjectDTO
     {
     }
 }

@@ -13,6 +13,7 @@ namespace DevFreela.API.Controllers.GenericControllers
 
         //private readonly _IAuth
 
+
         [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
@@ -23,6 +24,7 @@ namespace DevFreela.API.Controllers.GenericControllers
 
             return Ok();
         }
+
 
         [AllowAnonymous]
         [HttpPost("register")]
@@ -38,6 +40,7 @@ namespace DevFreela.API.Controllers.GenericControllers
 
         }
 
+
         [Authorize(Roles = $"{nameof(RolesTypesEnum.Client)},{nameof(RolesTypesEnum.FreeLancer)}")]
         [HttpPost("changePassword")]
         public async Task<IActionResult> ChangePassword([FromBody] UpdatePasswordModel model)
@@ -50,6 +53,7 @@ namespace DevFreela.API.Controllers.GenericControllers
             }
             return Ok(/*response*/); // Replace with actual response
         }
+
 
         [Authorize(Roles = $"{nameof(RolesTypesEnum.Client)},{nameof(RolesTypesEnum.FreeLancer)}")]
         [HttpPut("profile-picture")]

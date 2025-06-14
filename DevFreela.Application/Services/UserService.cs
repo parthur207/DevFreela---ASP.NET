@@ -8,7 +8,7 @@ using DevFreela.Domain.Models.ResponsePattern;
 
 namespace DevFreela.Application.Services
 {
-    public class UserService : IAdminUserInterface
+    public class UserService : IAdminUsersInterface
     {
         private readonly DevFreelaDbContext _dbContext;//Alterar para injeção de dependecia repository
         public UserService(DevFreelaDbContext dbContext)

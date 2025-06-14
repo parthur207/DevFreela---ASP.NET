@@ -27,6 +27,9 @@ namespace DevFreela.API.Controllers.ClientControllers
             return Ok(response);
         }
 
+        [HttpGet("getPurchased/{nameOrDescription}")]
+
+
         [HttpPatch("Buy/{idProject}")]
         public async Task<IActionResult> BuyProject([FromRoute] int idProject)
         {
