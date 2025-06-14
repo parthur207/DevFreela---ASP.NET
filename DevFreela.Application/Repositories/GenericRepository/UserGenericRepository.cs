@@ -1,5 +1,9 @@
 ﻿using DevFreela.Domain.Entities;
+using DevFreela.Domain.Enums;
+using DevFreela.Domain.Models.Creations;
+using DevFreela.Domain.Models.PatternResult;
 using DevFreela.Domain.Models.ResponsePattern;
+using DevFreela.Domain.Models.Updates;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +14,8 @@ namespace DevFreela.Application.Repositories.GenericRepository
 {
     public interface UserGenericRepository
     {
-        Task<SimpleResponseModel> LoginGenericAsync(UserEntity Entity);
-
-        Task<SimpleResponseModel> RegisterGenericAsync(UserEntity Entity);
+        Task<ResponseModel<(int, RolesTypesEnum)>> LoginGenericAsync(LoginModel model);
+        Task<SimpleResponseModel> RegisterGenericAsync(CreateUserModel model);
+        Task<SimpleResponseModel> ChangePasswordGenericAsync(int UserId, UpdatePasswordModel model);
     }
 }
