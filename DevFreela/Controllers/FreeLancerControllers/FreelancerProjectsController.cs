@@ -1,7 +1,9 @@
 ﻿using DevFreela.Application.Interfaces.AdminInterface;
+using DevFreela.Application.Interfaces.FreeLancerInterface;
 using DevFreela.Application.Services;
 using DevFreela.Domain.Enums;
-using DevFreela.Domain.Models;
+using DevFreela.Domain.Models.Creations;
+using DevFreela.Domain.Models.Updates;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,50 +16,50 @@ namespace DevFreela.API.Controllers.FreelancerControllers
     [Authorize(Roles = nameof(RolesTypesEnum.FreeLancer))]
     public class FreelancerProjectsController : ControllerBase
     {
-        //private readonly 
+
+        private readonly IFreelancerProjectInterface _freelancerProjectService;
+
+        public FreelancerProjectsController(IFreelancerProjectInterface freelancerProjectService)
+        {
+            _freelancerProjectService = freelancerProjectService;
+        }
 
 
         [HttpGet("myProjects/search")]
-        public async Task<IActionResult> GetAllMyProjects([FromQuery] string search = "", [FromQuery] int size = 3)
-        {
-
-            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-
-            var response = await _projectService.GetSearchAsync(search, size);
-
-            if (response.Status is false)
-            {
-                return NotFound(response);
-            }
-
-            return Ok(response);
-        }
-
-        [HttpGet("MyProject/NameOrDescription")]
-        public async Task<IActionResult> GetMyProjectByNameOrDescription([FromQuery] string NameOrDescription)
+        public async Task<IActionResult> GetMyProjectByNameOrDescription([FromQuery] string NameOrDescription, [FromQuery] int size = 3)
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
-            var response = await _projectService.GetByIdAsync(idProject);
+            var Response = await _freelancerProjectService.GetAllMyProjectsByNameOrDescription(userId, NameOrDescription, size);
              
-            if (response.Status is false)
+            if (Response.Status is ResponseStatusEnum.NotFound)
             {
-                return NotFound(response);
+                return NotFound(Response);
             }
 
-            return Ok(response);
+            if (Response.Status is ResponseStatusEnum.Error)
+            {
+                return BadRequest(Response);
+            }
+
+            return Ok(Response);
         }
 
         [HttpGet("myProjects/status")]
-        public async Task<IActionResult> GetAllMyProjectsByStatus([FromQuery] string search = "", [FromQuery] ProjectStatusEnum ?status=null, [FromQuery] int size = 3)
+        public async Task<IActionResult> GetAllMyProjectsByStatus([FromQuery] ProjectStatusEnum status, [FromQuery] int size = 3)
         {
             int UserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
-            var response = await _projectService.GetSearchAsync(search, size);
+            var response = await _freelancerProjectService.GetAllMyProjectsByStatus(UserId,status, size);
 
-            if (response.Status is false)
+            if (response.Status is ResponseStatusEnum.NotFound)
             {
                 return NotFound(response);
+            }
+
+            if (response.Status is ResponseStatusEnum.Error)
+            {
+                return BadRequest(response);
             }
 
             return Ok(response);
@@ -67,8 +69,17 @@ namespace DevFreela.API.Controllers.FreelancerControllers
         [HttpPost("project/create")]
         public async Task<IActionResult> PostProject([FromBody] CreateProjectModel Model)
         {
-            var response = await _projectService.CreateProjectAsync(Model);
-            if (response.Status is false)
+
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+            var response = await _freelancerProjectService.CreateProject(userId, Model);
+
+            if (response.Status is ResponseStatusEnum.NotFound)
+            {
+                return NotFound(response);
+            }
+
+            if (response.Status is ResponseStatusEnum.Error)
             {
                 return BadRequest(response);
             }
@@ -76,52 +87,20 @@ namespace DevFreela.API.Controllers.FreelancerControllers
             return Ok(response);
         }
 
-        [HttpPut("project/update/{id}")]
-        public async Task<IActionResult> PutProject([FromRoute] int id, [FromBody] UpdateProjectModel Model)
-        {
-            var response = await _projectService.UpdateAsync(id, Model);
-
-            if (response.Status is false)
-            {
-                return BadRequest(response);
-            }
-
-            return Ok(response);
-        }
-
-        [HttpPatch("project/delete/{id}")]
-        public async Task<IActionResult> DeleteProject([FromRoute] int id)
-        {
-            var response = await _projectService.DeleteAsync(id);
-
-            if (response.Status is false)
-            {
-                return BadRequest(response);
-            }
-
-            return Ok(response);
-        }
-
-        [HttpPatch("project/start/{id}")]
-        public async Task<IActionResult> StartProject([FromRoute] int id)
-        {
-            var response = await _projectService.StartAsync(id);
-
-            if (response.Status is false)
-            {
-                return BadRequest(response);
-            }
-
-            return Ok(response);
-        }
-
-        [HttpPatch("project/complete/{id}")]
-        public async Task<IActionResult> CompleteProject([FromRoute] int id)
+        [HttpPut("project/update/{idProject}")]
+        public async Task<IActionResult> PutProject([FromRoute] int idProject, [FromBody] UpdateProjectModel Model)
         {
 
-            var response = await _projectService.CompleteAsync(id);
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
-            if (response.Status is false)
+            var response = await _freelancerProjectService.UpdateProject(idProject, userId, Model);
+
+            if (response.Status is ResponseStatusEnum.NotFound)
+            {
+                return NotFound(response);
+            }
+
+            if (response.Status is ResponseStatusEnum.Error)
             {
                 return BadRequest(response);
             }
@@ -129,13 +108,21 @@ namespace DevFreela.API.Controllers.FreelancerControllers
             return Ok(response);
         }
 
-        [HttpPatch("project/cancel/{id}")]
-        public async Task<IActionResult> CancelProject([FromRoute] int id)
+
+        [HttpPatch("project/start/{idProject}")]
+        public async Task<IActionResult> StartProject([FromRoute] int idProject)
         {
 
-            var response = await _projectService.CompleteAsync(id);
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
-            if (response.Status is false)
+            var response = await _freelancerProjectService.StartProject(idProject, userId);
+
+            if (response.Status is ResponseStatusEnum.NotFound)
+            {
+                return NotFound(response);
+            }
+
+            if (response.Status is ResponseStatusEnum.Error)
             {
                 return BadRequest(response);
             }
@@ -143,13 +130,60 @@ namespace DevFreela.API.Controllers.FreelancerControllers
             return Ok(response);
         }
 
-        [HttpPatch("project/suspend/{id}")]
-        public async Task<IActionResult> SuspendProject([FromRoute] int id)
+        [HttpPatch("project/complete/{idProject}")]
+        public async Task<IActionResult> CompleteProject([FromRoute] int idProject)
+        {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+            var response = await _freelancerProjectService.CompleteProject(idProject, userId);
+
+            if (response.Status is ResponseStatusEnum.NotFound)
+            {
+                return NotFound(response);
+            }
+
+            if (response.Status is ResponseStatusEnum.Error)
+            {
+                return BadRequest(response);
+            }
+
+            return Ok(response);
+        }
+
+
+        [HttpPatch("project/suspend/{idProject}")]
+        public async Task<IActionResult> SuspendProject([FromRoute] int idProject)
+        {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+            var response = await _freelancerProjectService.SuspendProject(idProject, userId);
+
+            if (response.Status is ResponseStatusEnum.NotFound)
+            {
+                return NotFound(response);
+            }
+
+            if (response.Status is ResponseStatusEnum.Error)
+            {
+                return BadRequest(response);
+            }
+
+            return Ok(response);
+        }
+
+        [HttpPatch("project/available/{idProject}")]
+        public async Task<IActionResult> AvailableProject([FromRoute] int idProject)
         {
 
-            var response = await _projectService.CompleteAsync(id);
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            var response = await _freelancerProjectService.MakeProjectAvailable(idProject, userId);
 
-            if (response.Status is false)
+            if (response.Status is ResponseStatusEnum.NotFound)
+            {
+                return NotFound(response);
+            }
+
+            if (response.Status is ResponseStatusEnum.Error)
             {
                 return BadRequest(response);
             }
@@ -157,19 +191,25 @@ namespace DevFreela.API.Controllers.FreelancerControllers
             return Ok(response);
         }
 
-        [HttpPatch("project/available/{id}")]
-        public async Task<IActionResult> AvailableProject([FromRoute] int id)
+        [HttpDelete("project/delete/{idProject}")]
+        public async Task<IActionResult> DeleteProject([FromRoute] int idProject)
         {
 
-            var response = await _projectService.CompleteAsync(id);
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
-            if (response.Status is false)
+            var response = await _freelancerProjectService.DeleteProject(idProject, userId);
+
+            if (response.Status is ResponseStatusEnum.NotFound)
+            {
+                return NotFound(response);
+            }
+
+            if (response.Status is ResponseStatusEnum.Error)
             {
                 return BadRequest(response);
             }
 
             return Ok(response);
         }
-
     }
 }
