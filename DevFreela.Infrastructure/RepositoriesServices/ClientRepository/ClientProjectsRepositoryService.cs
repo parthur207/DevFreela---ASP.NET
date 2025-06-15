@@ -8,6 +8,7 @@ using DevFreela.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,20 +23,29 @@ namespace DevFreela.Infrastructure.RepositoriesServices.ClientRepository
             _dbContext = dbContext;
         }
 
-        public async Task<ResponseModel<List<ProjectEntity>>> GetPurchasedProjectsClientAsync(int IdUser, string search, int Size)
+        public async Task<ResponseModel<List<UserProjectEntity>>> GetPurchasedProjectsClientAsync(int idUser, string search, int Size)
         {
-            ResponseModel<List<ProjectEntity>> response = new ResponseModel<List<ProjectEntity>>();
+            ResponseModel<List<UserProjectEntity>> response = new ResponseModel<List<UserProjectEntity>>();
             try
             {
-                var projects = _dbContext.Projects
-                    .Where(p => p.Id == IdUser && (string.IsNullOrEmpty(search) || p.Title.Contains(search)))
+                var query = _dbContext.UserProjects
+                    .Include(x => x.Project)
+                    .Where(x => x.IdUser == idUser);
+
+                if (!string.IsNullOrWhiteSpace(search))
+                {
+                    query = query.Where(x => x.Project.Title.Contains(search));
+                }
+
+                var projects = await query
+                    .OrderByDescending(x => x.PurchaseDate)
                     .Take(Size)
-                    .ToList();
+                    .ToListAsync();
 
                 if (projects is null || !projects.Any())
                 {
                     response.Status = ResponseStatusEnum.NotFound;
-                    response.Message = "Nenhum projeto adiquirido";
+                    response.Message = "Nenhum projeto adquirido encontrado.";
                     return response;
                 }
 
@@ -46,10 +56,9 @@ namespace DevFreela.Infrastructure.RepositoriesServices.ClientRepository
             catch (Exception ex)
             {
                 response.Status = ResponseStatusEnum.Error;
-                response.Message = $"Ocorreu um erro inesperado: {ex.Message}";
+                response.Message = $"Erro inesperado: {ex.Message}";
                 return response;
             }
-            
         }
 
         public async Task<SimpleResponseModel> BuyProjectClientAsync(int IdUser, int IdProject)
@@ -58,33 +67,35 @@ namespace DevFreela.Infrastructure.RepositoriesServices.ClientRepository
             SimpleResponseModel response = new SimpleResponseModel();
             try
             {
-                var project = await _dbContext.Projects.FindAsync(IdProject);
+                var HasProject = await _dbContext.Projects.AnyAsync(x=>x.Id == IdProject);
 
-                if (project == null)
+                if (!HasProject)
                 {
                     response.Status = ResponseStatusEnum.NotFound;
                     response.Message = "Projeto não encontrado.";
                     return response;
                 }
 
-                var project2 = await _dbContext.Projects.FirstOrDefaultAsync(x => x.Id == IdProject && x.Status != ProjectStatusEnum.Available|| x.Status != ProjectStatusEnum.InProgress || x.Status!= ProjectStatusEnum.Created);
+                var projectById = await _dbContext.Projects
+                    .FirstOrDefaultAsync(x => x.Id == IdProject && 
+                    x.Status != ProjectStatusEnum.Available);
 
-                if (project2 is null)
+                if (projectById is null)
                 {
-                    response.Status = ResponseStatusEnum.NotFound;
+                    response.Status = ResponseStatusEnum.Error;
                     response.Message = "O projeto informando não está disponível para compra.";
                     return response;
                 }
 
-                if (project.IdFreeLancer == IdUser)
+                if (projectById.IdFreeLancer == IdUser)
                 {
                     response.Status = ResponseStatusEnum.Error;
                     response.Message = "Você não pode comprar seu próprio projeto.";
                     return response;
                 }
 
-                project.SetPaymentPeding();
-                project.AssignBuyer(IdUser);
+                projectById.SetPaymentPending();
+                projectById.AssignBuyer(IdUser);
                 _dbContext.Projects.Update(project);
                 await _dbContext.SaveChangesAsync();
 
@@ -106,7 +117,7 @@ namespace DevFreela.Infrastructure.RepositoriesServices.ClientRepository
             SimpleResponseModel response = new SimpleResponseModel();
             try
             {
-                var project = await _dbContext.Projects.Where(x=>x.Id == IdProject && x.IdClient == IdUser && x.Status == ProjectStatusEnum.PaymentPending).FirstOrDefaultAsync();
+                var project = await _dbContext.Projects.Where(x=>x.Id == IdProject && x.Id == IdUser && x.Status == ProjectStatusEnum.PaymentPending).FirstOrDefaultAsync();
 
                 if (project is null)
                 {
@@ -122,7 +133,7 @@ namespace DevFreela.Infrastructure.RepositoriesServices.ClientRepository
                     return response;
                 }
 
-                project.UnassignBuyer();
+                project.UpdateProject();
                 project.MakeAvailable();
                 _dbContext.Projects.Update(project);
                 await _dbContext.SaveChangesAsync();

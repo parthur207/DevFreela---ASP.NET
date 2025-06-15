@@ -14,7 +14,7 @@ namespace DevFreela.Application.Repositories.ClientRepository
     {
 
         //Querys
-        Task<ResponseModel<List<ProjectEntity>>> GetPurchasedProjectsClientAsync(int IdUser, string search, int Size);
+        Task<ResponseModel<List<UserProjectEntity>>> GetPurchasedProjectsClientAsync(int IdUser, string search, int Size);
 
         //Commands
         Task<SimpleResponseModel> BuyProjectClientAsync(int IdUser, int IdProject);

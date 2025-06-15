@@ -25,7 +25,7 @@ namespace DevFreela.Infrastructure.Persistence
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            // ProjectEntity
+            //ProjectEntity
             builder.Entity<ProjectEntity>(x =>
             {
                 x.HasKey(x => x.Id);
@@ -47,7 +47,7 @@ namespace DevFreela.Infrastructure.Persistence
             });
 
 
-            // UserEntity
+            //UserEntity
             builder.Entity<UserEntity>(x =>
             {
                 x.HasKey(x => x.Id);

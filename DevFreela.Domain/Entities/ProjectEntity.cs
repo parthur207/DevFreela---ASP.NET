@@ -37,17 +37,11 @@ namespace DevFreela.Domain.Entities
             IdFreeLancer = idFreeLancer;
         }
 
-        public void SetPaymentPending()
-        {
-            if (Status == ProjectStatusEnum.Created || Status == ProjectStatusEnum.Available || Status == ProjectStatusEnum.InProgress)
-            {
-                Status = ProjectStatusEnum.PaymentPending;
-            }
-        }
+      
 
         public void Suspend()
         {
-            if (Status == ProjectStatusEnum.Created || Status == ProjectStatusEnum.PaymentPending || Status == ProjectStatusEnum.InProgress || Status == ProjectStatusEnum.Available)
+            if (Status == ProjectStatusEnum.Created || Status == ProjectStatusEnum.InProgress || Status == ProjectStatusEnum.Available)
             {
                 Status = ProjectStatusEnum.Suspended;
             }
@@ -79,14 +73,7 @@ namespace DevFreela.Domain.Entities
             }
         }
 
-        public void MakeAsSold()
-        {
-            if (Status == ProjectStatusEnum.PaymentPending)
-            {
-                Status = ProjectStatusEnum.Sold;
-            }
-        }
-
+       
         public void UpdateProject(string title, string description, decimal totalCost)
         {
             Title = title;
