@@ -1,5 +1,4 @@
-﻿
-using DevFreela.Domain.Enums;
+﻿using DevFreela.Domain.Enums;
 
 namespace DevFreela.Domain.Entities
 {
@@ -18,23 +17,24 @@ namespace DevFreela.Domain.Entities
             Email = email;
             Password = password;
             BirthDate = birthDate;
-            Role= role;
+            Role = role;
+
             Skills = [];
             Comments = [];
-            OwnedProjects = [];
             FreeLancerProjects = [];
-            
+            Purchases = [];
         }
 
         public string FullName { get; private set; }
         public string Email { get; private set; }
         public string Password { get; private set; }
         public DateTime BirthDate { get; private set; }
-        public RolesTypesEnum Role { get; private set; } 
+        public RolesTypesEnum Role { get; private set; }
+
         public List<UserSkillEntity> Skills { get; private set; }
         public List<ProjectCommentEntity> Comments { get; private set; }
-        public List<ProjectEntity> OwnedProjects { get; private set; }//Client
-        public List<ProjectEntity> FreeLancerProjects { get; private set; }//Freelancer
+        public List<ProjectEntity> FreeLancerProjects { get; private set; }
+        public List<UserProjectEntity> Purchases { get; private set; }
 
         public void ChangePassword(string newPassword)
         {

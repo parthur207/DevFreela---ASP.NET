@@ -14,6 +14,8 @@ namespace DevFreela.Infrastructure.Persistence
 
         public DbSet<UserEntity> Users { get; set; }
 
+        public DbSet<UserProjectEntity> UserProjects { get; set; }
+
         public DbSet<SkillEntity> Skills { get; set; }
 
         public DbSet<UserSkillEntity> UserSkills { get; set; }
@@ -21,59 +23,42 @@ namespace DevFreela.Infrastructure.Persistence
         public DbSet<ProjectCommentEntity> ProjectComments { get; set; }
 
 
-        //Configuração do relacionamento entre as entidades. Declaração de chaves primárias/estrangeiras
         protected override void OnModelCreating(ModelBuilder builder)
         {
-
+            // ProjectEntity
             builder.Entity<ProjectEntity>(x =>
             {
-                x.HasKey(x => x.Id);//chave primária
-                x.HasOne(x => x.FreeLancer)//Um FreeLancer
-                    .WithMany(x => x.FreeLancerProjects)// Possui muitos projetos
-                    .HasForeignKey(x => x.IdFreeLancer)//chave estrangeira
-                    .OnDelete(DeleteBehavior.Restrict);//Restrição de deleção 
+                x.HasKey(x => x.Id);
 
-                x.HasOne(x => x.Client)//Um cliente 
-                    .WithMany(x => x.OwnedProjects)//Pode adquirir muitos projetos
-                    .HasForeignKey(x => x.IdClient)//Chave estrangeira
+                x.HasOne(x => x.FreeLancer)
+                    .WithMany(x => x.FreeLancerProjects)
+                    .HasForeignKey(x => x.IdFreeLancer)
                     .OnDelete(DeleteBehavior.Restrict);
 
+                x.HasMany(x => x.Comments)
+                    .WithOne(x => x.Project)
+                    .HasForeignKey(x => x.IdProject)
+                    .OnDelete(DeleteBehavior.Restrict);
 
+                x.HasMany(x => x.Purchases) // ou "UserProjects", se for o nome da prop
+                    .WithOne(x => x.Project)
+                    .HasForeignKey(x => x.IdProject)
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
+
+            // UserEntity
             builder.Entity<UserEntity>(x =>
             {
-                x.HasKey(x => x.Id);//Chave primária
+                x.HasKey(x => x.Id);
 
-                x.HasMany(x => x.Skills)// Muitas habilidades
+                x.HasMany(x => x.Skills)
                     .WithOne(x => x.User)
-                    .HasForeignKey(x => x.IdUser)//Chave estrangeira
+                    .HasForeignKey(x => x.IdUser)
                     .OnDelete(DeleteBehavior.Restrict);
 
-            });
+                x.HasMany(x => x.Purchases); // ou "UserProjects", se for o nome da prop
 
-            builder.Entity<SkillEntity>(x =>
-            {
-                x.HasKey(x => x.Id);
-
-            });
-
-            builder.Entity<UserSkillEntity>(x =>
-            {
-                x.HasKey(x => x.Id);
-                x.HasOne(x => x.Skill)
-                    .WithMany(x => x.UserSkills)
-                    .HasForeignKey(x => x.IdSkill)
-                    .OnDelete(DeleteBehavior.Restrict);
-            });
-
-            builder.Entity<ProjectCommentEntity>(x =>
-            {
-                x.HasKey(x => x.Id);
-                x.HasOne(x => x.Project)
-                .WithMany(x => x.Comments)
-                .HasForeignKey(x => x.IdProject)
-                .OnDelete(DeleteBehavior.Restrict);
             });
         }
     }
