@@ -15,9 +15,9 @@ namespace DevFreela.Application.Repositories.FreelancerRepository
 {
     public interface IFreelancerProjectRepository
     {
-        Task<ResponseModel<List<AdminFreelancerProjectDTO>>> GetAllMyProjectsByNameOrDescriptionAsync(int FreeLanceId, string NameOrDescription, int Size);
+        Task<ResponseModel<List<ProjectEntity>>> GetAllMyProjectsByNameOrDescriptionAsync(int FreeLanceId, string NameOrDescription, int Size);
 
-        Task<ResponseModel<List<AdminFreelancerProjectDTO>>> GetAllMyProjectsByStatusAsync(int FreeLanceId, ProjectStatusEnum Status, int Size);
+        Task<ResponseModel<List<ProjectEntity>>> GetAllMyProjectsByStatusAsync(int FreeLanceId, ProjectStatusEnum Status, int Size);
 
         //Commands
         Task<SimpleResponseModel> CreateProjectAsync(int FreeLanceId, ProjectEntity Entity);
@@ -27,8 +27,6 @@ namespace DevFreela.Application.Repositories.FreelancerRepository
         Task<SimpleResponseModel> DeleteProjectAsync(int IdProject, int userId);
 
         Task<SimpleResponseModel> StartProjectAsync(int IdProject, int userId);
-
-        Task<SimpleResponseModel> CompleteProjectAsync(int IdProject, int userId);
 
         Task<SimpleResponseModel> SuspendProjectAsync(int IdProject, int userId);
 

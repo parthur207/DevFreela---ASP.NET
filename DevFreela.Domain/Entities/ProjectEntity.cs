@@ -40,7 +40,10 @@ namespace DevFreela.Domain.Entities
 
         public List<ProjectCommentEntity> Comments { get; set; }
 
-
+        public void AssignFreelancer(int idFreeLancer)
+        {
+            IdFreeLancer = idFreeLancer;
+        }
 
         public void AssignBuyer(int idClient)
         {
