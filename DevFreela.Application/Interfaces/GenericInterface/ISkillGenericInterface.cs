@@ -7,7 +7,7 @@ namespace DevFreela.Application.Interfaces.GenericInterface
 {
     public interface ISkillGenericInterface
     {
-        Task<ResponseModel<List<SkillDTO>>> GetAllSkills();
+        Task<ResponseModel<List<AdminFreelancerSkillDTO>>> GetAllSkills();
 
         Task<SimpleResponseModel> CreateSkill(CreateSkillModel Model);
     }

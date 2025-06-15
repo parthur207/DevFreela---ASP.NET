@@ -1,5 +1,8 @@
 ﻿using DevFreela.Application.DTOs.GenericDTOs;
 using DevFreela.Application.Interfaces.ClientInterface;
+using DevFreela.Application.Mappers;
+using DevFreela.Application.Repositories.ClientRepository;
+using DevFreela.Domain.Enums;
 using DevFreela.Domain.Models.PatternResult;
 using DevFreela.Domain.Models.ResponsePattern;
 using System;
@@ -12,22 +15,74 @@ namespace DevFreela.Application.Services.ClientService
 {
     internal class ClientProjectsService : IClientProjectsInterface
     {
-        public Task<SimpleResponseModel> BuyProjectClient(int IdUser, int IdProject)
+
+        private readonly IClientProjectRepository _clientProjectRepository;
+        public ClientProjectsService(IClientProjectRepository clientProjectRepository)
         {
-            throw new NotImplementedException();
+            _clientProjectRepository = clientProjectRepository;
         }
 
-        public Task<SimpleResponseModel> CancelPurchaseClient(int IdUser, int IdProject)
+        public async Task<ResponseModel<List<ProjectGenericDTO>>> GetPurchasedProjectsClient(int IdUser, string search, int Size)
         {
-            throw new NotImplementedException();
+
+            ResponseModel<List<ProjectGenericDTO>> Response = new ResponseModel<List<ProjectGenericDTO>>();
+
+            var ResponseRepository = await _clientProjectRepository.GetPurchasedProjectsClientAsync(IdUser, search, Size);
+
+            if (ResponseRepository.Status != ResponseStatusEnum.Success)
+            {
+                Response.Status = ResponseRepository.Status;
+                Response.Message = ResponseRepository.Message;
+                return Response;
+            }
+
+            foreach (var p in ResponseRepository.Content)
+            {
+                var projectMapped = ProjectMapper.ToGenericProjectDTO(p);
+                Response.Content.Add(projectMapped);
+            }
+
+            Response.Status = ResponseStatusEnum.Success;
+            return Response;
         }
 
-        public Task<ResponseModel<List<ProjectDTO>>> GetPurchasedProjectsClient(int IdUser, string search, int Size)
+        public async Task<SimpleResponseModel> BuyProjectClient(int IdUser, int IdProject)
         {
-            throw new NotImplementedException();
+            SimpleResponseModel Response = new SimpleResponseModel();
+
+            var  ResponseRepository= await _clientProjectRepository.BuyProjectClientAsync(IdUser, IdProject);
+
+            if (ResponseRepository.Status != ResponseStatusEnum.Success)
+            {
+                Response.Status = ResponseRepository.Status;
+                Response.Message = ResponseRepository.Message;
+                return Response;
+            }
+            Response.Status = ResponseStatusEnum.Success;
+            Response.Message = ResponseRepository.Message;
+            return Response;
         }
 
-        public Task<SimpleResponseModel> MakePaymentClient(int IdUser, int IdProject)
+        public async Task<SimpleResponseModel> CancelPurchaseClient(int IdUser, int IdProject)
+        {  
+            SimpleResponseModel Response = new SimpleResponseModel();
+            
+            var ResponseRepository = await _clientProjectRepository.CancelPurchaseClientAsync(IdUser, IdProject);
+
+            if (ResponseRepository.Status != ResponseStatusEnum.Success)
+            {
+                Response.Status = ResponseRepository.Status;
+                Response.Message = ResponseRepository.Message;
+                return Response;
+            }
+            Response.Status = ResponseStatusEnum.Success;
+            Response.Message = ResponseRepository.Message;
+            return Response;
+        }
+
+      
+
+        public async Task<SimpleResponseModel> MakePaymentClient(int IdUser, int IdProject)
         {
             throw new NotImplementedException();
         }

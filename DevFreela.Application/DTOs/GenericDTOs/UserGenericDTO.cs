@@ -1,4 +1,5 @@
 ﻿using DevFreela.Domain.Entities;
+using DevFreela.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,22 +8,22 @@ using System.Threading.Tasks;
 
 namespace DevFreela.Application.DTOs.GenericDTOs
 {
-    public class UserDTO
+    public class UserGenericDTO
     {
 
-        public UserDTO(string fullName, string email, DateTime birthDate, List<string> skills)
+        public UserGenericDTO(string fullName, string email, RolesTypesEnum role, DateTime birthDate, List<string> skills)
         {
             FullName = fullName;
             Email = email;
+            Role = role.ToString();
             BirthDate = birthDate;
             Skills = skills;
         }
 
         public string FullName { get; private set; }
         public string Email { get; private set; }
+        public string Role { get; private set; }
         public DateTime BirthDate { get; private set; }
         public List<string> Skills { get; private set; }
-
-
     }
 }

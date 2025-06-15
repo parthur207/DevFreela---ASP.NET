@@ -94,10 +94,10 @@ namespace DevFreela.Application.Services
             }
         }
 
-        public async Task<ResponseModel<ProjectDTO>> GetByIdAsync(int id)
+        public async Task<ResponseModel<AdminFreelancerProjectDTO>> GetByIdAsync(int id)
         {
 
-            ResponseModel<ProjectDTO> response = new ResponseModel<ProjectDTO>();
+            ResponseModel<AdminFreelancerProjectDTO> response = new ResponseModel<AdminFreelancerProjectDTO>();
             try
             {
                 var project = await _dbContext.Projects
@@ -127,9 +127,9 @@ namespace DevFreela.Application.Services
             }
         }
 
-        public async Task<ResponseModel<List<ProjectItemDTO>>> GetSearchAsync(string Search, int N)
+        public async Task<ResponseModel<List<ProjectGenericDTO>>> GetSearchAsync(string Search, int N)
         {
-            ResponseModel<List<ProjectItemDTO>> response = new ResponseModel<List<ProjectItemDTO>> { Content = new List<ProjectItemDTO>() };
+            ResponseModel<List<ProjectGenericDTO>> response = new ResponseModel<List<ProjectGenericDTO>> { Content = new List<ProjectGenericDTO>() };
 
             try
             {

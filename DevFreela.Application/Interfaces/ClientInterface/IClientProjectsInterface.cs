@@ -13,7 +13,7 @@ namespace DevFreela.Application.Interfaces.ClientInterface
     {
 
         //Querys
-        Task<ResponseModel<List<ProjectDTO>>> GetPurchasedProjectsClient(int IdUser,  string search, int Size);
+        Task<ResponseModel<List<ProjectGenericDTO>>> GetPurchasedProjectsClient(int IdUser,  string search, int Size);
 
         //Commands
         Task<SimpleResponseModel> BuyProjectClient(int IdUser, int IdProject);

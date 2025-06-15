@@ -96,6 +96,11 @@ namespace DevFreela.Domain.Entities
             {
                 Status = ProjectStatusEnum.Available;
                 AvailableAt = DateTime.Now;
+
+                if (SoldAt !=null)
+                {
+                    SoldAt = null;
+                }
             }
         }
 

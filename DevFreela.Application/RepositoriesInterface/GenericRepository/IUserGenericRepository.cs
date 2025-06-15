@@ -16,6 +16,6 @@ namespace DevFreela.Application.Repositories.GenericRepository
     {
         Task<ResponseModel<(int, RolesTypesEnum)>> LoginGenericAsync(UserEntity Entity);
         Task<SimpleResponseModel> RegisterGenericAsync(UserEntity Entity);
-        Task<SimpleResponseModel> ChangePasswordGenericAsync(int UserId, UserEntity Entity);
+        Task<SimpleResponseModel> ChangePasswordGenericAsync(int UserId, string OldPassword, string NewPassword);
     }
 }

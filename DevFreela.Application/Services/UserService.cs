@@ -17,9 +17,9 @@ namespace DevFreela.Application.Services
             _dbContext = dbContext;
         }
 
-        public async Task<ResponseModel<List<UserDTO>>> GetAllUsersAsync()
+        public async Task<ResponseModel<List<UserGenericDTO>>> GetAllUsersAsync()
         {
-            ResponseModel<List<UserDTO>> response = new ResponseModel<List<UserDTO>> { Content = new List<UserDTO>() };
+            ResponseModel<List<UserGenericDTO>> response = new ResponseModel<List<UserGenericDTO>> { Content = new List<UserGenericDTO>() };
 
             try
             {
@@ -49,9 +49,9 @@ namespace DevFreela.Application.Services
             }
         }
 
-        public async Task<ResponseModel<UserDTO>> GetByEmailAsync(string email)
+        public async Task<ResponseModel<UserGenericDTO>> GetByEmailAsync(string email)
         {
-            ResponseModel<UserDTO> response = new ResponseModel<UserDTO>();
+            ResponseModel<UserGenericDTO> response = new ResponseModel<UserGenericDTO>();
 
             try
             {

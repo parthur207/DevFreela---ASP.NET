@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace DevFreela.Application.DTOs.AdminFreelancerDTOs
 {
-    public class SkillDTO
+    public class AdminFreelancerSkillDTO
     {
-        public SkillDTO(string skill)
+        public AdminFreelancerSkillDTO(string skill)
         {
             Skill = skill;
         }

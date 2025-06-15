@@ -18,9 +18,9 @@ namespace DevFreela.Application.Services
         {
             _dbContext = dbContext;
         }
-        public async Task<ResponseModel<List<SkillDTO>>> GetAllSkillsAsync()
+        public async Task<ResponseModel<List<AdminFreelancerSkillDTO>>> GetAllSkillsAsync()
         {
-            ResponseModel<List<SkillDTO>> response= new ResponseModel<List<SkillDTO>>();
+            ResponseModel<List<AdminFreelancerSkillDTO>> response= new ResponseModel<List<AdminFreelancerSkillDTO>>();
            
             try
             {

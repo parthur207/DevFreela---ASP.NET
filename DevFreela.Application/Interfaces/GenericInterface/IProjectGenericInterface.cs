@@ -14,8 +14,8 @@ namespace DevFreela.Application.Interfaces.GenericInterface
     {
 
         //Querys
-        Task<ResponseModel<List<ProjectDTO>>> GetAllProjects(string search, int Size);
-        Task<ResponseModel<List<ProjectDTO>>> GetAllProjectsByOwner(string NameOrEmail, int Size);
+        Task<ResponseModel<List<AdminFreelancerProjectDTO>>> GetAllProjects(string search, int Size);
+        Task<ResponseModel<List<AdminFreelancerProjectDTO>>> GetAllProjectsByOwner(string NameOrEmail, int Size);
 
 
         //Commands

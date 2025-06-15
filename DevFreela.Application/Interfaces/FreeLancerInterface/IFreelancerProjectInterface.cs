@@ -10,6 +10,7 @@ using DevFreela.Domain.Enums;
 using DevFreela.Domain.Models.Creations;
 using DevFreela.Domain.Models.Updates;
 using DevFreela.Domain.Models.PatternResult;
+using DevFreela.Application.DTOs.GenericDTOs;
 
 namespace DevFreela.Application.Interfaces.FreeLancerInterface
 {

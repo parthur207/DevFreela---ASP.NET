@@ -18,7 +18,7 @@ namespace DevFreela.Application.Services.GenericService
             throw new NotImplementedException();
         }
 
-        public Task<ResponseModel<List<SkillDTO>>> GetAllSkills()
+        public Task<ResponseModel<List<AdminFreelancerSkillDTO>>> GetAllSkills()
         {
             throw new NotImplementedException();
         }

@@ -1,51 +1,169 @@
 ﻿using DevFreela.Application.DTOs.GenericDTOs;
 using DevFreela.Application.Interfaces.AdminInterface;
+using DevFreela.Application.Mappers;
+using DevFreela.Application.Repositories.AdminRepository;
+using DevFreela.Domain.Enums;
 using DevFreela.Domain.Models.PatternResult;
 using DevFreela.Domain.Models.ResponsePattern;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DevFreela.Application.Services.AdminService
 {
     internal class AdminUsersService : IAdminUsersInterface
     {
-
-        public Task<ResponseModel<List<UserDTO>>> GetAllClientsAdmin(int Size)
+        private readonly IAdminUsersRepository _adminUsersRepository;
+        public AdminUsersService(IAdminUsersRepository adminUsersRepository)
         {
-            throw new NotImplementedException();
+            _adminUsersRepository = adminUsersRepository;
         }
 
-        public Task<ResponseModel<List<UserDTO>>> GetAllFreelancersAdmin(int Size)
+        public async Task<ResponseModel<List<UserGenericDTO>>> GetAllClientsAdmin(int Size)
         {
-            throw new NotImplementedException();
+            
+            ResponseModel<List<UserGenericDTO>> response = new ResponseModel<List<UserGenericDTO>>();
+
+            var ResponseRepository = await _adminUsersRepository.GetAllClientsAdminAsync(Size);
+
+            if (ResponseRepository.Status != ResponseStatusEnum.Success)
+            {
+                response.Status = ResponseRepository.Status;
+                response.Message = ResponseRepository.Message;
+                return response;
+            }
+
+            foreach (var u in ResponseRepository.Content)
+            {
+                var userMapped = UserMapper.ToUserGenericDTO(u);
+                response.Content.Add(userMapped);
+            }
+
+            response.Status = ResponseStatusEnum.Success;
+            return response;
         }
 
-        public Task<ResponseModel<List<UserDTO>>> GetAllUsersAdmin(int Size)
-        {
-            throw new NotImplementedException();
+        public async Task<ResponseModel<List<UserGenericDTO>>> GetAllFreelancersAdmin(int Size)
+        { 
+            ResponseModel<List<UserGenericDTO>> response = new ResponseModel<List<UserGenericDTO>>();
+
+            var ResponseRepository = await _adminUsersRepository.GetAllFreelancersAdminAsync(Size);
+
+            if (ResponseRepository.Status != ResponseStatusEnum.Success)
+            {
+                response.Status = ResponseRepository.Status;
+                response.Message = ResponseRepository.Message;
+                return response;
+            }
+
+            foreach (var u in ResponseRepository.Content)
+            {
+                var userMapped = UserMapper.ToUserGenericDTO(u);
+                response.Content.Add(userMapped);
+            }
+
+            response.Status = ResponseStatusEnum.Success;
+            return response;
         }
 
-        public Task<ResponseModel<List<UserDTO>>> GetAllUsersInactiveAdmin(int Size)
+        public async Task<ResponseModel<List<UserGenericDTO>>> GetAllUsersAdmin(int Size)
         {
-            throw new NotImplementedException();
+            
+            ResponseModel<List<UserGenericDTO>> response = new ResponseModel<List<UserGenericDTO>>();
+
+            var ResponseRepository = await _adminUsersRepository.GetAllUsersAdminAsync(Size);
+
+            if (ResponseRepository.Status != ResponseStatusEnum.Success)
+            {
+                response.Status = ResponseRepository.Status;
+                response.Message = ResponseRepository.Message;
+                return response;
+            }
+
+            foreach (var u in ResponseRepository.Content)
+            {
+                var userMapped = UserMapper.ToUserGenericDTO(u);
+                response.Content.Add(userMapped);
+            }
+
+            response.Status = ResponseStatusEnum.Success;
+            return response;
         }
 
-        public Task<ResponseModel<UserDTO>> GetUserByEmailAdmin(string Email)
+        public async Task<ResponseModel<List<UserGenericDTO>>> GetAllUsersInactiveAdmin(int Size)
         {
-            throw new NotImplementedException();
+            
+            ResponseModel<List<UserGenericDTO>> response = new ResponseModel<List<UserGenericDTO>>();
+
+            var ResponseRepository = await _adminUsersRepository.GetAllUsersInactiveAdminAsync(Size);
+
+            if (ResponseRepository.Status != ResponseStatusEnum.Success)
+            {
+                response.Status = ResponseRepository.Status;
+                response.Message = ResponseRepository.Message;
+                return response;
+            }
+
+            foreach (var u in ResponseRepository.Content)
+            {
+                var userMapped = UserMapper.ToUserGenericDTO(u);
+                response.Content.Add(userMapped);
+            }
+
+            response.Status = ResponseStatusEnum.Success;
+            return response;
         }
 
-        public Task<SimpleResponseModel> ActivateUserAdmin(string Email)
+        public async Task<ResponseModel<UserGenericDTO>> GetUserByEmailAdmin(string Email)
         {
-            throw new NotImplementedException();
+           
+            ResponseModel<UserGenericDTO> response = new ResponseModel<UserGenericDTO>();
+
+            var ResponseRepository = await _adminUsersRepository.GetUserByEmailAdminAsync(Email);
+
+            if (ResponseRepository.Status != ResponseStatusEnum.Success)
+            {
+                response.Status = ResponseRepository.Status;
+                response.Message = ResponseRepository.Message;
+                return response;
+            }
+
+            var userMapped = UserMapper.ToUserGenericDTO(ResponseRepository.Content);
+            response.Content = userMapped;
+            response.Status = ResponseStatusEnum.Success;
+            return response;
         }
 
-        public Task<SimpleResponseModel> InactiveUserAdmin(string Email)
+        public async Task<SimpleResponseModel> ActivateUserAdmin(string Email)
         {
-            throw new NotImplementedException();
+            
+            SimpleResponseModel response = new SimpleResponseModel();
+
+            var ResponseRepository = await _adminUsersRepository.ActivateUserAdminAsync(Email);
+
+            if (ResponseRepository.Status != ResponseStatusEnum.Success)
+            {
+                response.Status = ResponseRepository.Status;
+                response.Message = ResponseRepository.Message;
+                return response;
+            }
+
+            response.Status = ResponseStatusEnum.Success;
+            return response;
+        }
+
+        public async Task<SimpleResponseModel> InactiveUserAdmin(string Email)
+        {
+            SimpleResponseModel response = new SimpleResponseModel();
+
+            var ResponseRepository = await _adminUsersRepository.InactiveUserAdminAsync(Email);
+
+            if (ResponseRepository.Status != ResponseStatusEnum.Success)
+            {
+                response.Status = ResponseRepository.Status;
+                response.Message = ResponseRepository.Message;
+                return response;
+            }
+
+            response.Status = ResponseStatusEnum.Success;
+            return response;
         }
     }
 }

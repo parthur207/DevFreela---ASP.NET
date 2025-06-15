@@ -18,12 +18,12 @@ namespace DevFreela.Application.Services.GenericService
             throw new NotImplementedException();
         }
 
-        public Task<ResponseModel<List<ProjectDTO>>> GetAllProjects(string search, int Size)
+        public Task<ResponseModel<List<AdminFreelancerProjectDTO>>> GetAllProjects(string search, int Size)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ResponseModel<List<ProjectDTO>>> GetAllProjectsByOwner(string NameOrEmail, int Size)
+        public Task<ResponseModel<List<AdminFreelancerProjectDTO>>> GetAllProjectsByOwner(string NameOrEmail, int Size)
         {
             throw new NotImplementedException();
         }
