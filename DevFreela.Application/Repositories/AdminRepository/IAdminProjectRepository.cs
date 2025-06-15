@@ -1,4 +1,5 @@
 ﻿using DevFreela.Application.DTOs.AdminFreelancerDTOs;
+using DevFreela.Domain.Entities;
 using DevFreela.Domain.Enums;
 using DevFreela.Domain.Models.PatternResult;
 using System;
@@ -11,13 +12,13 @@ namespace DevFreela.Application.Repositories.AdminRepository
 {
     public interface IAdminProjectRepository
     {
-        Task<ResponseModel<List<AdminFreelancerProjectDTO>>> GetAllProjectsByStatusAdminAsync(ProjectStatusEnum status, int Size);
+        Task<ResponseModel<List<ProjectEntity>>> GetAllProjectsByStatusAdminAsync(ProjectStatusEnum status, int Size);
 
-        Task<ResponseModel<List<AdminFreelancerProjectDTO>>> GetSearchAdminAsync(string Search, int Size);
+        Task<ResponseModel<List<ProjectEntity>>> GetSearchAdminAsync(string Search, int Size);
 
-        Task<ResponseModel<List<AdminFreelancerProjectDTO>>> GetAllProjectsByFreelancerAdminAsync(string EmailFreelancer);
+        Task<ResponseModel<List<ProjectEntity>>> GetAllProjectsByFreelancerAdminAsync(string EmailFreelancer);
 
-        Task<ResponseModel<List<AdminFreelancerProjectDTO>>> GetAllProjectsByClientAdminAsync(string EmailClient);
+        Task<ResponseModel<List<ProjectEntity>>> GetAllProjectsByClientAdminAsync(string EmailClient);
     }
 }
 }

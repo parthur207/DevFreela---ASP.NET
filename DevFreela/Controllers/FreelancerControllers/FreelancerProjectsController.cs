@@ -130,26 +130,6 @@ namespace DevFreela.API.Controllers.FreelancerControllers
             return Ok(response);
         }
 
-        [HttpPatch("project/complete/{idProject}")]
-        public async Task<IActionResult> CompleteProject([FromRoute] int idProject)
-        {
-            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-
-            var response = await _freelancerProjectService.CompleteProject(idProject, userId);
-
-            if (response.Status is ResponseStatusEnum.NotFound)
-            {
-                return NotFound(response);
-            }
-
-            if (response.Status is ResponseStatusEnum.Error)
-            {
-                return BadRequest(response);
-            }
-
-            return Ok(response);
-        }
-
 
         [HttpPatch("project/suspend/{idProject}")]
         public async Task<IActionResult> SuspendProject([FromRoute] int idProject)

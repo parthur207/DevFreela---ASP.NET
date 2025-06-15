@@ -1,4 +1,5 @@
 ﻿using DevFreela.Application.DTOs.AdminFreelancerDTOs;
+using DevFreela.Domain.Entities;
 using DevFreela.Domain.Enums;
 using DevFreela.Domain.Models.Creations;
 using DevFreela.Domain.Models.PatternResult;
@@ -19,9 +20,9 @@ namespace DevFreela.Application.Repositories.FreelancerRepository
         Task<ResponseModel<List<AdminFreelancerProjectDTO>>> GetAllMyProjectsByStatusAsync(int FreeLanceId, ProjectStatusEnum Status, int Size);
 
         //Commands
-        Task<SimpleResponseModel> CreateProjectAsync(int FreeLanceId, CreateProjectModel ProjectModel);
+        Task<SimpleResponseModel> CreateProjectAsync(int FreeLanceId, ProjectEntity Entity);
 
-        Task<SimpleResponseModel> UpdateProjectAsync(int IdProject, int userId, UpdateProjectModel model);
+        Task<SimpleResponseModel> UpdateProjectAsync(int IdProject, int userId, ProjectEntity Entity);
 
         Task<SimpleResponseModel> DeleteProjectAsync(int IdProject, int userId);
 

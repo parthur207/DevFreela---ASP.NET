@@ -1,23 +1,23 @@
 ﻿using DevFreela.Application.DTOs.AdminFreelancerDTOs;
 using DevFreela.Application.Interfaces.FreeLancerInterface;
-using DevFreela.Application.Repositories.Admin;
+using DevFreela.Application.Repositories.FreelancerRepository;
 using DevFreela.Domain.Enums;
 using DevFreela.Domain.Models.Creations;
 using DevFreela.Domain.Models.PatternResult;
 using DevFreela.Domain.Models.ResponsePattern;
 using DevFreela.Domain.Models.Updates;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DevFreela.Application.Services.FreelancerService
 {
     internal class FreelancerProjectsService : IFreelancerProjectInterface
     {
 
-        private readonly 
+        private readonly IFreelancerProjectRepository _freelancerProjectsRepository;
+
+        public FreelancerProjectsService(IFreelancerProjectRepository freelancerProjectsRepository)
+        {
+            _freelancerProjectsRepository = freelancerProjectsRepository;
+        }
 
         public Task<ResponseModel<List<AdminFreelancerProjectDTO>>> GetAllMyProjectsByNameOrDescription(int FreeLanceId, string NameOrDescription, int Size)
         {
@@ -29,10 +29,6 @@ namespace DevFreela.Application.Services.FreelancerService
             throw new NotImplementedException();
         }
 
-        public Task<SimpleResponseModel> CompleteProject(int IdProject, int userId)
-        {
-            throw new NotImplementedException();
-        }
 
         public Task<SimpleResponseModel> CreateProject(int FreeLanceId, CreateProjectModel ProjectModel)
         {

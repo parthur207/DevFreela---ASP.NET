@@ -1,4 +1,5 @@
 ﻿using DevFreela.Application.DTOs.AdminFreelancerDTOs;
+using DevFreela.Domain.Entities;
 using DevFreela.Domain.Models.Creations;
 using DevFreela.Domain.Models.PatternResult;
 using DevFreela.Domain.Models.ResponsePattern;
@@ -12,8 +13,8 @@ namespace DevFreela.Application.Repositories.GenericRepository
 {
     public interface ISkillGenericRepository
     {
-        Task<ResponseModel<List<SkillDTO>>> GetAllSkillsAsync();
+        Task<ResponseModel<List<SkillEntity>>> GetAllSkillsAsync();
 
-        Task<SimpleResponseModel> CreateSkillAsync(CreateSkillModel Model);
+        Task<SimpleResponseModel> CreateSkillAsync(SkillEntity Entity);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using DevFreela.Application.DTOs.GenericDTOs;
+using DevFreela.Domain.Entities;
 using DevFreela.Domain.Models.PatternResult;
 using DevFreela.Domain.Models.ResponsePattern;
 using System;
@@ -13,7 +14,7 @@ namespace DevFreela.Application.Repositories.ClientRepository
     {
 
         //Querys
-        Task<ResponseModel<List<ProjectDTO>>> GetPurchasedProjectsClientAsync(int IdUser, string search, int Size);
+        Task<ResponseModel<List<ProjectEntity>>> GetPurchasedProjectsClientAsync(int IdUser, string search, int Size);
 
         //Commands
         Task<SimpleResponseModel> BuyProjectClientAsync(int IdUser, int IdProject);

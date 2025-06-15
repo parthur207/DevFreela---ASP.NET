@@ -2,6 +2,7 @@ using DevFreela.Application.Interfaces;
 using DevFreela.Application.Interfaces.AdminInterface;
 using DevFreela.Application.Interfaces.GenericInterface;
 using DevFreela.Application.Models;
+using DevFreela.Application.Repositories.AdminRepository;
 using DevFreela.Application.Services;
 using DevFreela.Domain.Models;
 using DevFreela.Infrastructure.Auth;
@@ -88,6 +89,8 @@ namespace DevFreela.API.Main
             builder.Services.AddScoped<ISkillGenericInterface, SkillsService>();
             builder.Services.AddScoped<IUserSkillInterface, UserSkillService>();
             builder.Services.AddScoped<IAdminUsersInterface, UserService>();
+
+            builder.Services.AddScoped<IAdminProjectRepository, IAdminProjectRepository>();
 
             builder.Services.AddTransient<IJwtInterface, JwtService>();
 

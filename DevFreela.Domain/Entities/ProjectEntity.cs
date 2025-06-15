@@ -41,9 +41,20 @@ namespace DevFreela.Domain.Entities
         public List<ProjectCommentEntity> Comments { get; set; }
 
 
+
+        public void AssignBuyer(int idClient)
+        {
+            IdClient= idClient;
+        }
+
+        public void UnassignBuyer()
+        {
+            IdClient = null;
+        }
+
         public void SetPaymentPeding()
         {
-            if (Status == ProjectStatusEnum.Created)
+            if (Status == ProjectStatusEnum.Created || Status== ProjectStatusEnum.Available || Status== ProjectStatusEnum.InProgress)
             {
                 Status = ProjectStatusEnum.PaymentPending;
             }
@@ -51,7 +62,7 @@ namespace DevFreela.Domain.Entities
 
         public void Suspend()
         {
-            if (Status== ProjectStatusEnum.Created || Status is ProjectStatusEnum.PaymentPending)
+            if (Status== ProjectStatusEnum.Created || Status is ProjectStatusEnum.PaymentPending || Status==ProjectStatusEnum.InProgress || Status==ProjectStatusEnum.Available)
             {
                 Status = ProjectStatusEnum.Suspended;
             }
@@ -64,7 +75,6 @@ namespace DevFreela.Domain.Entities
                 Status = ProjectStatusEnum.Cancelled;
             }
         }
-
 
 
         public void Start()

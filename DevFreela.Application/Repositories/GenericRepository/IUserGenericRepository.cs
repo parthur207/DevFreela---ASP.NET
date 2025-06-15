@@ -12,10 +12,10 @@ using System.Threading.Tasks;
 
 namespace DevFreela.Application.Repositories.GenericRepository
 {
-    public interface UserGenericRepository
+    public interface IUserGenericRepository
     {
-        Task<ResponseModel<(int, RolesTypesEnum)>> LoginGenericAsync(LoginModel model);
-        Task<SimpleResponseModel> RegisterGenericAsync(CreateUserModel model);
-        Task<SimpleResponseModel> ChangePasswordGenericAsync(int UserId, UpdatePasswordModel model);
+        Task<ResponseModel<(int, RolesTypesEnum)>> LoginGenericAsync(UserEntity Entity);
+        Task<SimpleResponseModel> RegisterGenericAsync(UserEntity Entity);
+        Task<SimpleResponseModel> ChangePasswordGenericAsync(int UserId, UserEntity Entity);
     }
 }

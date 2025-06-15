@@ -14,9 +14,24 @@
 
         public bool IsDeleted { get; private set; } = false;
 
-        public void SetAsDeleted()
+        public bool SetAsDeleted()
         {
-            IsDeleted = true;
+            if (IsDeleted is false) 
+            {
+                IsDeleted = true;
+                return true;
+            }
+            return false;
+        }
+
+        public bool SetAsActive()
+        {
+            if (IsDeleted is true) 
+            {
+                IsDeleted = false;
+                return true;
+            }
+            return false;
         }
 
     }

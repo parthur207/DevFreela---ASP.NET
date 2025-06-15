@@ -29,8 +29,6 @@ namespace DevFreela.Application.Interfaces.FreeLancerInterface
 
         Task<SimpleResponseModel> StartProject(int IdProject, int userId);
 
-        Task<SimpleResponseModel> CompleteProject(int IdProject, int userId);
-
         Task<SimpleResponseModel> SuspendProject(int IdProject, int userId);
 
         Task<SimpleResponseModel> MakeProjectAvailable(int IdProject, int userId);

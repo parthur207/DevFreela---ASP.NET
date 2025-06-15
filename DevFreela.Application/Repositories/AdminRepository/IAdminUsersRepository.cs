@@ -1,4 +1,5 @@
 ﻿using DevFreela.Application.DTOs.GenericDTOs;
+using DevFreela.Domain.Entities;
 using DevFreela.Domain.Models.PatternResult;
 using DevFreela.Domain.Models.ResponsePattern;
 using System;
@@ -13,11 +14,11 @@ namespace DevFreela.Application.Repositories.AdminRepository
     {
 
         //Querys
-        Task<ResponseModel<List<UserDTO>>> GetAllUsersAdminAsync(int Size);
-        Task<ResponseModel<UserDTO>> GetUserByEmailAdminAsync(string Email);
-        Task<ResponseModel<List<UserDTO>>> GetAllFreelancersAdminAsync(int Size);
-        Task<ResponseModel<List<UserDTO>>> GetAllClientsAdminAsync(int Size);
-        Task<ResponseModel<List<UserDTO>>> GetAllUsersInactiveAdminAsync(int Size);
+        Task<ResponseModel<List<UserEntity>>> GetAllUsersAdminAsync(int Size);
+        Task<ResponseModel<UserEntity>> GetUserByEmailAdminAsync(string Email);
+        Task<ResponseModel<List<UserEntity>>> GetAllFreelancersAdminAsync(int Size);
+        Task<ResponseModel<List<UserEntity>>> GetAllClientsAdminAsync(int Size);
+        Task<ResponseModel<List<UserEntity>>> GetAllUsersInactiveAdminAsync(int Size);
 
         //Commands
         Task<SimpleResponseModel> InactiveUserAdminAsync(string Email);

@@ -26,7 +26,7 @@ namespace DevFreela.Application.Services
                 var users = await _dbContext.Users.Include(x=>x.Skills).ThenInclude(x=>x.Skill)
                     .ToListAsync();
 
-                if (users is null || users.Count == 0)
+                if (users is null || !users.Any())
                 {
                     response.Status = false;
                     response.Message = "Nenhum usuário foi encontrado.";
