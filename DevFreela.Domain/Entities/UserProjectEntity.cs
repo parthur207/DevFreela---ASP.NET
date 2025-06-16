@@ -26,6 +26,12 @@ namespace DevFreela.Domain.Entities
         public DateTime PurchaseDate { get; set; }
 
 
+        public void AssignClient(int ClientId)
+        {
+            IdUser= ClientId;
+        }
+
+
         public void SetPaymentPending()
         {
             PurchaseStatus = PurchaseStatusEnum.PaymentPending;
@@ -36,6 +42,7 @@ namespace DevFreela.Domain.Entities
             if (PurchaseStatus == PurchaseStatusEnum.PaymentPending)
             {
                 PurchaseStatus = PurchaseStatusEnum.Sold;
+                PurchaseDate = DateTime.Now;
             }
         }
 

@@ -11,6 +11,7 @@ namespace DevFreela.Domain.Entities
             Description = description;
             IdFreeLancer = idFreeLancer;
             TotalCost = totalCost;
+            Sales = 0;
             Status = ProjectStatusEnum.Created;
             Comments = [];
             Purchases = [];
@@ -21,9 +22,8 @@ namespace DevFreela.Domain.Entities
 
         public int IdFreeLancer { get; private set; }
         public UserEntity FreeLancer { get; private set; }
-
         public decimal TotalCost { get; private set; }
-
+        public int Sales { get; private set; }
         public DateTime? StartedAt { get; private set; }
         public DateTime? AvailableAt { get; private set; }
 
@@ -37,6 +37,10 @@ namespace DevFreela.Domain.Entities
             IdFreeLancer = idFreeLancer;
         }
 
+        public void AssignSale()
+        {
+            Sales++;
+        }
       
 
         public void Suspend()

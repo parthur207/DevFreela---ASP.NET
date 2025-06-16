@@ -17,4 +17,8 @@
     <ProjectReference Include="..\DevFreela.Domain\DevFreela.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="RepositoriesServices\ClientRepository\" />
+  </ItemGroup>
+
 </Project>
