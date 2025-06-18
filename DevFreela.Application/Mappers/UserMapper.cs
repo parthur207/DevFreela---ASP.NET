@@ -11,10 +11,10 @@ namespace DevFreela.Application.Mappers
 {
     public class UserMapper
     { 
-        public static UserGenericDTO ToUserGenericDTO(UserEntity entity)
+        public static GenericUserDTO ToUserGenericDTO(UserEntity entity)
         {
             var skills = entity.Skills.Select(x => x.Skill.Description).ToList();
-            return new UserGenericDTO(entity.FullName, entity.Email, entity.Role, entity.BirthDate, skills);
+            return new GenericUserDTO(entity.FullName, entity.Email, entity.Role, entity.BirthDate, skills);
         }
 
         public static UserEntity ToUserEntity(CreateUserModel model)

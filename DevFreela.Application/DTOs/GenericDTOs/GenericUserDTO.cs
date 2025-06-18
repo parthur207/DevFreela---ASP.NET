@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace DevFreela.Application.DTOs.GenericDTOs
 {
-    public class UserGenericDTO
+    public class GenericUserDTO
     {
 
-        public UserGenericDTO(string fullName, string email, RolesTypesEnum role, DateTime birthDate, List<string> skills)
+        public GenericUserDTO(string fullName, string email, RolesTypesEnum role, DateTime birthDate, List<string> skills)
         {
             FullName = fullName;
             Email = email;

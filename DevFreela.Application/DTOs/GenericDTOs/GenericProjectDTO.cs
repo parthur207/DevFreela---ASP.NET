@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace DevFreela.Application.DTOs.GenericDTOs
 {
-    public class ProjectGenericDTO
+    public class GenericProjectDTO
     {
-        public ProjectGenericDTO(int id, string title, string clientName, string freeLancerName, decimal totalCost)
+        public GenericProjectDTO(int id, string title, string clientName, string freeLancerName, decimal totalCost)
         {
             Id = id;
             Title = title;

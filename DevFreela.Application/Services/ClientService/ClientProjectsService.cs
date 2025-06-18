@@ -22,10 +22,10 @@ namespace DevFreela.Application.Services.ClientService
             _clientProjectRepository = clientProjectRepository;
         }
 
-        public async Task<ResponseModel<List<ProjectGenericDTO>>> GetPurchasedProjectsClient(int IdUser, string search, int Size)
+        public async Task<ResponseModel<List<GenericProjectDTO>>> GetPurchasedProjectsClient(int IdUser, string search, int Size)
         {
 
-            ResponseModel<List<ProjectGenericDTO>> Response = new ResponseModel<List<ProjectGenericDTO>>();
+            ResponseModel<List<GenericProjectDTO>> Response = new ResponseModel<List<GenericProjectDTO>>();
 
             var ResponseRepository = await _clientProjectRepository.GetPurchasedProjectsClientAsync(IdUser, search, Size);
 

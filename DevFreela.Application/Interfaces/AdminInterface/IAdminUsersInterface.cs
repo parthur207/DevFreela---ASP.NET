@@ -15,11 +15,11 @@ namespace DevFreela.Application.Interfaces.AdminInterface
     public interface IAdminUsersInterface
     {
         //Querys
-        Task<ResponseModel<List<UserGenericDTO>>> GetAllUsersAdmin(int Size);
-        Task<ResponseModel<UserGenericDTO>> GetUserByEmailAdmin(string Email);
-        Task<ResponseModel<List<UserGenericDTO>>> GetAllFreelancersAdmin(int Size);
-        Task<ResponseModel<List<UserGenericDTO>>> GetAllClientsAdmin(int Size);
-        Task<ResponseModel<List<UserGenericDTO>>> GetAllUsersInactiveAdmin(int Size);
+        Task<ResponseModel<List<GenericUserDTO>>> GetAllUsersAdmin(int Size);
+        Task<ResponseModel<GenericUserDTO>> GetUserByEmailAdmin(string Email);
+        Task<ResponseModel<List<GenericUserDTO>>> GetAllFreelancersAdmin(int Size);
+        Task<ResponseModel<List<GenericUserDTO>>> GetAllClientsAdmin(int Size);
+        Task<ResponseModel<List<GenericUserDTO>>> GetAllUsersInactiveAdmin(int Size);
 
         //Commands
         Task<SimpleResponseModel> InactiveUserAdmin(string Email);

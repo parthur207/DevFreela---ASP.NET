@@ -16,10 +16,10 @@ namespace DevFreela.Application.Services.AdminService
             _adminUsersRepository = adminUsersRepository;
         }
 
-        public async Task<ResponseModel<List<UserGenericDTO>>> GetAllClientsAdmin(int Size)
+        public async Task<ResponseModel<List<GenericUserDTO>>> GetAllClientsAdmin(int Size)
         {
             
-            ResponseModel<List<UserGenericDTO>> response = new ResponseModel<List<UserGenericDTO>>();
+            ResponseModel<List<GenericUserDTO>> response = new ResponseModel<List<GenericUserDTO>>();
 
             var ResponseRepository = await _adminUsersRepository.GetAllClientsAdminAsync(Size);
 
@@ -40,9 +40,9 @@ namespace DevFreela.Application.Services.AdminService
             return response;
         }
 
-        public async Task<ResponseModel<List<UserGenericDTO>>> GetAllFreelancersAdmin(int Size)
+        public async Task<ResponseModel<List<GenericUserDTO>>> GetAllFreelancersAdmin(int Size)
         { 
-            ResponseModel<List<UserGenericDTO>> response = new ResponseModel<List<UserGenericDTO>>();
+            ResponseModel<List<GenericUserDTO>> response = new ResponseModel<List<GenericUserDTO>>();
 
             var ResponseRepository = await _adminUsersRepository.GetAllFreelancersAdminAsync(Size);
 
@@ -63,10 +63,10 @@ namespace DevFreela.Application.Services.AdminService
             return response;
         }
 
-        public async Task<ResponseModel<List<UserGenericDTO>>> GetAllUsersAdmin(int Size)
+        public async Task<ResponseModel<List<GenericUserDTO>>> GetAllUsersAdmin(int Size)
         {
             
-            ResponseModel<List<UserGenericDTO>> response = new ResponseModel<List<UserGenericDTO>>();
+            ResponseModel<List<GenericUserDTO>> response = new ResponseModel<List<GenericUserDTO>>();
 
             var ResponseRepository = await _adminUsersRepository.GetAllUsersAdminAsync(Size);
 
@@ -87,10 +87,10 @@ namespace DevFreela.Application.Services.AdminService
             return response;
         }
 
-        public async Task<ResponseModel<List<UserGenericDTO>>> GetAllUsersInactiveAdmin(int Size)
+        public async Task<ResponseModel<List<GenericUserDTO>>> GetAllUsersInactiveAdmin(int Size)
         {
             
-            ResponseModel<List<UserGenericDTO>> response = new ResponseModel<List<UserGenericDTO>>();
+            ResponseModel<List<GenericUserDTO>> response = new ResponseModel<List<GenericUserDTO>>();
 
             var ResponseRepository = await _adminUsersRepository.GetAllUsersInactiveAdminAsync(Size);
 
@@ -111,10 +111,10 @@ namespace DevFreela.Application.Services.AdminService
             return response;
         }
 
-        public async Task<ResponseModel<UserGenericDTO>> GetUserByEmailAdmin(string Email)
+        public async Task<ResponseModel<GenericUserDTO>> GetUserByEmailAdmin(string Email)
         {
            
-            ResponseModel<UserGenericDTO> response = new ResponseModel<UserGenericDTO>();
+            ResponseModel<GenericUserDTO> response = new ResponseModel<GenericUserDTO>();
 
             var ResponseRepository = await _adminUsersRepository.GetUserByEmailAdminAsync(Email);
 
