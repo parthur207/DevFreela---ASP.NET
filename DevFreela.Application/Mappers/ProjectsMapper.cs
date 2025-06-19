@@ -13,13 +13,17 @@ namespace DevFreela.Application.Mappers
 {
     public class ProjectMapper
     {
-        public static AdminFreelancerProjectDTO ToAdminFreelancerProjectDTO(ProjectEntity entity)//GetById
-            => new(entity.Id, entity.Title, entity.Description,entity.Client.FullName,
-           entity.FreeLancer.FullName, entity.IsDeleted, entity.TotalCost, entity.Comments);
+        public static AdminFreelancerProjectDTO ToAdminFreelancerProjectDTO(ProjectEntity entity)
+        { 
 
+       
+              var buyers = entity.Purchases.Select(x => (x.User.FullName, x.User.Email)).ToList();
+            List<(string, string)> comments = entity.Comments.SelectMany(x => x.User.FullName, x=>x.Content  ).ToList();
+            return new(entity.Id, entity.Title, entity.Description, buyers,
+               entity.FreeLancer.FullName, entity.IsDeleted, entity.TotalCost, comments);
+        }
         public static GenericProjectDTO ToGenericProjectDTO(ProjectEntity project)//GetSearch
-            => new(project.Id, project.Title,
-                project.Client.FullName, project.FreeLancer.FullName, project.TotalCost);
+            => new(project.Id, project.Title, project.FreeLancer.FullName, project.TotalCost);
 
         public static ClientBuyerProjectDTO ToClientBuyerProjectDTO() 
         {

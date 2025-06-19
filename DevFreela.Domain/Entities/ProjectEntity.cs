@@ -14,7 +14,7 @@ namespace DevFreela.Domain.Entities
             Sales = 0;
             Status = ProjectStatusEnum.Created;
             Comments = [];
-            Purchases = [];
+            Purchases = UserEntity;
         }
 
         public string Title { get; private set; }

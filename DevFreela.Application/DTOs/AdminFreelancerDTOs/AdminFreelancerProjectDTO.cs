@@ -9,18 +9,16 @@ namespace DevFreela.Application.DTOs.GenericDTOs
 {
     public class AdminFreelancerProjectDTO
     {
-        public AdminFreelancerProjectDTO(int id, string title, string description, string clientName, string freeLancerName, bool isDeleted, decimal totalCost, List<ProjectCommentEntity> comments)
+        public AdminFreelancerProjectDTO(int id, string title, string description, List<(string, string)> buyers ,string freeLancerName, bool isDeleted, decimal totalCost, List<(string, string)> comments)
         {
             Id = id;
             Title = title;
             Description = description;
-            ClientName = clientName;
+            Buyers = buyers;
             FreeLancerName = freeLancerName;
             IsDeleted = isDeleted;
             TotalCost = totalCost;
-            Comments = comments.Select(x => new { x.IdUser, x.Content })
-                .Cast<object>()
-                .ToList();
+            Comments = comments;
         }
 
         public int Id { get; private set; }
@@ -29,7 +27,7 @@ namespace DevFreela.Application.DTOs.GenericDTOs
 
         public string Description { get; private set; }
 
-        public string ClientName { get; private set; }
+        public List <(string, string)> Buyers { get; private set; }
 
         public string FreeLancerName { get; private set; }
 
@@ -37,7 +35,7 @@ namespace DevFreela.Application.DTOs.GenericDTOs
 
         public bool IsDeleted { get; private set; }
 
-        public List<object> Comments { get; private set; }
+        public List<(string, string)> Comments { get; private set; }
 
 
     }
